@@ -4,7 +4,8 @@
   "description": "一个基于Vue 的UI 框架",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "parcel": "npx parcel index.html --no-cache"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,17 @@
   },
   "homepage": "https://github.com/ChenLeoXX/vue-ui-library#readme",
   "dependencies": {
-    "vue": "^2.6.4"
+    "button": "^1.1.1",
+    "vue": "^2.6.4",
+    "vue-hot-reload-api": "^2.3.1"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.11.0"
+    "@vue/component-compiler-utils": "^2.5.2",
+    "parcel-bundler": "^1.11.0",
+    "sass": "^1.17.0",
+    "vue-template-compiler": "^2.6.4"
+  },
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
   }
 }
