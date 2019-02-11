@@ -1,16 +1,47 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>预览</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    :root {
+      --button-height: 32px;
+      --font-size: 14px;
+      --border-radius: 4px;
+      --primary : #2d8cf0;
+      --warn :#ff9900;
+      --success:#19be6b;
+      --error:#ed4014;
+      --light-primary:#5cadff;
+      --active-primary:#2b85e4;
+      --text-color:#515a6e;
+      --disabled:#c5c8ce;
+      --button-color:#fff;
+    }
+    body {
+      font-style: var(--font-size);
+    }
+  </style>
 </head>
 <body>
- <div id="app">
-     <v-button></v-button>
- </div>
+<div id="app">
+  <v-button>
+    默认
+  </v-button>
+  <v-button icon="settings">
+    图标按钮
+  </v-button>
+  <v-button type="primary">
+    类型按钮
+  </v-button>
+</div>
+<script src="//at.alicdn.com/t/font_1041180_m38ljwyf9ha.js"></script>
 <script src="./src/app.js"></script>
 </body>
 </html>
