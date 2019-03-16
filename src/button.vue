@@ -1,6 +1,9 @@
 <template>
-     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:icon}">
-       <v-icon :icon-name="icon" loading="loading" v-if="icon"></v-icon>
+     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:icon,[shape]:shape}"
+             @click="$emit('click')"
+     >
+       <v-icon :icon-name="icon" v-if="icon && icon !=='loading'"></v-icon>
+       <v-icon  :class="{'loading':icon === 'loading'}" :icon-name="icon" v-if="icon === 'loading'"></v-icon>
        <div class="content">
          <slot></slot>
        </div>
@@ -12,6 +15,9 @@
         props:{
             icon:{
                 type:String,
+            },
+            shape: {
+              type:String,
             },
             type:{
                 type:String,
@@ -36,6 +42,23 @@
     }
 </script>
 <style lang="scss">
+  .v-icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+  .loading  {
+    animation: loading 0.8s linear infinite;
+  }
+  @keyframes loading {
+    0% {
+      transform:rotate(0deg);
+    }
+    100% {
+      transform:rotate(360deg)
+    }
+  }
   .v-button {
     display: inline-flex;
     align-items: center;
@@ -64,6 +87,7 @@
         order: 1;
       }
     }
+    /*类型class*/
     &.primary {
       background-color: var(--primary);
       border:var(--primary);
@@ -98,6 +122,10 @@
     &.default:hover {
       color: var(--primary);
       border-color: var(--primary);
+    }
+    /*更大的圆角*/
+    &.round {
+      border-radius: 3em;
     }
   }
 </style>

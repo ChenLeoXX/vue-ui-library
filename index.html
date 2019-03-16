@@ -34,14 +34,20 @@
   <v-button>
     默认
   </v-button>
-  <v-button icon="settings" icon-position="left">
+  <v-button icon="settings">
     图标按钮
   </v-button>
   <v-button type="primary">
     类型按钮
   </v-button>
-  <v-button type="warn" icon="loading" loading="true" icon-position="right">
+  <v-button type="warn" icon="loading" icon-position="right">
     警告按钮
+  </v-button>
+  <v-button type="error" icon="search">
+    失败按钮
+  </v-button>
+  <v-button type="success" shape="round" :icon="iconName" @click="iconName = 'loading'">
+    成功按钮
   </v-button>
 </div>
 <script src="//at.alicdn.com/t/font_1041180_zjx4zr4b08j.js"></script>
