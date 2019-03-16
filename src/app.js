@@ -3,4 +3,4 @@ import button from './button'
 Vue.component('v-button',button)
 new Vue({
     el:"#app"
-})
+}) 
