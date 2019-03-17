@@ -1,9 +1,9 @@
 <template>
-     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:icon,[shape]:shape}"
+     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition && $slots.default,[shape]:shape}"
              @click="$emit('click')"
      >
-       <v-icon :icon-name="icon" v-if="icon && icon !=='loading'"></v-icon>
-       <v-icon  :class="{'loading':icon === 'loading'}" :icon-name="icon" v-if="icon === 'loading'"></v-icon>
+       <v-icon :icon-name="icon" v-if="icon && !isLoading"></v-icon>
+       <v-icon  :class="{'loading':isLoading}" icon-name="loading" v-if="isLoading"></v-icon>
        <div class="content">
          <slot></slot>
        </div>
@@ -13,6 +13,10 @@
     import vIcon from './v-icon';
     export default {
         props:{
+            isLoading:{
+                type:Boolean,
+                default:false
+            },
             icon:{
                 type:String,
             },
