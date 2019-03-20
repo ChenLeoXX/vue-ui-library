@@ -11,6 +11,8 @@
       box-sizing: border-box;
     }
     :root {
+      --circle-width:32px;
+      --circle-height: 32px;
       --button-height: 32px;
       --font-size: 14px;
       --border-radius: 4px;
@@ -41,14 +43,15 @@
     类型按钮
   </v-button>
   <v-button type="warn" icon="search" :is-loading="true" icon-position="right">
-    警告按钮
+
   </v-button>
   <v-button type="error" icon="search">
     失败按钮
   </v-button>
   <v-button type="success" shape="round" icon="settings">
-    成功按钮
+    圆角按钮
   </v-button>
+  <v-button shape="circle" icon="search"></v-button>
   <button-group>
     <v-button icon="left">Go back</v-button>
     <v-button> more </v-button>

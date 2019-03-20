@@ -1,10 +1,10 @@
 <template>
-     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition && $slots.default,[shape]:shape}"
+     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape}"
              @click="$emit('click')"
      >
        <v-icon :icon-name="icon" v-if="icon && !isLoading"></v-icon>
        <v-icon  :class="{'loading':isLoading}" icon-name="loading" v-if="isLoading"></v-icon>
-       <div class="content">
+       <div class="content" v-if="$slots.default">
          <slot></slot>
        </div>
      </button>
@@ -76,19 +76,19 @@
     &.icon-position-left {
       .v-icon {
         order:1;
-        margin-right: 0.5em;
       }
       .content {
+        margin-left: 0.5em;
         order: 2;
       }
     }
     &.icon-position-right {
       .v-icon {
         order: 2;
-        margin-left: 0.5em;
       }
       .content {
         order: 1;
+        margin-right: 0.5em;
       }
     }
     /*类型class*/
@@ -130,6 +130,15 @@
     /*更大的圆角*/
     &.round {
       border-radius: 3em;
+    }
+    &.circle {
+      border-radius:50%;
+      height: var(--circle-height);
+      width: var(--circle-width);
+      padding:0;
+      .v-icon {
+        width: 2.5em;
+      }
     }
   }
 </style>
