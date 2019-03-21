@@ -139,6 +139,7 @@
       .v-icon {
         width: 2.5em;
       }
+
     }
   }
 </style>
