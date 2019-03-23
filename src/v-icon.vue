@@ -5,6 +5,7 @@
   </svg>
 </template>
 <script>
+  import '../static/svg'
   export default {
     props: {
       iconName: {

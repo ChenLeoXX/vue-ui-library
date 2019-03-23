@@ -1,9 +1,10 @@
 {
   "name": "leo-test-ui",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "一个基于Vue 的UI 框架",
   "main": "dist/index.js",
   "scripts": {
+    "start": "npx parcel index.html --no-cache",
     "test": "parcel build test/* --no-minify && karma start --single-run",
     "watch-test": "parcel watch test/* --no-cache & karma start",
     "parcel": "npx parcel ./index.html --no-cache"

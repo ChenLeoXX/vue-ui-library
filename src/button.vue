@@ -1,5 +1,5 @@
 <template>
-     <button class="v-button leo" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape}"
+     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape}"
              @click="$emit('click')"
      >
        <v-icon :icon-name="icon" v-if="icon && !isLoading"></v-icon>
