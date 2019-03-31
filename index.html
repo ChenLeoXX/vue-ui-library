@@ -36,9 +36,7 @@
 <body>
 <div id="app">
   <div style="margin-bottom: 20px;">
-    <v-input disabled></v-input>
-    <v-input error="输错啦"></v-input>
-    <v-input error="" readonly></v-input>
+    <v-input @change="test($event)"></v-input>
   </div>
   <v-button>
     默认

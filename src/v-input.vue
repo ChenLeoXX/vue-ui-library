@@ -1,6 +1,12 @@
 <template>
   <div class="wrapper">
-    <input :disabled="disabled"  :readonly="readonly" :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
+    <input
+        @change="$emit('change',$event)"
+        @blur="$emit('blur',$event)"
+        @focus="$emit('focus',$event)"
+        @input="$emit('input',$event)"
+        :disabled="disabled"  :value="value" :readonly="readonly"
+        :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
     <template v-if="error">
         <v-icon  icon-name="error" fill="#f77f61"></v-icon>
       <span class="msg">{{error}}</span>
@@ -11,6 +17,9 @@
   import vIcon from './v-icon'
   export default  {
     props:{
+      value:{
+        default:''
+      },
       disabled:{
         type:Boolean,
         default:false
