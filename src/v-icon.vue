@@ -1,6 +1,6 @@
 ™
 <template>
-  <svg class="v-icon">
+  <svg class="v-icon" :fill="color">
     <use :xlink:href=`#i-${iconName}`></use>
   </svg>
 </template>
@@ -12,9 +12,11 @@
         type: String,
         default: 'settings'
       },
-
+      color:{
+        type:String,
+      }
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 </style>

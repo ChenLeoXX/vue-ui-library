@@ -11,6 +11,8 @@
       box-sizing: border-box;
     }
     :root {
+      --big-font-size:16px;
+      --tip-font-size:12px;
       --circle-width:32px;
       --circle-height: 32px;
       --button-height: 32px;
@@ -33,6 +35,11 @@
 </head>
 <body>
 <div id="app">
+  <div style="margin-bottom: 20px;">
+    <v-input disabled></v-input>
+    <v-input error="输错啦"></v-input>
+    <v-input error="" readonly></v-input>
+  </div>
   <v-button>
     默认
   </v-button>

@@ -1,5 +1,5 @@
 <template>
-     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape}"
+     <button class="v-button" :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape,'only-icon':!$slots.default}"
              @click="$emit('click')"
      >
        <v-icon :icon-name="icon" v-if="icon && !isLoading"></v-icon>
@@ -45,7 +45,7 @@
         }
     }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .v-icon {
     width: 1em; height: 1em;
     vertical-align: -0.15em;
@@ -76,19 +76,19 @@
     &.icon-position-left {
       .v-icon {
         order:1;
+        margin-right: 0.5em;
       }
       .content {
-        margin-left: 0.5em;
         order: 2;
       }
     }
     &.icon-position-right {
       .v-icon {
         order: 2;
+        margin-left: 0.5em;
       }
       .content {
         order: 1;
-        margin-right: 0.5em;
       }
     }
     /*类型class*/
@@ -126,6 +126,11 @@
     &.default:hover {
       color: var(--primary);
       border-color: var(--primary);
+    }
+    &.only-icon {
+      .v-icon {
+        margin:0;
+      }
     }
     /*更大的圆角*/
     &.round {

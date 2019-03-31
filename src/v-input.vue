@@ -1,0 +1,107 @@
+<template>
+  <div class="wrapper">
+    <input :disabled="disabled"  :readonly="readonly" :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
+    <template v-if="error">
+        <v-icon  icon-name="error" fill="#f77f61"></v-icon>
+      <span class="msg">{{error}}</span>
+    </template>
+  </div>
+</template>
+<script>
+  import vIcon from './v-icon'
+  export default  {
+    props:{
+      disabled:{
+        type:Boolean,
+        default:false
+      },
+      readonly:{
+        type:Boolean,
+        default:false
+      },
+      placeholder:{
+        type:String,
+        default:'请输入'
+      },
+      textType:{
+        type:String,
+        default:'text'
+      },
+      error:{
+        type:String
+      },
+      size:{
+        type:String,
+        default:'m'
+      }
+    },
+    components:{
+      vIcon
+    }
+  }
+</script>
+<style lang="scss" scoped>
+.wrapper {
+  display: inline-flex;
+  vertical-align: top;
+  align-items: center;
+  font-size: var(--font-size);
+  & > :not(:last-child) {
+    margin-right: 0.3em;
+  }
+  input {
+    outline: none;
+    padding: 5px;
+    border-radius:var(--border-radius);
+    font-size: var(--font-size);
+    border:1px solid #ddd;
+    transition:all 0.2s linear;
+    color:rgba(0,0,0,.65);
+    &::placeholder {
+      color:#ddd;
+    }
+    &[disabled],&[readonly]{
+      background: #ddd;
+      cursor: not-allowed;
+      border:1px solid #bbb;
+      box-shadow:none;
+      &:hover {
+        border:1px solid #bbb;
+      }
+      &::placeholder {
+        color:#aaa;
+      }
+    }
+    &.error {
+      border:1px solid #ff606f;
+      box-shadow:0 0 0 2px rgba(255,0,0,0.2)
+    }
+    &.m {
+      padding: 8px;
+    }
+    &.s {
+      padding:4px;
+      font-size: var(--tip-font-size);
+    }
+    &.l {
+      padding:12px;
+      font-size:var(--big-font-size)
+    }
+    &:hover {
+      border:1px solid var(--primary)
+    }
+    &:focus {
+      border-color:var(--primary);
+      box-shadow:0 0 0 2px rgba(24,144,255,0.2)
+    }
+  }
+  .v-icon {
+    width: 1em;
+    height: 1em;
+  }
+  .msg {
+    font-size: var(--tip-font-size);
+    color:red;
+  }
+}
+</style>
