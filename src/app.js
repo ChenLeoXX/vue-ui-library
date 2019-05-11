@@ -12,6 +12,12 @@ new Vue({
   data() {
     return {
       isLoading:false,
+      msg: 'Hello World'
     }
   },
+  methods: {
+    test(e, val) {
+      console.log(e, val);
+    }
+  }
 });

@@ -36,7 +36,9 @@
 <body>
 <div id="app">
   <div style="margin-bottom: 20px;">
-    <v-input @change="test($event)"></v-input>
+    <v-input @input="test"></v-input>
+    <v-input v-model="msg"></v-input>
+    <p>{{msg}}</p>
   </div>
   <v-button>
     默认
