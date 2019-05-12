@@ -35,6 +35,44 @@
 </head>
 <body>
 <div id="app">
+	<div style="padding: 20px">
+		<v-row gutter="24">
+			<v-col span="6">
+				<div>1</div>
+			</v-col>
+			<v-col span="12">
+				<div>2</div>
+			</v-col>
+			<v-col span="6">
+				<div>3</div>
+			</v-col>
+		</v-row>
+		<v-row style="margin-top:20px">
+			<v-col span="10">
+				<div>1</div>
+			</v-col>
+			<v-col span="10" offset="2">
+				<div>2</div>
+			</v-col>
+			<v-col span="2">
+				<div>3</div>
+			</v-col>
+		</v-row>
+		<v-row style="margin-top:20px" gutter="30">
+			<v-col span="6">
+				<div>1</div>
+			</v-col>
+			<v-col span="6">
+				<div>2</div>
+			</v-col>
+			<v-col span="6">
+				<div>3</div>
+			</v-col>
+			<v-col span="6">
+				<div>3</div>
+			</v-col>
+		</v-row>
+	</div>
   <div style="margin-bottom: 20px;">
     <v-input @input="test"></v-input>
     <v-input v-model="msg"></v-input>

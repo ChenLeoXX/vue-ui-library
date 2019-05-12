@@ -29,7 +29,7 @@
         },
         //父组件上内的子组件挂载完成后才会挂载父组件
         mounted() {
-            this.children.forEach(function (child) {
+            this.$children.forEach(function (child) {
                 //在子组件data上定义 gutter
                 child.gutter = this.gutter
             }.bind(this))
@@ -41,7 +41,6 @@
 	.row {
 		display: flex;
 		flex-wrap: wrap;
-
 		&.align-right {
 			justify-content: flex-end;
 		}
