@@ -31,6 +31,12 @@
     body {
       font-style: var(--font-size);
     }
+
+    .demo {
+	    width: 100%;
+	    border: 1px solid red;
+	    min-height: 150px;
+    }
   </style>
 </head>
 <body>
@@ -102,6 +108,15 @@
     <v-button> more </v-button>
     <v-button icon="right" icon-position="right">Go next</v-button>
   </button-group>
+	<br>
+	<v-layout class="demo">
+		<v-head class="demo"> head</v-head>
+		<v-layout>
+			<v-content class="demo"> content</v-content>
+			<v-side class="demo">sider</v-side>
+		</v-layout>
+		<v-foot class="demo"> foot</v-foot>
+	</v-layout>
 </div>
 <script src="./src/app.js"></script>
 </body>
