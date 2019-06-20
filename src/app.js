@@ -10,6 +10,7 @@ import head from './header'
 import vLay from './v-lay'
 import foot from './footer'
 import vRow from './v-row'
+import vToast from './toast'
 Vue.component('v-button', button);
 Vue.component('v-icon', VIcon);
 Vue.component('button-group', buttonGroup);
@@ -21,6 +22,7 @@ Vue.component('v-foot', foot);
 Vue.component('v-side', sider);
 Vue.component('v-layout', vLay);
 Vue.component('v-content', content);
+Vue.use(vToast);
 new Vue({
   el: "#app",
   data() {
@@ -31,7 +33,7 @@ new Vue({
   },
   methods: {
     test(e, val) {
-      console.log(e, val);
+        this.$toast('哈哈哈哈')
     }
   }
 });
