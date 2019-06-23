@@ -31,16 +31,20 @@ new Vue({
       msg: 'Hello World'
     }
   },
+    create() {
+        // this.test()
+    },
   methods: {
     test(e, val) {
-        this.$toast('哈哈哈哈', {
+        this.$toast('请问您要充值多少???', {
             closeBtn: {
                 text: '充值',
                 callback(toast) {
                     //  toast instance
                     console.log('充值成功!')
                 },
-            }
+            },
+            enableHtml: false
         })
     }
   }

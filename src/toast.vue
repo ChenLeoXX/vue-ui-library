@@ -1,14 +1,21 @@
 <template>
-	<div class="toast" :class="{[`position-${showPosition}`]:true}">
-		<slot></slot>
-		<div class="line"></div>
-		<span @click="onCloseClick">{{closeBtn.text}}</span>
+	<div ref="ct" class="toast" :class="{[`position-${showPosition}`]:true}">
+		<div class="content">
+			<div v-html="$slots.default[0]" v-if="enableHtml"></div>
+			<slot v-else></slot>
+		</div>
+		<div class="line" ref="line" K></div>
+		<span class="text" @click="onCloseClick">{{closeBtn.text}}</span>
 	</div>
 </template>
 <script>
     export default {
         name: "toast",
         props: {
+            enableHtml: {
+                type: Boolean,
+                default: false,
+            },
             closeBtn: {
                 type: Object,
                 default: () => {
@@ -35,19 +42,30 @@
             }
         },
         mounted() {
-            if (this.autoClose) {
-                this.close()
-            }
+            this.excuteClose()
+            this.calcLineHeight()
         },
         methods: {
+            calcLineHeight() {
+                // mounted 之后下次队列更新
+                this.$nextTick(() => {
+                    this.$refs.line.style.height = this.$refs.ct.getBoundingClientRect().height + 'px'
+                })
+            },
+            excuteClose() {
+                if (this.autoClose) {
+                    this.close()
+                }
+            },
             onCloseClick() {
-                this.close();
                 this.closeBtn.callback(this)
+                this.$el.remove()
+                this.$destroy()
             },
             close() {
                 setTimeout(() => {
-                    this.$el.remove();
-                    this.$destroy();
+                    this.$el.remove()
+                    this.$destroy()
                 }, this.closeDelay * 1000);
             }
         }
@@ -58,18 +76,24 @@
 		color: #fff;
 		padding: 0 0.5em;
 		display: flex;
+		align-items: center;
 		border-radius: 3px;
 		font-size: 14px;
 		position: fixed;
-		/*padding:0.5em;*/
 		left: 50%;
-		height: 40px;
-		line-height: 40px;
+		min-height: 40px;
 		transform: translateX(-50%);
 		background: rgba(0, 0, 0, 0.74);
 		box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.50);
-		text-align: center;
+		/*text-align: center;*/
+		.content {
+			padding: 0.5em;
+		}
 		
+		.text {
+			flex-shrink: 0;
+			padding: 0 8px;
+		}
 		&.position-top {
 			top: 0%;
 		}
@@ -80,9 +104,6 @@
 	}
 	
 	.line {
-		margin: 0 0.5em;
-		height: 100%;
-		width: 1px;
-		background: rgb(228, 228, 228, .15);
+		border-left: 1px solid #666;
 	}
 </style>
