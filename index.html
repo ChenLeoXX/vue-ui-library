@@ -41,44 +41,44 @@
 </head>
 <body>
 <div id="app">
-	<div style="padding: 20px">
-		<v-row gutter="24">
-			<v-col span="6">
-				<div>1</div>
-			</v-col>
-			<v-col span="12">
-				<div>2</div>
-			</v-col>
-			<v-col span="6">
-				<div>3</div>
-			</v-col>
-		</v-row>
-		<v-row style="margin-top:20px">
-			<v-col span="10">
-				<div>1</div>
-			</v-col>
-			<v-col span="10" offset="2">
-				<div>2</div>
-			</v-col>
-			<v-col span="2">
-				<div>3</div>
-			</v-col>
-		</v-row>
-		<v-row style="margin-top:20px">
-			<v-col span="24" :ipad="{span:6}" :pc="{span:10}">
-				<div>1</div>
-			</v-col>
-			<v-col span="24" :ipad="{span:6}" :pc="{span:8}">
-				<div>2</div>
-			</v-col>
-			<v-col span="24" :ipad="{span:6}" :pc="{span:2}">
-				<div>3</div>
-			</v-col>
-			<v-col span="24" :ipad="{span:6}" :pc="{span:4}">
-				<div>3</div>
-			</v-col>
-		</v-row>
-	</div>
+	<!--	<div style="padding: 20px">-->
+	<!--		<v-row gutter="24">-->
+	<!--			<v-col span="6">-->
+	<!--				<div>1</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="12">-->
+	<!--				<div>2</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="6">-->
+	<!--				<div>3</div>-->
+	<!--			</v-col>-->
+	<!--		</v-row>-->
+	<!--		<v-row style="margin-top:20px">-->
+	<!--			<v-col span="10">-->
+	<!--				<div>1</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="10" offset="2">-->
+	<!--				<div>2</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="2">-->
+	<!--				<div>3</div>-->
+	<!--			</v-col>-->
+	<!--		</v-row>-->
+	<!--		<v-row style="margin-top:20px">-->
+	<!--			<v-col span="24" :ipad="{span:6}" :pc="{span:10}">-->
+	<!--				<div>1</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="24" :ipad="{span:6}" :pc="{span:8}">-->
+	<!--				<div>2</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="24" :ipad="{span:6}" :pc="{span:2}">-->
+	<!--				<div>3</div>-->
+	<!--			</v-col>-->
+	<!--			<v-col span="24" :ipad="{span:6}" :pc="{span:4}">-->
+	<!--				<div>3</div>-->
+	<!--			</v-col>-->
+	<!--		</v-row>-->
+	<!--	</div>-->
   <div style="margin-bottom: 20px;">
     <v-input @input="test"></v-input>
     <v-input v-model="msg"></v-input>
@@ -87,36 +87,36 @@
 	<v-button @click="test">
     默认
   </v-button>
-  <v-button icon="settings">
-    图标按钮
-  </v-button>
-  <v-button type="primary">
-    类型按钮
-  </v-button>
-  <v-button type="warn" icon="search" :is-loading="true" icon-position="right">
+	<!--  <v-button icon="settings">-->
+	<!--    图标按钮-->
+	<!--  </v-button>-->
+	<!--  <v-button type="primary">-->
+	<!--    类型按钮-->
+	<!--  </v-button>-->
+	<!--  <v-button type="warn" icon="search" :is-loading="true" icon-position="right">-->
 
-  </v-button>
-  <v-button type="error" icon="search">
-    失败按钮
-  </v-button>
-  <v-button type="success" shape="round" icon="settings">
-    圆角按钮
-  </v-button>
-  <v-button shape="circle" icon="search"></v-button>
-  <button-group>
-    <v-button icon="left">Go back</v-button>
-    <v-button> more </v-button>
-    <v-button icon="right" icon-position="right">Go next</v-button>
-  </button-group>
-	<br>
-	<v-layout class="demo">
-		<v-head class="demo"> head</v-head>
-		<v-layout>
-			<v-content class="demo"> content</v-content>
-			<v-side class="demo">sider</v-side>
-		</v-layout>
-		<v-foot class="demo"> foot</v-foot>
-	</v-layout>
+	<!--  </v-button>-->
+	<!--  <v-button type="error" icon="search">-->
+	<!--    失败按钮-->
+	<!--  </v-button>-->
+	<!--  <v-button type="success" shape="round" icon="settings">-->
+	<!--    圆角按钮-->
+	<!--  </v-button>-->
+	<!--  <v-button shape="circle" icon="search"></v-button>-->
+	<!--  <button-group>-->
+	<!--    <v-button icon="left">Go back</v-button>-->
+	<!--    <v-button> more </v-button>-->
+	<!--    <v-button icon="right" icon-position="right">Go next</v-button>-->
+	<!--  </button-group>-->
+	<!--	<br>-->
+	<!--	<v-layout class="demo">-->
+	<!--		<v-head class="demo"> head</v-head>-->
+	<!--		<v-layout>-->
+	<!--			<v-content class="demo"> content</v-content>-->
+	<!--			<v-side class="demo">sider</v-side>-->
+	<!--		</v-layout>-->
+	<!--		<v-foot class="demo"> foot</v-foot>-->
+	<!--	</v-layout>-->
 </div>
 <script src="./src/app.js"></script>
 </body>

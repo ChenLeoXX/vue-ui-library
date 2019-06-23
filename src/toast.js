@@ -3,10 +3,12 @@ import Toast from './toast.vue'
 
 export default {
     install(Vue, options) {
-        Vue.prototype.$toast = function (msg) {
+        Vue.prototype.$toast = function (msg, toastOpt) {
             let Constructor = Vue.extend(Toast);
             let toast = new Constructor({
-                propsData: {}
+                propsData: {
+                    closeBtn: toastOpt.closeBtn
+                }
             });
             toast.$slots.default = [msg];
             toast.$mount();

@@ -33,7 +33,15 @@ new Vue({
   },
   methods: {
     test(e, val) {
-        this.$toast('哈哈哈哈')
+        this.$toast('哈哈哈哈', {
+            closeBtn: {
+                text: '充值',
+                callback(toast) {
+                    //  toast instance
+                    console.log('充值成功!')
+                },
+            }
+        })
     }
   }
 });
