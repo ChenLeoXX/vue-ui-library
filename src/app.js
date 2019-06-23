@@ -35,8 +35,8 @@ new Vue({
         // this.test()
     },
   methods: {
-    test(e, val) {
-        this.$toast('请问您要充值多少???', {
+      test(pos) {
+          this.$toast('少年,你渴望力量吗?少年,你渴望力量吗?少年,你渴望力量吗?少年,  你渴望力量吗?少年,你渴望力量吗?少年,你渴望力量吗?少年,你渴望力量吗?少年,你渴望力量吗?', {
             closeBtn: {
                 text: '充值',
                 callback(toast) {
@@ -44,6 +44,8 @@ new Vue({
                     console.log('充值成功!')
                 },
             },
+              showPosition: pos,
+              autoClose: false,
             enableHtml: false
         })
     }

@@ -1,11 +1,13 @@
 <template>
-	<div ref="ct" class="toast" :class="{[`position-${showPosition}`]:true}">
-		<div class="content">
-			<div v-html="$slots.default[0]" v-if="enableHtml"></div>
-			<slot v-else></slot>
+	<div class="wrapper" :class="toastClasses">
+		<div ref="ct" class="toast">
+			<div class="content">
+				<div v-html="$slots.default[0]" v-if="enableHtml"></div>
+				<slot v-else></slot>
+			</div>
+			<div class="line" ref="line" K></div>
+			<span class="text" @click="onCloseClick">{{closeBtn.text}}</span>
 		</div>
-		<div class="line" ref="line" K></div>
-		<span class="text" @click="onCloseClick">{{closeBtn.text}}</span>
 	</div>
 </template>
 <script>
@@ -27,7 +29,7 @@
             },
             showPosition: {
                 type: String,
-                default: 'top',
+                default: 'middle',
                 validator(val) {
                     return ['top', 'bottom', 'middle'].indexOf(val) > -1
                 }
@@ -40,6 +42,11 @@
                 type: Number,
                 default: 30,
             }
+        },
+        computed: {
+            toastClasses() {
+                return {[`position-${this.showPosition}`]: true}
+            },
         },
         mounted() {
             this.excuteClose()
@@ -54,7 +61,9 @@
             },
             excuteClose() {
                 if (this.autoClose) {
-                    this.close()
+                    setTimeout(() => {
+                        this.close()
+                    }, this.closeDelay * 1000)
                 }
             },
             onCloseClick() {
@@ -63,15 +72,86 @@
                 this.$destroy()
             },
             close() {
-                setTimeout(() => {
-                    this.$el.remove()
-                    this.$destroy()
-                }, this.closeDelay * 1000);
+                this.$el.remove()
+                this.$emit('close')
+                this.$destroy()
             }
         }
     }
 </script>
 <style lang="scss" scoped>
+	$animation-duration: 500ms;
+	@keyframes fade-in {
+		0% {
+			opacity: 0
+		}
+		100% {
+			opacity: 1
+		}
+	}
+	
+	@keyframes slide-down {
+		0% {
+			transform: translateY(-100%);
+		}
+		100% {
+			transform: translateY(0%);
+		}
+	}
+	
+	@keyframes slide-up {
+		0% {
+			transform: translateY(100%);
+		}
+		100% {
+			transform: translateY(0%);
+		}
+	}
+	
+	@keyframes fade-in {
+		0% {
+			opacity: 0
+		}
+		100% {
+			opacity: 1
+		}
+	}
+	
+	.wrapper {
+		position: fixed;
+		left: 50%;
+		
+		&.position-top {
+			top: 0;
+			transform: translateX(-50%);
+			
+			.toast {
+				animation: slide-down $animation-duration;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		}
+		
+		&.position-bottom {
+			bottom: 0;
+			transform: translateX(-50%);
+			
+			.toast {
+				animation: slide-up $animation-duration linear;
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+		}
+		
+		&.position-middle {
+			top: 50%;
+			transform: translate(-50%, -50%);
+			
+			.toast {
+				animation: fade-in $animation-duration linear;
+			}
+		}
+	}
 	.toast {
 		color: #fff;
 		padding: 0 0.5em;
@@ -79,27 +159,17 @@
 		align-items: center;
 		border-radius: 3px;
 		font-size: 14px;
-		position: fixed;
-		left: 50%;
 		min-height: 40px;
-		transform: translateX(-50%);
 		background: rgba(0, 0, 0, 0.74);
 		box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.50);
-		/*text-align: center;*/
 		.content {
 			padding: 0.5em;
+			max-width: 260px;
 		}
 		
 		.text {
 			flex-shrink: 0;
 			padding: 0 8px;
-		}
-		&.position-top {
-			top: 0%;
-		}
-		
-		&.position-middle {
-			top: 50%;
 		}
 	}
 	

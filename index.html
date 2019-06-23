@@ -87,12 +87,12 @@
 	<v-button @click="test">
     默认
   </v-button>
-	<!--  <v-button icon="settings">-->
-	<!--    图标按钮-->
-	<!--  </v-button>-->
-	<!--  <v-button type="primary">-->
-	<!--    类型按钮-->
-	<!--  </v-button>-->
+	<v-button icon="settings" @click="test('top')">
+		图标按钮
+	</v-button>
+	<v-button type="primary" @click="test('bottom')">
+		类型按钮
+	</v-button>
 	<!--  <v-button type="warn" icon="search" :is-loading="true" icon-position="right">-->
 
 	<!--  </v-button>-->
