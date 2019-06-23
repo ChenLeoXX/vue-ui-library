@@ -5,8 +5,8 @@
 				<div v-html="$slots.default[0]" v-if="enableHtml"></div>
 				<slot v-else></slot>
 			</div>
-			<div class="line" ref="line" K></div>
-			<span class="text" @click="onCloseClick">{{closeBtn.text}}</span>
+			<div class="line" ref="line"></div>
+			<span class="close" @click="onCloseClick">{{closeBtn.text}}</span>
 		</div>
 	</div>
 </template>
@@ -35,12 +35,11 @@
                 }
             },
             autoClose: {
-                type: Boolean,
-                default: true
-            },
-            closeDelay: {
-                type: Number,
-                default: 30,
+                type: [Boolean, Number],
+                default: 3,
+                validator(val) {
+                    return val === false || (typeof val === 'number' && val > 0)
+                },
             }
         },
         computed: {
@@ -56,14 +55,15 @@
             calcLineHeight() {
                 // mounted 之后下次队列更新
                 this.$nextTick(() => {
-                    this.$refs.line.style.height = this.$refs.ct.getBoundingClientRect().height + 'px'
+                    let btn = document.querySelector('.close')
+                    btn.style.height = this.$refs.line.style.height = this.$refs.ct.getBoundingClientRect().height + 'px'
                 })
             },
             excuteClose() {
                 if (this.autoClose) {
                     setTimeout(() => {
                         this.close()
-                    }, this.closeDelay * 1000)
+                    }, this.autoClose * 1000)
                 }
             },
             onCloseClick() {
@@ -80,7 +80,7 @@
     }
 </script>
 <style lang="scss" scoped>
-	$animation-duration: 500ms;
+	$animation-duration: 300ms;
 	@keyframes fade-in {
 		0% {
 			opacity: 0
@@ -126,7 +126,7 @@
 			transform: translateX(-50%);
 			
 			.toast {
-				animation: slide-down $animation-duration;
+				animation: slide-down $animation-duration linear;
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
@@ -167,9 +167,13 @@
 			max-width: 260px;
 		}
 		
-		.text {
+		.close {
+			cursor: pointer;
 			flex-shrink: 0;
 			padding: 0 8px;
+			height: 100%;
+			display: flex;
+			align-items: center;
 		}
 	}
 	

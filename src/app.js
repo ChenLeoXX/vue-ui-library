@@ -10,7 +10,7 @@ import head from './header'
 import vLay from './v-lay'
 import foot from './footer'
 import vRow from './v-row'
-import vToast from './toast'
+import vToast from './toast-plugin'
 Vue.component('v-button', button);
 Vue.component('v-icon', VIcon);
 Vue.component('button-group', buttonGroup);
@@ -41,12 +41,12 @@ new Vue({
                 text: '充值',
                 callback(toast) {
                     //  toast instance
+                    console.log(toast)
                     console.log('充值成功!')
                 },
             },
               showPosition: pos,
-              autoClose: false,
-            enableHtml: false
+              enableHtml: false
         })
     }
   }
