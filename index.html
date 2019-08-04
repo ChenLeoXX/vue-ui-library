@@ -41,6 +41,37 @@
 </head>
 <body>
 <div id="app">
+	<v-tab>
+		<v-tab-head>
+			<v-tab-item name="social">
+				<v-icon></v-icon>
+				社会
+			</v-tab-item>
+			<v-tab-item name="cultural">
+				人文
+			</v-tab-item>
+			<v-tab-item name="history">
+				历史
+			</v-tab-item>
+			<v-tab-item name="technology">
+				科技
+			</v-tab-item>
+		</v-tab-head>
+		<v-tab-body>
+			<v-tab-pane name="social">
+				社会
+			</v-tab-pane>
+			<v-tab-pane name="cultural">
+				人文
+			</v-tab-pane>
+			<v-tab-pane name="history">
+				历史
+			</v-tab-pane>
+			<v-tab-pane name="technology">
+				科技
+			</v-tab-pane>
+		</v-tab-body>
+	</v-tab>
 	<!--	<div style="padding: 20px">-->
 	<!--		<v-row gutter="24">-->
 	<!--			<v-col span="6">-->
@@ -79,20 +110,20 @@
 	<!--			</v-col>-->
 	<!--		</v-row>-->
 	<!--	</div>-->
-  <div style="margin-bottom: 20px;">
-    <v-input @input="test"></v-input>
-    <v-input v-model="msg"></v-input>
-    <p>{{msg}}</p>
-  </div>
-	<v-button @click="test">
-    默认
-  </v-button>
-	<v-button icon="settings" @click="test('top')">
-		图标按钮
-	</v-button>
-	<v-button type="primary" @click="test('bottom')">
-		类型按钮
-	</v-button>
+	<!--  <div style="margin-bottom: 20px;">-->
+	<!--    <v-input @input="test"></v-input>-->
+	<!--    <v-input v-model="msg"></v-input>-->
+	<!--    <p>{{msg}}</p>-->
+	<!--  </div>-->
+	<!--	<v-button @click="test">-->
+	<!--    默认-->
+	<!--  </v-button>-->
+	<!--	<v-button icon="settings" @click="test('top')">-->
+	<!--		图标按钮-->
+	<!--	</v-button>-->
+	<!--	<v-button type="primary" @click="test('bottom')">-->
+	<!--		类型按钮-->
+	<!--	</v-button>-->
 	<!--  <v-button type="warn" icon="search" :is-loading="true" icon-position="right">-->
 
 	<!--  </v-button>-->

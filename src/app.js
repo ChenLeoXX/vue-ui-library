@@ -10,6 +10,11 @@ import head from './header'
 import vLay from './v-lay'
 import foot from './footer'
 import vRow from './v-row'
+import vTab from './tabs'
+import vTabItem from './tab-item'
+import vTabBody from './tab-body'
+import vTabPane from './tab-pane'
+import vTabHead from './tab-head'
 import vToast from './toast-plugin'
 Vue.component('v-button', button);
 Vue.component('v-icon', VIcon);
@@ -22,6 +27,11 @@ Vue.component('v-foot', foot);
 Vue.component('v-side', sider);
 Vue.component('v-layout', vLay);
 Vue.component('v-content', content);
+Vue.component('v-tab', vTab);
+Vue.component('v-tab-item', vTabItem);
+Vue.component('v-tab-body', vTabBody);
+Vue.component('v-tab-pane', vTabPane);
+Vue.component('v-tab-head', vTabHead);
 Vue.use(vToast);
 new Vue({
   el: "#app",
