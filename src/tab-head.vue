@@ -12,10 +12,12 @@
         name: "tab-head",
         inject: ['eventHub'],
         mounted() {
-            this.eventHub.$on('update:selectName', (name, vm) => {
-                this.$refs.line.style.width = vm.clientWidth + 'px'
-                this.$refs.line.style.left = vm.offsetLeft + 'px'
-            })
+            if (this.eventHub) {
+                this.eventHub.$on('update:selectName', (name, vm) => {
+                    this.$refs.line.style.width = vm.clientWidth + 'px'
+                    this.$refs.line.style.left = vm.offsetLeft + 'px'
+                })
+            }
         }
     }
 </script>

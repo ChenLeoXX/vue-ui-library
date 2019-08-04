@@ -45,7 +45,7 @@ describe('Button', () => {
         iconPosition: 'right'
       }
     }).$mount(div)
-    const icon = vm.$el.querySelector('svg')
+    const icon = vm.$el.querySelector('.icon-wrapper')
     expect(getComputedStyle(icon).order).to.eq('2')
     vm.$el.remove()
     vm.$destroy()

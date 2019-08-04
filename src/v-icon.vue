@@ -25,7 +25,6 @@
   .icon-wrapper {
 	  width: 1em;
 	  height: 1em;
-	
 	  .v-icon {
 		  width: 100%;
 		  height: 100%;

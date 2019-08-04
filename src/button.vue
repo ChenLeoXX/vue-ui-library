@@ -79,7 +79,8 @@
 		transition: all .2s ease-in;
 
 		&.icon-position-left {
-			.v-icon {
+			.icon-wrapper {
+				color: var(--button-color);
 				order: 1;
 				margin-right: 0.5em;
 			}
@@ -90,7 +91,8 @@
 		}
 
 		&.icon-position-right {
-			.v-icon {
+			.icon-wrapper {
+				color: var(--button-color);
 				order: 2;
 				margin-left: 0.5em;
 			}

@@ -1,5 +1,5 @@
 <template>
-	<div class="tab-item" @click="onTab" :class="activeClass">
+	<div class="tab-item" @click="onTab" :class="activeClass" :data-name="name">
 		<slot></slot>
 		<slot name="icon"></slot>
 	</div>
@@ -33,14 +33,19 @@
         },
         inject: ['eventHub'],
         created() {
-            this.eventHub.$on('update:selectName', (name) => {
-                this.active = name === this.name;
-            })
+            if (this.eventHub) {
+                this.eventHub.$on('update:selectName', (name) => {
+                    this.active = name === this.name;
+                })
+            }
         },
         methods: {
             onTab() {
                 if (this.disabled) return
-                this.eventHub.$emit('update:selectName', this.name, this.$el)
+                if (this.eventHub) {
+                    this.eventHub.$emit('update:selectName', this.name, this.$el)
+                }
+                this.$emit('click')
             }
         }
     }
@@ -54,7 +59,6 @@
 		padding: 0.5em 2em;
 		display: flex;
 		align-items: center;
-		
 		&.disable {
 			cursor: not-allowed;
 			color: $text-grey;
@@ -63,6 +67,9 @@
 			color: $blue-text;
 		}
 		
+		&:not(.disable):hover {
+			color: $blue-text;
+		}
 		> .actions-wrapper {
 			margin-left: auto;
 		}

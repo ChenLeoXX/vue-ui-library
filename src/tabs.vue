@@ -31,6 +31,9 @@
         methods: {
             init() {
                 let vm
+                if (this.$children.length === 0) {
+                    throw  Error('tab需要传入tab-head和 tab-body')
+                }
                 this.$children.forEach(item => {
                     if (item.$options.name === 'tab-head') {
                         item.$children.forEach(item => {
