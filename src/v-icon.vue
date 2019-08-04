@@ -1,8 +1,11 @@
 ™
 <template>
-  <svg class="v-icon" :fill="color">
-    <use :xlink:href=`#i-${iconName}`></use>
-  </svg>
+  <div class="icon-wrapper">
+    <svg class="v-icon" :fill="color">
+      <use :xlink:href=`#i-${iconName}`></use>
+    </svg>
+    <slot></slot>
+  </div>
 </template>
 <script>
   import '../static/svg'
@@ -22,5 +25,13 @@
   .v-icon {
     width: 1em;
     height: 1em;
+  }
+
+  .icon-wrapper {
+    display: inline-block;
+  
+    > svg {
+      vertical-align: middle;
+    }
   }
 </style>

@@ -6,11 +6,12 @@
 
 <script>
     export default {
-        name: "tab-body"
+        name: "tab-body",
+        inject: ['eventHub'],
     }
 </script>
 
-<style lange="scss" scoped>
+<style lang="scss" scoped>
 	.tab-body {
 	}
 </style>

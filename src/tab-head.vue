@@ -1,28 +1,23 @@
 <template>
 	<div class="tab-head">
 		<slot></slot>
+		<div class="actions-wrapper">
+			<slot name="action"></slot>
+		</div>
 	</div>
 </template>
 <script>
     export default {
         name: "tab-head",
-        props: {
-            selected: {
-                type: String,
-                required: true
-            },
-            direction: {
-                type: String,
-                default: 'horizontal',
-                validator(value) {
-                    return ['horizontal', 'vertical'].indexOf(value) >= 0
-                },
-            }
-        }
+        inject: ['eventHub'],
     }
 </script>
-<style lange="scss" scoped>
+<style lang="scss" scoped>
 	.tab-head {
-	
+		display: flex;
+		
+		> .actions-wrapper {
+			margin-left: auto;
+		}
 	}
 </style>

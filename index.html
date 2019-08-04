@@ -41,8 +41,9 @@
 </head>
 <body>
 <div id="app">
-	<v-tab>
+	<v-tab :selected.sync="selectName">
 		<v-tab-head>
+			<button slot="action">设置</button>
 			<v-tab-item name="social">
 				<v-icon></v-icon>
 				社会

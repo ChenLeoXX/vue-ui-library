@@ -38,7 +38,8 @@ new Vue({
   data() {
     return {
       isLoading:false,
-      msg: 'Hello World'
+        msg: 'Hello World',
+        selectName: 'social'
     }
   },
     create() {
