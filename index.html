@@ -29,9 +29,13 @@
       --button-color:#fff;
     }
     body {
+	    margin: 0;
       font-style: var(--font-size);
     }
 
+    #app {
+	    padding: 8px;
+    }
     .demo {
 	    width: 100%;
 	    border: 1px solid red;
@@ -45,10 +49,10 @@
 		<v-tab-head>
 			<button slot="action">设置</button>
 			<v-tab-item name="social">
-				<v-icon></v-icon>
+				<v-icon style="margin-right:8px" name="icon"></v-icon>
 				社会
 			</v-tab-item>
-			<v-tab-item name="cultural">
+			<v-tab-item name="cultural" disabled>
 				人文
 			</v-tab-item>
 			<v-tab-item name="history">

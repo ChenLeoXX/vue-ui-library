@@ -22,16 +22,13 @@
   }
 </script>
 <style lang="scss" scoped>
-  .v-icon {
-    width: 1em;
-    height: 1em;
-  }
-
   .icon-wrapper {
-    display: inline-block;
-  
-    > svg {
-      vertical-align: middle;
+	  width: 1em;
+	  height: 1em;
+	
+	  .v-icon {
+		  width: 100%;
+		  height: 100%;
     }
   }
 </style>

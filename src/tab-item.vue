@@ -1,6 +1,7 @@
 <template>
 	<div class="tab-item" @click="onTab" :class="activeClass">
 		<slot></slot>
+		<slot name="icon"></slot>
 	</div>
 </template>
 
@@ -15,7 +16,8 @@
         computed: {
             activeClass() {
                 return {
-                    active: this.active
+                    active: this.active,
+                    disable: this.disabled
                 }
             }
         },
@@ -37,19 +39,28 @@
         },
         methods: {
             onTab() {
-                this.eventHub.$emit('update:selectName', this.name)
+                if (this.disabled) return
+                this.eventHub.$emit('update:selectName', this.name, this.$el)
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+	$blue-text: #40a9ff;
+	$text-grey: #ddd;
 	.tab-item {
-		padding: 0.5em 2.5em;
-		border: 1px solid lightgreen;
+		cursor: pointer;
+		padding: 0.5em 2em;
+		display: flex;
+		align-items: center;
 		
+		&.disable {
+			cursor: not-allowed;
+			color: $text-grey;
+		}
 		&.active {
-			background: lightcoral;
+			color: $blue-text;
 		}
 		
 		> .actions-wrapper {

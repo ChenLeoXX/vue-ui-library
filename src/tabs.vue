@@ -30,7 +30,17 @@
         },
         methods: {
             init() {
-                this.eventHub.$emit('update:selectName', this.selected)
+                let vm
+                this.$children.forEach(item => {
+                    if (item.$options.name === 'tab-head') {
+                        item.$children.forEach(item => {
+                            if (item.name === this.selected && item.$options.name === 'tab-item') {
+                                vm = item.$el
+                            }
+                        })
+                    }
+                })
+                this.eventHub.$emit('update:selectName', this.selected, vm)
             }
         },
         provide() {
@@ -43,6 +53,5 @@
 
 <style lang="scss" scoped>
 	.tabs {
-	
 	}
 </style>
