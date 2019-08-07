@@ -77,7 +77,6 @@ describe('Button', () => {
     vm.$el.click()
     expect(callback).to.have.been.called
   })
-
   it('测试当有isLoading属性时点击图标发生变化',()=>{
     const div = document.createElement('div')
     document.body.append(div)

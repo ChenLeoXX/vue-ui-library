@@ -45,38 +45,42 @@
 </head>
 <body>
 <div id="app">
-	<v-tab :selected.sync="selectName">
-		<v-tab-head>
-			<button slot="action">设置</button>
-			<v-tab-item name="social">
-				<v-icon style="margin-right:8px" name="icon"></v-icon>
-				社会
-			</v-tab-item>
-			<v-tab-item name="cultural" disabled>
-				人文
-			</v-tab-item>
-			<v-tab-item name="history">
-				历史
-			</v-tab-item>
-			<v-tab-item name="technology">
-				科技
-			</v-tab-item>
-		</v-tab-head>
-		<v-tab-body>
-			<v-tab-pane name="social">
-				社会
-			</v-tab-pane>
-			<v-tab-pane name="cultural">
-				人文
-			</v-tab-pane>
-			<v-tab-pane name="history">
-				历史
-			</v-tab-pane>
-			<v-tab-pane name="technology">
-				科技
-			</v-tab-pane>
-		</v-tab-body>
-	</v-tab>
+	<v-popover>
+		<div slot="content">我是内容</div>
+		<button>点我</button>
+	</v-popover>
+	<!--	<v-tab :selected.sync="selectName">-->
+	<!--		<v-tab-head>-->
+	<!--			<button slot="action">设置</button>-->
+	<!--			<v-tab-item name="social">-->
+	<!--				<v-icon style="margin-right:8px" name="icon"></v-icon>-->
+	<!--				社会-->
+	<!--			</v-tab-item>-->
+	<!--			<v-tab-item name="cultural" disabled>-->
+	<!--				人文-->
+	<!--			</v-tab-item>-->
+	<!--			<v-tab-item name="history">-->
+	<!--				历史-->
+	<!--			</v-tab-item>-->
+	<!--			<v-tab-item name="technology">-->
+	<!--				科技-->
+	<!--			</v-tab-item>-->
+	<!--		</v-tab-head>-->
+	<!--		<v-tab-body>-->
+	<!--			<v-tab-pane name="social">-->
+	<!--				社会-->
+	<!--			</v-tab-pane>-->
+	<!--			<v-tab-pane name="cultural">-->
+	<!--				人文-->
+	<!--			</v-tab-pane>-->
+	<!--			<v-tab-pane name="history">-->
+	<!--				历史-->
+	<!--			</v-tab-pane>-->
+	<!--			<v-tab-pane name="technology">-->
+	<!--				科技-->
+	<!--			</v-tab-pane>-->
+	<!--		</v-tab-body>-->
+	<!--	</v-tab>-->
 	<!--	<div style="padding: 20px">-->
 	<!--		<v-row gutter="24">-->
 	<!--			<v-col span="6">-->

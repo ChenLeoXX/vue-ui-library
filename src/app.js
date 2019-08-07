@@ -16,6 +16,9 @@ import vTabBody from './tab-body'
 import vTabPane from './tab-pane'
 import vTabHead from './tab-head'
 import vToast from './toast-plugin'
+import vPopover from './popover'
+
+Vue.component('v-popover', vPopover);
 Vue.component('v-button', button);
 Vue.component('v-icon', VIcon);
 Vue.component('button-group', buttonGroup);
