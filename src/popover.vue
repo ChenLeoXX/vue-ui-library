@@ -1,11 +1,16 @@
 <template>
 	<div class="popover" ref="popover">
 		<div class="content-wrapper" :class="{[`position-${position}`]:true}" v-if="visible" ref="contentWrapper">
-			<slot name="content">
-			</slot>
+			<div class="title" v-if="needTitle">
+				<slot name="title"></slot>
+			</div>
+			<div class="content">
+				<slot name="content">
+				</slot>
+			</div>
 		</div>
-		<div class="trigger-wrapper" @click="onTrigger($event)" ref="trigger">
-			<slot :test="test"></slot>
+		<div class="trigger-wrapper" ref="trigger">
+			<slot></slot>
 		</div>
 	</div>
 </template>
@@ -16,13 +21,21 @@
         data() {
             return {
                 visible: false,
-                test: {
-                    txt: 'hello world',
-                    name: 'leo,'
-                }
+                hoverTimer: null
             }
         },
         props: {
+            trigger: {
+                type: String,
+                default: 'click',
+                validator(val) {
+                    return ['click', 'hover'].indexOf(val) >= 0
+                }
+            },
+            needTitle: {
+                type: Boolean,
+                default: false
+            },
             position: {
                 type: String,
                 default: 'top',
@@ -31,7 +44,29 @@
                 }
             }
         },
+        mounted() {
+            if (this.trigger === 'click') {
+                this.$refs.popover.addEventListener('click', this.onTrigger)
+            } else {
+                this.$refs.popover.addEventListener('mouseenter', this.show)
+                this.$refs.popover.addEventListener('mouseleave', this.close)
+            }
+        },
+        //手动添加的监听器需要手动清除
+        destroyed() {
+            if (this.trigger === 'click') {
+                this.$refs.popover.removeEventListener('click', this.onTrigger)
+            } else {
+                this.$refs.popover.removeEventListener('mouseenter', this.show)
+                this.$refs.popover.removeEventListener('mouseleave', this.close)
+                this.$refs.contentWrapper.removeEventListener('mouseenter', this.clearTimer)
+                this.$refs.contentWrapper.removeEventListener('mouseleave', this.close)
+            }
+        },
         methods: {
+            clearTimer() {
+                clearTimeout(this.hoverTimer)
+            },
             getPosition() {
                 let contentWrapper = this.$refs.contentWrapper
                 document.body.appendChild(contentWrapper)
@@ -68,16 +103,34 @@
                 }
             },
             close() {
-                this.visible = false
-                document.removeEventListener('click', this.onDocClick)
+                if (this.trigger === 'hover') {
+                    this.hoverTimer = setTimeout(() => {
+                        this.visible = false
+                    }, 200)
+                } else {
+                    this.visible = false
+                    document.removeEventListener('click', this.onDocClick)
+                }
             },
             show() {
                 this.visible = true
-                this.$nextTick(() => {
-                    this.getPosition()
-                    document.addEventListener('click', this.onDocClick)
-                })
+                if (this.trigger === 'hover') {
+                    this.$nextTick(() => {
+                        this.getPosition()
+                        this.$refs.contentWrapper.addEventListener('mouseenter', this.clearTimer)
+                        this.$refs.contentWrapper.addEventListener('mouseleave', () => {
+                            this.visible = false
+                        })
+                    })
+                } else {
+                    this.$nextTick(() => {
+                        this.getPosition()
+                        document.addEventListener('click', this.onDocClick)
+                    })
+                }
+              
             },
+            //判断是否是点击的内容区域,或者组件自身 阻止
             onDocClick(e) {
                 let popEl = this.$refs.popover
                 let contentEl = this.$refs.contentWrapper
@@ -108,7 +161,14 @@
 		word-break: break-word;
 		display: inline-block;
 		position: absolute;
-		padding: 0.5em 1em;
+		
+		.title, .content {
+			padding: 0.5em 1em;
+		}
+		
+		.title {
+			border-bottom: 1px solid #ddd;
+		}
 		&::before {
 			content: '';
 			display: block;
@@ -124,6 +184,7 @@
 			
 			&.position-top:before {
 				top: 100%;
+				margin-left: 10px;
 				border-right-color: transparent;
 				border-bottom: none;
 				border-left-color: transparent;
@@ -132,8 +193,8 @@
 		
 		&.position-bottom {
 			margin-top: 10px;
-			
 			&.position-bottom:before {
+				margin-left: 10px;
 				top: -5px;
 				border-right-color: transparent;
 				border-top: none;
@@ -158,7 +219,6 @@
 		&.position-right {
 			/*transform: translateX(100%);*/
 			margin-left: 10px;
-			
 			&.position-right:before {
 				top: 50%;
 				transform: translateY(-50%);

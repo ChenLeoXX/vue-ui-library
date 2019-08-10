@@ -46,17 +46,20 @@
 </head>
 <body>
 <div id="app">
-	<v-popover style="margin:20px">
+	<v-popover style="margin:20px" :need-title="true">
+		<template #title>
+			我是一个标题
+		</template>
 		<div slot="content">
-			???
+			哈哈哈哈哈哈哈哈嗝
 		</div>
 		<v-button>
-			点我
+			我有标题
 		</v-button>
 	</v-popover>
-	<v-popover style="margin:20px" position="bottom">
+	<v-popover style="margin:20px" position="bottom" trigger="hover">
 		<div slot="content">我是内容</div>
-		<v-button>点我</v-button>
+		<v-button>hover me</v-button>
 	</v-popover>
 	<v-popover style="margin:20px" position="left">
 		<div slot="content">我是内容</div>
