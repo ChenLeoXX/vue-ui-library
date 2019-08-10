@@ -1,10 +1,11 @@
 <template>
 	<div class="popover" ref="popover">
-		<div class="content-wrapper" v-if="visible" ref="contentWrapper">
-			<slot name="content"></slot>
+		<div class="content-wrapper" :class="{[`position-${position}`]:true}" v-if="visible" ref="contentWrapper">
+			<slot name="content">
+			</slot>
 		</div>
 		<div class="trigger-wrapper" @click="onTrigger($event)" ref="trigger">
-			<slot></slot>
+			<slot :test="test"></slot>
 		</div>
 	</div>
 </template>
@@ -14,7 +15,11 @@
         name: "popover",
         data() {
             return {
-                visible: false
+                visible: false,
+                test: {
+                    txt: 'hello world',
+                    name: 'leo,'
+                }
             }
         },
         props: {
@@ -31,8 +36,27 @@
                 let contentWrapper = this.$refs.contentWrapper
                 document.body.appendChild(contentWrapper)
                 const {height, width, top, left} = this.$refs.trigger.getBoundingClientRect()
-                contentWrapper.style.top = top + window.scrollY + 'px'
-                contentWrapper.style.left = left + window.scrollX + 'px'
+                const {height: contentHeight} = this.$refs.contentWrapper.getBoundingClientRect()
+                const positions = {
+                    top: {
+                        top: top + window.scrollY,
+                        left: left + window.scrollX
+                    },
+                    bottom: {
+                        top: top + height + window.scrollY,
+                        left: left + window.scrollX
+                    },
+                    left: {
+                        top: top + ((height - contentHeight) / 2) + window.scrollY,
+                        left: left + window.scrollX
+                    },
+                    right: {
+                        top: top + ((height - contentHeight) / 2) + window.scrollY,
+                        left: left + width + window.scrollX
+                    }
+                }
+                contentWrapper.style.top = positions[this.position].top + 'px'
+                contentWrapper.style.left = positions[this.position].left + 'px'
             },
             onTrigger(e) {
                 if (this.$refs.trigger.contains(e.target)) {
@@ -49,10 +73,10 @@
             },
             show() {
                 this.visible = true
-                setTimeout(() => {
+                this.$nextTick(() => {
                     this.getPosition()
                     document.addEventListener('click', this.onDocClick)
-                }, 50)
+                })
             },
             onDocClick(e) {
                 let popEl = this.$refs.popover
@@ -68,6 +92,7 @@
 <style lang="scss" scoped>
 	
 	.popover {
+		display: inline-block;
 		.trigger-wrapper {
 			display: inline-block;
 		}
@@ -75,9 +100,7 @@
 	
 	.content-wrapper {
 		box-sizing: border-box;
-		margin-top: -10px;
 		filter: drop-shadow(0 1px 5px rgba(0, 0, 0, 0.15));
-		transform: translateY(-100%);
 		background-color: #fff;
 		background-clip: padding-box;
 		border-radius: 4px;
@@ -86,19 +109,64 @@
 		display: inline-block;
 		position: absolute;
 		padding: 0.5em 1em;
-		
 		&::before {
 			content: '';
 			display: block;
 			position: absolute;
-			top: 100%;
-			/*margin-left: 10px;*/
 			height: 0;
 			width: 0;
 			border: 5px solid white;
-			border-right-color: transparent;
-			border-bottom: none;
-			border-left-color: transparent;
+		}
+		
+		&.position-top {
+			transform: translateY(-100%);
+			margin-top: -10px;
+			
+			&.position-top:before {
+				top: 100%;
+				border-right-color: transparent;
+				border-bottom: none;
+				border-left-color: transparent;
+			}
+		}
+		
+		&.position-bottom {
+			margin-top: 10px;
+			
+			&.position-bottom:before {
+				top: -5px;
+				border-right-color: transparent;
+				border-top: none;
+				border-left-color: transparent;
+			}
+		}
+		
+		&.position-left {
+			transform: translateX(-100%);
+			margin-left: -10px;
+			
+			&.position-left:before {
+				top: 50%;
+				transform: translateY(-50%);
+				right: -5px;
+				border-right: none;
+				border-top-color: transparent;
+				border-bottom-color: transparent;
+			}
+		}
+		
+		&.position-right {
+			/*transform: translateX(100%);*/
+			margin-left: 10px;
+			
+			&.position-right:before {
+				top: 50%;
+				transform: translateY(-50%);
+				left: -5px;
+				border-left: none;
+				border-top-color: transparent;
+				border-bottom-color: transparent;
+			}
 		}
 	}
 
