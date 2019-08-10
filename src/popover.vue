@@ -60,7 +60,7 @@
                 this.$refs.popover.removeEventListener('mouseenter', this.show)
                 this.$refs.popover.removeEventListener('mouseleave', this.close)
                 this.$refs.contentWrapper.removeEventListener('mouseenter', this.clearTimer)
-                this.$refs.contentWrapper.removeEventListener('mouseleave', this.close)
+                this.$refs.contentWrapper.removeEventListener('mouseleave', this.hoverClose)
             }
         },
         methods: {
@@ -102,6 +102,9 @@
                     }
                 }
             },
+            hoverClose() {
+                this.visible = false
+            },
             close() {
                 if (this.trigger === 'hover') {
                     this.hoverTimer = setTimeout(() => {
@@ -118,9 +121,7 @@
                     this.$nextTick(() => {
                         this.getPosition()
                         this.$refs.contentWrapper.addEventListener('mouseenter', this.clearTimer)
-                        this.$refs.contentWrapper.addEventListener('mouseleave', () => {
-                            this.visible = false
-                        })
+                        this.$refs.contentWrapper.addEventListener('mouseleave', this.hoverClose)
                     })
                 } else {
                     this.$nextTick(() => {
