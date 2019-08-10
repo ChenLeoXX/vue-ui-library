@@ -47,7 +47,7 @@
         mounted() {
             if (this.trigger === 'click') {
                 this.$refs.popover.addEventListener('click', this.onTrigger)
-            } else {
+            } else if (this.trigger === 'hover') {
                 this.$refs.popover.addEventListener('mouseenter', this.show)
                 this.$refs.popover.addEventListener('mouseleave', this.close)
             }
@@ -56,7 +56,7 @@
         destroyed() {
             if (this.trigger === 'click') {
                 this.$refs.popover.removeEventListener('click', this.onTrigger)
-            } else {
+            } else if (this.trigger === 'hover') {
                 this.$refs.popover.removeEventListener('mouseenter', this.show)
                 this.$refs.popover.removeEventListener('mouseleave', this.close)
                 this.$refs.contentWrapper.removeEventListener('mouseenter', this.clearTimer)
