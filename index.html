@@ -31,6 +31,7 @@
     body {
 	    margin: 0;
       font-style: var(--font-size);
+	    padding: 150px;
     }
 
     #app {
@@ -47,7 +48,14 @@
 <div id="app">
 	<v-popover>
 		<div slot="content">我是内容</div>
-		<button>点我</button>
+		<v-button>点我</v-button>
+	</v-popover>
+	
+	<v-popover style="margin-top:300px">
+		<div slot="content">
+			<a href="http://www.google.com">去谷歌吧</a>
+		</div>
+		<div>哈哈哈哈</div>
 	</v-popover>
 	<!--	<v-tab :selected.sync="selectName">-->
 	<!--		<v-tab-head>-->

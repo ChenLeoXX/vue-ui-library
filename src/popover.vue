@@ -1,6 +1,6 @@
 <template>
-	<div class="popover" @click="xxx" ref="popover">
-		<div class="content-wrapper" v-if="visible">
+	<div class="popover" ref="popover">
+		<div class="content-wrapper" v-if="visible" ref="contentWrapper">
 			<slot name="content"></slot>
 		</div>
 		<div class="trigger-wrapper" @click="onTrigger($event)" ref="trigger">
@@ -17,9 +17,22 @@
                 visible: false
             }
         },
+        props: {
+            position: {
+                type: String,
+                default: 'top',
+                validator(val) {
+                    return ['top', 'left', 'right', 'bottom'].indexOf(val) >= 0
+                }
+            }
+        },
         methods: {
-            xxx() {
-                console.log('xxx')
+            getPosition() {
+                let contentWrapper = this.$refs.contentWrapper
+                document.body.appendChild(contentWrapper)
+                const {height, width, top, left} = this.$refs.trigger.getBoundingClientRect()
+                contentWrapper.style.top = top + window.scrollY + 'px'
+                contentWrapper.style.left = left + window.scrollX + 'px'
             },
             onTrigger(e) {
                 if (this.$refs.trigger.contains(e.target)) {
@@ -37,33 +50,56 @@
             show() {
                 this.visible = true
                 setTimeout(() => {
+                    this.getPosition()
                     document.addEventListener('click', this.onDocClick)
                 }, 50)
             },
             onDocClick(e) {
-                let el = this.$refs.popover
-                if (!el.contains(e.target) || e.target !== el) {
-                    this.close()
-                } else {
-                    return undefined
-                }
+                let popEl = this.$refs.popover
+                let contentEl = this.$refs.contentWrapper
+                if (popEl.contains(e.target) || popEl === e.target) return
+                if ((contentEl && contentEl === e.target) || contentEl.contains(e.target)) return
+                this.close()
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+	
 	.popover {
 		.trigger-wrapper {
 			display: inline-block;
-			border: 1px solid blue;
 		}
 	}
 	
 	.content-wrapper {
-		/*display: inline-block;*/
-		border: 1px solid red;
-		padding: 3px;
+		box-sizing: border-box;
+		margin-top: -10px;
+		filter: drop-shadow(0 1px 5px rgba(0, 0, 0, 0.15));
+		transform: translateY(-100%);
+		background-color: #fff;
+		background-clip: padding-box;
+		border-radius: 4px;
+		max-width: 30em;
+		word-break: break-word;
+		display: inline-block;
+		position: absolute;
+		padding: 0.5em 1em;
+		
+		&::before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 100%;
+			/*margin-left: 10px;*/
+			height: 0;
+			width: 0;
+			border: 5px solid white;
+			border-right-color: transparent;
+			border-bottom: none;
+			border-left-color: transparent;
+		}
 	}
 
 </style>
