@@ -17,7 +17,11 @@ import vTabPane from './tab-pane'
 import vTabHead from './tab-head'
 import vToast from './toast-plugin'
 import vPopover from './popover'
+import vCollapse from './collapse'
+import vCollapseItem from './collapse-item'
 
+Vue.component('v-collapse', vCollapse);
+Vue.component('v-collapse-item', vCollapseItem);
 Vue.component('v-popover', vPopover);
 Vue.component('v-button', button);
 Vue.component('v-icon', VIcon);
