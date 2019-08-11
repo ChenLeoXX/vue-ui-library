@@ -15,6 +15,7 @@
 
     export default {
         name: "collapse-item",
+        inject: ['eventHub'],
         data() {
             return {
                 visible: true
@@ -27,11 +28,18 @@
             },
         },
         mounted() {
-
+            this.eventHub && this.eventHub.$on('update:selected', (names) => {
+                console.log(names)
+                this.visible = names.indexOf(this.name) >= 0;
+            })
         },
         methods: {
             toggle() {
-
+                if (this.visible) {
+                    this.eventHub.$emit('update:remove', this.name)
+                } else {
+                    this.eventHub.$emit('update:add', this.name)
+                }
             },
         },
         comments: {

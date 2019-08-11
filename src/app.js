@@ -46,7 +46,8 @@ new Vue({
     return {
       isLoading:false,
         msg: 'Hello World',
-        selectName: 'social'
+        selectName: 'social',
+        selected: ['1']
     }
   },
     create() {
