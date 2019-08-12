@@ -17,6 +17,7 @@
       },
       color:{
         type:String,
+          default: '#fff'
       }
     }
   }

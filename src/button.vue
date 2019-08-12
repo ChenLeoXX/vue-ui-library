@@ -46,6 +46,17 @@
     }
 </script>
 <style lang="scss" scoped>
+	$button-height: 32px;
+	$font-size: 14px;
+	$button-color: #fff;
+	$border-radius: 4px;
+	$primary: #2d8cf0;
+	$warn: #ff9900;
+	$error: #ed4014;
+	$success: #19be6b;
+	$text-color: #515a6e;
+	$circle-height: 32px;
+	$circle-width: 32px;
 	.v-icon {
 		width: 1em;
 		height: 1em;
@@ -71,16 +82,16 @@
 		display: inline-flex;
 		align-items: center;
 		vertical-align: top;
-		min-height: var(--button-height);
-		font-size: var(--font-size);
-		color: var(--button-color);
-		border-radius: var(--border-radius);
+		min-height: $button-height;
+		font-size: $font-size;
+		color: $button-color;
+		border-radius: $border-radius;
 		padding: 0 1em;
 		transition: all .2s ease-in;
 
 		&.icon-position-left {
 			.icon-wrapper {
-				color: var(--button-color);
+				color: $button-color;
 				order: 1;
 				margin-right: 0.5em;
 			}
@@ -92,7 +103,7 @@
 
 		&.icon-position-right {
 			.icon-wrapper {
-				color: var(--button-color);
+				color: $button-color;
 				order: 2;
 				margin-left: 0.5em;
 			}
@@ -104,27 +115,27 @@
 
 		/*类型class*/
 		&.primary {
-			background-color: var(--primary);
-			border: var(--primary);
-			outline: var(--primary);
+			background-color: $primary;
+			border: $primary;
+			outline: $primary;
 		}
 
 		&.warn {
-			background-color: var(--warn);
-			border: var(--warn);
-			outline: var(--wran);
+			background-color: $warn;
+			border: $warn;
+			outline: $warn;
 		}
 
 		&.error {
-			background-color: var(--error);
-			border: var(--error);
-			outline: var(--error);
+			background-color: $error;
+			border: $error;
+			outline: $error;
 		}
 
 		&.success {
-			background-color: var(--success);
-			border: var(--success);
-			outline: var(--success);
+			background-color: $success;
+			border: $success;
+			outline: $success;
 		}
 
 		&.default {
@@ -133,7 +144,7 @@
 			border-style: solid;
 			border-color: #dcdee2;
 			outline: none;
-			color: var(--text-color)
+			color: $text-color
 		}
 
 		&:not(.default):hover {
@@ -141,8 +152,8 @@
 		}
 
 		&.default:hover {
-			color: var(--primary);
-			border-color: var(--primary);
+			color: $primary;
+			border-color: $primary;
 		}
 
 		&.only-icon {
@@ -158,8 +169,8 @@
 
 		&.circle {
 			border-radius: 50%;
-			height: var(--circle-height);
-			width: var(--circle-width);
+			height: $circle-height;
+			width: $circle-width;
 			padding: 0;
 
 			.v-icon {
