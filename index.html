@@ -49,33 +49,27 @@
 	<div>
 		只打开一个
 		<v-collapse :selected-arr.sync="selected" :single="true">
-			<v-collapse-item name="1">
-				<div slot="title">我是标题</div>
+			<v-collapse-item name="1" title="我是标题">
 				<div>我是内容</div>
 			</v-collapse-item>
-			<v-collapse-item name="2">
-				<div slot="title">我是标题</div>
+			<v-collapse-item name="2" title="我是标题">
 				<div>我是内容</div>
 			</v-collapse-item>
-			<v-collapse-item name="3">
-				<div slot="title">我是标题</div>
+			<v-collapse-item name="3" title="我是标题">
 				<div>我是内容</div>
 			</v-collapse-item>
 		</v-collapse>
 	</div>
 	<div>
 		同时打开多个
-		<v-collapse :selected-arr.sync="selected">
-			<v-collapse-item name="1">
-				<div slot="title">我是标题</div>
+		<v-collapse :selected-arr.sync="selected2">
+			<v-collapse-item name="1" title="标题一">
 				<div>我是内容</div>
 			</v-collapse-item>
-			<v-collapse-item name="2">
-				<div slot="title">我是标题</div>
+			<v-collapse-item name="2" title="标题二">
 				<div>我是内容</div>
 			</v-collapse-item>
-			<v-collapse-item name="3">
-				<div slot="title">我是标题</div>
+			<v-collapse-item name="3" title="标题三">
 				<div>我是内容</div>
 			</v-collapse-item>
 		</v-collapse>

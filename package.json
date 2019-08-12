@@ -4,6 +4,8 @@
   "description": "一个基于Vue 的UI 框架",
   "main": "dist/index.js",
   "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "start": "npx parcel index.html --no-cache",
     "test": "parcel build test/* --no-minify && karma start --single-run",
     "watch-test": "parcel watch test/* --no-cache & karma start",
@@ -21,9 +23,8 @@
   },
   "homepage": "https://github.com/ChenLeoXX/vue-ui-library#readme",
   "dependencies": {
-    "button": "^1.1.1",
     "css-loader": "^2.1.1",
-    "vue": "^2.6.8",
+    "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3"
   },
   "devDependencies": {
@@ -42,7 +43,9 @@
     "sinon": "^7.2.7",
     "sinon-chai": "^3.3.0",
     "vue-loader": "^15.7.0",
-    "vue-template-compiler": "^2.6.8"
+    "vue-server-renderer": "^2.6.10",
+    "vue-template-compiler": "^2.6.8",
+    "vuepress": "^1.0.3"
   },
   "alias": {
     "vue": "./node_modules/vue/dist/vue.common.js"

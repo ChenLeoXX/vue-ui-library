@@ -1,10 +1,10 @@
 <template>
-	<div class="collapse-item" @click="toggle">
-		<div class="title">
+	<div class="collapse-item" @click.stop="toggle">
+		<div class="title" ref="title">
 			<v-icon icon-name="right"></v-icon>
-			<slot name="title"></slot>
+			{{this.title}}
 		</div>
-		<div class="content" v-if="visible">
+		<div class="content" v-if="visible" @click.stop>
 			<slot></slot>
 		</div>
 	</div>
@@ -22,6 +22,9 @@
             }
         },
         props: {
+            title: {
+                type: String
+            },
             name: {
                 type: String | Number,
                 required: true
@@ -29,16 +32,25 @@
         },
         mounted() {
             this.eventHub && this.eventHub.$on('update:selected', (names) => {
-                console.log(names)
                 this.visible = names.indexOf(this.name) >= 0;
+                this.changeIconPos()
             })
         },
         methods: {
             toggle() {
                 if (this.visible) {
                     this.eventHub.$emit('update:remove', this.name)
+                    this.changeIconPos()
                 } else {
                     this.eventHub.$emit('update:add', this.name)
+                    this.changeIconPos()
+                }
+            },
+            changeIconPos() {
+                if (this.visible) {
+                    this.$refs.title.querySelector('svg').classList.remove('rotate')
+                } else {
+                    this.$refs.title.querySelector('svg').classList.add('rotate')
                 }
             },
         },
@@ -48,7 +60,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	$content-txt-color: rgba(0, 0, 0, 0.65);
 	$title-txt-color: rgba(0, 0, 0, 0.85);
 	$item-radius: 4px;
@@ -59,8 +71,9 @@
 		}
 		
 		&:last-child > .title:last-child {
-			border-bottom-left-radius: $item-radius;
-			border-bottom-right-radius: $item-radius;
+			border-bottom: none;
+			/*<!--border-bottom-left-radius: $item-radius;-->*/
+			/*<!--border-bottom-right-radius: $item-radius;-->*/
 		}
 		
 		.title {
@@ -80,9 +93,15 @@
 				top: 50%;
 				transform: translateY(-50%);
 				font-size: 14px;
-				
 				svg {
-					transition: transform .3s ease;
+					/*display: inline-block;*/
+					transition-property: transform;
+					transition-duration: 0.24s, 0.24s;
+					transition-timing-function: ease, ease;
+					
+					&.rotate {
+						transform: rotate(90deg);
+					}
 				}
 			}
 		}
