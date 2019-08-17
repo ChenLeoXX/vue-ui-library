@@ -1,6 +1,8 @@
 $active-primary: #2b85e4;
 $big-font-size: 16px;
+$border-color: #e0e4e8;
 $border-radius: 4px;
+$box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 $button-color: #fff;
 $button-height: 32px;
 $circle-height: 32px;
@@ -8,9 +10,17 @@ $circle-width: 32px;
 $disabled: #c5c8ce;
 $error: #ed4014;
 $font-size: 14px;
+$hover-lightblue: #e6f7ff;
+$light-gray-color: #314659;
 $light-primary: #5cadff;
+$primary: #2d8cf0;
 $primary: #2d8cf0;
 $success: #19be6b;
 $text-color: #515a6e;
 $tip-font-size: 12px;
 $warn: #ff9900;
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}

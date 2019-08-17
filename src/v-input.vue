@@ -50,6 +50,7 @@
   }
 </script>
 <style lang="scss" scoped>
+	@import "var";
 .wrapper {
   display: inline-flex;
   vertical-align: top;
@@ -61,8 +62,8 @@
   input {
     outline: none;
     padding: 5px;
-    border-radius:var(--border-radius);
-    font-size: var(--font-size);
+	  border-radius: $border-radius;
+	  font-size: $font-size;
     border:1px solid #ddd;
     transition:all 0.2s linear;
     color:rgba(0,0,0,.65);
@@ -90,17 +91,17 @@
     }
     &.s {
       padding:4px;
-      font-size: var(--tip-font-size);
+	    font-size: $tip-font-size;
     }
     &.l {
       padding:12px;
-      font-size:var(--big-font-size)
+	    font-size: $big-font-size;
     }
     &:hover {
-      border:1px solid var(--primary)
+	    border: 1px solid $primary;
     }
     &:focus {
-      border-color:var(--primary);
+	    border-color: $primary;
       box-shadow:0 0 0 2px rgba(24,144,255,0.2)
     }
   }
@@ -109,7 +110,7 @@
     height: 1em;
   }
   .msg {
-    font-size: var(--tip-font-size);
+	  font-size: $tip-font-size;
     color:red;
   }
 }

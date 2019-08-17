@@ -2,7 +2,9 @@
 <template>
   <div class="icon-wrapper">
     <svg class="v-icon" :fill="color">
-      <use :xlink:href=`#i-${iconName}`></use>
+	    <use :xlink:href="icon">
+	
+	    </use>
     </svg>
     <slot></slot>
   </div>
@@ -19,7 +21,12 @@
         type:String,
           default: '#fff'
       }
-    }
+    },
+      computed: {
+          icon() {
+              return `#i-${this.iconName}`
+          }
+      }
   }
 </script>
 <style lang="scss" scoped>
