@@ -1,13 +1,15 @@
 <template>
 	<div class="cascader-item" v-if="items.length >0" :style="{'minHeight':height}">
 		<div class="left">
-			<div class="label" v-for="(item,index) in items" :key="index" @click="leftSelected = item">
+			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)">
 				{{item.name}}
 				<v-icon icon-name="right" color="gray" v-if="item.children.length"></v-icon>
 			</div>
 		</div>
-		<div class="right" v-if="rightItems">
-			<cascader-item :items="rightItems"></cascader-item>
+		<div class="right" v-if="selected[level] &&selected[level].children.length">
+			<cascader-item :items="selected[level].children" :level="level+1" :selected="selected"
+			               @update:selected="onUpdate"
+			></cascader-item>
 		</div>
 	</div>
 </template>
@@ -27,22 +29,31 @@
             height: {
                 type: String,
                 default: '200px'
+            },
+            level: {
+                type: Number,
+                default: 0
+            },
+            selected: {
+                type: Array
             }
         },
         data() {
             return {
-                leftSelected: null
+                leftSelected: null,
             }
         },
-        computed: {
-            rightItems() {
-                if (this.leftSelected && this.leftSelected.children) {
-                    return this.leftSelected.children
-                } else {
-                    return null
-                }
+        methods: {
+            onUpdate($event) {
+                console.log($event);
+                this.$emit('update:selected', $event)
+            },
+            onSelect(item) {
+                let copyArr = JSON.parse(JSON.stringify(this.selected))
+                copyArr[this.level] = item
+                this.$emit('update:selected', copyArr)
             }
-        }
+        },
     }
 </script>
 

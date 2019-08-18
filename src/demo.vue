@@ -1,11 +1,12 @@
 <template>
 	<div class="demo">
-		<v-cascader :source="source">
+		<v-cascader :source="source" :selected.sync="selected">
 			<v-input></v-input>
 		</v-cascader>
 	</div>
 </template>
 <script>
+    import db from './db'
     import cascader from './cascader'
     import input from './v-input'
     export default {
@@ -16,6 +17,8 @@
         },
         data() {
             return {
+                db: db,
+                selected: [],
                 source: [{
                     name: '福建',
                     children: [
