@@ -1,7 +1,9 @@
 <template>
 	<div class="cascader-item" v-if="items && items.length >0">
-		<div class="left" :style="{'maxHeight':height}">
-			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)">
+		<div class="left" :style="{'height':height}">
+			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)"
+			     :class="{'option-selected': selected[level] && selected[level].name === item.name}"
+			>
 				{{item.name}}
 				<v-icon icon-name="right" color="gray" v-if="rightArrowVisible(item)"></v-icon>
 			</div>
@@ -107,6 +109,10 @@
 				align-items: center;
 				position: relative;
 				
+				&.option-selected {
+					font-weight: 600;
+					background-color: #fafafa;
+				}
 				&:hover {
 					background: $hover-lightblue;
 				}

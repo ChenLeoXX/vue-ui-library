@@ -70,7 +70,13 @@
     &::placeholder {
       color:#ddd;
     }
-    &[disabled],&[readonly]{
+	
+	  &[readonly] {
+		  outline: none;
+		  cursor: pointer;
+	  }
+	
+	  &[disabled] {
       background: #ddd;
       cursor: not-allowed;
       border:1px solid #bbb;

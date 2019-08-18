@@ -3,7 +3,6 @@
 		<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"
 		            :load-data="loadData"
 		>
-			<v-input :value="result"></v-input>
 		</v-cascader>
 		<div>
 			{{source}}
@@ -13,12 +12,10 @@
 <script>
     import db from './db'
     import cascader from './cascader'
-    import input from './v-input'
     export default {
         name: 'demo',
         components: {
             'v-cascader': cascader,
-            'v-input': input
         },
         data() {
             return {

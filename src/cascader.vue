@@ -1,7 +1,9 @@
 <template>
 	<div class="cascader-wrapper">
 		<div class="trigger" @click="visible = !visible">
-			<slot :result="result"></slot>
+			<slot>
+				<v-input :value="result" readonly></v-input>
+			</slot>
 		</div>
 		<div class="popover" v-if="visible">
 			<!--递归组件-->
@@ -14,6 +16,7 @@
 </template>
 
 <script>
+    import vInput from './v-input'
     import cascaderItem from './cascader-item'
     export default {
         name: "cascader",
@@ -34,7 +37,8 @@
             }
         },
         components: {
-            cascaderItem
+            cascaderItem,
+            vInput
         },
         data() {
             return {
@@ -95,7 +99,7 @@
                     return item.name
                 }).join(' / ')
             },
-        }
+        },
     }
 </script>
 
@@ -106,6 +110,7 @@
 		position: relative;
 		.popover {
 			position: absolute;
+			transform: translateY(4px);
 			box-shadow: $box-shadow;
 		}
 	}
