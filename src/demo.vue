@@ -1,7 +1,7 @@
 <template>
 	<div class="demo">
 		<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"
-		            :loadData="loadData"
+		            :load-data="loadData"
 		>
 			<v-input :value="result"></v-input>
 		</v-cascader>
@@ -24,12 +24,12 @@
             return {
                 db: db,
                 selected: [],
-                source: []
+                source: [],
             }
         },
         methods: {
             /**
-             *
+             * 模拟后台动态返回节点
              * @param id 回调返回的p_id
              * @param cb 执行回调用的回调
              */
@@ -38,10 +38,20 @@
                     cb(res)
                 })
             },
+            /**
+             *
+             * @param id 数据的parent_id
+             * @returns {Promise<any>}
+             */
             ajax(id = 0) {
                 return new Promise((res) => {
                     setTimeout(() => {
                         let arr = db.filter(item => item.parent_id === id)
+                        //增加一个判断模拟判断是否有子节点的属性
+                        arr.forEach(node => {
+                            let withChildArr = db.filter(item => item.parent_id === node.id)
+                            node.isLeaf = withChildArr.length <= 0;
+                        })
                         res(arr)
                     }, 500)
                 })

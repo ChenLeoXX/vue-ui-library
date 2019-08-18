@@ -3,12 +3,12 @@
 		<div class="left" :style="{'maxHeight':height}">
 			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)">
 				{{item.name}}
-				<v-icon icon-name="right" color="gray" v-if="item.children&&item.children.length"></v-icon>
+				<v-icon icon-name="right" color="gray" v-if="rightArrowVisible(item)"></v-icon>
 			</div>
 		</div>
 		<div class="right" v-if="rightItems">
 			<cascader-item :items="rightItems.children" :level="level+1" :selected="selected"
-			               @update:selected="onUpdate"
+			               @update:selected="onUpdate" :load-data="loadData"
 			></cascader-item>
 		</div>
 	</div>
@@ -36,6 +36,9 @@
             },
             selected: {
                 type: Array
+            },
+            loadData: {
+                type: Function
             }
         },
         data() {
@@ -44,6 +47,14 @@
             }
         },
         methods: {
+            /**
+             * icon 通过是否动态加载显示逻辑
+             * @param item
+             * @returns {boolean}
+             */
+            rightArrowVisible(item) {
+                return this.loadData ? !item.isLeaf : item.children.length > 0
+            },
             onUpdate($event) {
                 this.$emit('update:selected', $event)
             },
@@ -103,6 +114,9 @@
 				.icon-wrapper {
 					position: absolute;
 					right: 12px;
+					width: 0.8em;
+					height: 0.8em;
+					line-height: 0.8em;
 				}
 			}
 		}

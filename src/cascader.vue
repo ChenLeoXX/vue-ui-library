@@ -7,7 +7,7 @@
 			<!--递归组件-->
 			<cascader-item
 							:items="source" @update:selected="onUpdate"
-							:height="height" :selected="selected"
+							:height="height" :selected="selected" :load-data="loadData"
 			></cascader-item>
 		</div>
 	</div>
@@ -80,13 +80,13 @@
                     }
                 }
                 let toUpdateSrc = (child) => {
-                    //由于深拷贝 lastUpdate 有可能不属于source ,$set时可能不是更新source 所以在进行一次 filter
+                    //更改source的children 重新渲染
                     let copyArr = JSON.parse(JSON.stringify(this.source))
                     let target = complexFind(copyArr, lastUpdate.id)
                     target.children = child
                     this.$emit('update:source', copyArr)
                 }
-                this.loadData(lastUpdate, toUpdateSrc)
+                this.loadData && this.loadData(lastUpdate, toUpdateSrc)
             },
         },
         computed: {
