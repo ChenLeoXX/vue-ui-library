@@ -1,13 +1,13 @@
 <template>
-	<div class="cascader-item" v-if="items.length >0" :style="{'minHeight':height}">
-		<div class="left">
+	<div class="cascader-item" v-if="items && items.length >0">
+		<div class="left" :style="{'maxHeight':height}">
 			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)">
 				{{item.name}}
-				<v-icon icon-name="right" color="gray" v-if="item.children.length"></v-icon>
+				<v-icon icon-name="right" color="gray" v-if="item.children&&item.children.length"></v-icon>
 			</div>
 		</div>
-		<div class="right" v-if="selected[level] &&selected[level].children.length">
-			<cascader-item :items="selected[level].children" :level="level+1" :selected="selected"
+		<div class="right" v-if="rightItems">
+			<cascader-item :items="rightItems.children" :level="level+1" :selected="selected"
 			               @update:selected="onUpdate"
 			></cascader-item>
 		</div>
@@ -28,7 +28,7 @@
             },
             height: {
                 type: String,
-                default: '200px'
+                default: '300px'
             },
             level: {
                 type: Number,
@@ -45,15 +45,29 @@
         },
         methods: {
             onUpdate($event) {
-                console.log($event);
                 this.$emit('update:selected', $event)
             },
             onSelect(item) {
                 let copyArr = JSON.parse(JSON.stringify(this.selected))
                 copyArr[this.level] = item
+                copyArr.splice(this.level + 1)
                 this.$emit('update:selected', copyArr)
             }
         },
+        computed: {
+            rightItems() {
+                //添加一个items的依赖 才会更新
+                let target = this.selected[this.level]
+                if (target) {
+                    let item = this.items.filter(item => item.name === target.name)[0]
+                    if (item && item.children && item.children.length > 0) {
+                        return item
+                    } else {
+                        return null
+                    }
+                }
+            },
+        }
     }
 </script>
 
@@ -65,17 +79,17 @@
 		justify-content: flex-start;
 		align-items: flex-start;
 		color: $light-gray-color;
-		
 		.right {
 			border-left: 1px solid $border-color;
 		}
 		
 		.left {
+			overflow: auto;
 			cursor: pointer;
 			border-radius: $border-radius;
 			background: white;
-			
 			.label {
+				user-select: none;
 				min-width: 110px;
 				padding: 5px 24px 5px 12px;
 				display: flex;

@@ -1,9 +1,10 @@
 <template>
 	<div class="cascader-wrapper">
 		<div class="trigger" @click="visible = !visible">
-			<slot></slot>
+			<slot :result="result"></slot>
 		</div>
 		<div class="popover" v-if="visible">
+			<!--递归组件-->
 			<cascader-item
 							:items="source" @update:selected="onUpdate"
 							:height="height" :selected="selected"
@@ -26,7 +27,10 @@
             },
             height: {
                 type: String,
-                default: '200px'
+                default: '300px'
+            },
+            loadData: {
+                type: Function
             }
         },
         components: {
@@ -38,9 +42,59 @@
             }
         },
         methods: {
+            /**
+             *
+             * @param data 更新后的selected的数组
+             */
             onUpdate(data) {
                 this.$emit('update:selected', data)
-            }
+                let lastUpdate = data[data.length - 1]
+                let simpleFind = (children, id) => {
+                    return children.filter(item => item.id === id)[0]
+                }
+                let complexFind = (children, id) => {
+                    let noChild = []
+                    let hasChild = []
+                    children.forEach(item => {
+                        if (item.children) {
+                            hasChild.push(item)
+                        } else {
+                            noChild.push(item)
+                        }
+                    })
+                    let found
+                    found = simpleFind(noChild, id)
+                    if (found) {
+                        return found
+                    } else {
+                        found = simpleFind(hasChild, id)
+                        if (found) {
+                            return found
+                        } else {
+                            for (let i = 0; i < hasChild.length; i++) {
+                                found = complexFind(hasChild[i].children, id)
+                                if (found) return found
+                            }
+                            return null
+                        }
+                    }
+                }
+                let toUpdateSrc = (child) => {
+                    //由于深拷贝 lastUpdate 有可能不属于source ,$set时可能不是更新source 所以在进行一次 filter
+                    let copyArr = JSON.parse(JSON.stringify(this.source))
+                    let target = complexFind(copyArr, lastUpdate.id)
+                    target.children = child
+                    this.$emit('update:source', copyArr)
+                }
+                this.loadData(lastUpdate, toUpdateSrc)
+            },
+        },
+        computed: {
+            result() {
+                return this.selected.map(item => {
+                    return item.name
+                }).join(' / ')
+            },
         }
     }
 </script>
