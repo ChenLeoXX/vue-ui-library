@@ -4,9 +4,6 @@
 		            :load-data="loadData"
 		>
 		</v-cascader>
-		<div>
-			{{source}}
-		</div>
 	</div>
 </template>
 <script>

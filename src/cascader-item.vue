@@ -1,7 +1,7 @@
 <template>
 	<div class="cascader-item" v-if="items && items.length >0">
 		<div class="left" :style="{'height':height}">
-			<div class="label" v-for="(item,index) in items" :key="index" @click="onSelect(item)"
+			<div class="label" v-for="(item,index) in items" :key="index" @click.stop="onSelect(item)"
 			     :class="{'option-selected': selected[level] && selected[level].name === item.name}"
 			>
 				{{item.name}}

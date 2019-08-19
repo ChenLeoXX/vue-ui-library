@@ -1,6 +1,6 @@
 <template>
-	<div class="cascader-wrapper">
-		<div class="trigger" @click="visible = !visible">
+	<div class="cascader-wrapper" v-click-outside="close" @click="toggle">
+		<div class="trigger">
 			<slot>
 				<v-input :value="result" readonly></v-input>
 			</slot>
@@ -16,10 +16,14 @@
 </template>
 
 <script>
+    import clickOutside from './click-outside'
     import vInput from './v-input'
     import cascaderItem from './cascader-item'
     export default {
         name: "cascader",
+        directives: {
+            clickOutside
+        },
         props: {
             source: {
                 type: Array
@@ -46,6 +50,12 @@
             }
         },
         methods: {
+            toggle() {
+                this.visible = !this.visible
+            },
+            close() {
+                this.visible = false
+            },
             /**
              *
              * @param data 更新后的selected的数组
@@ -108,6 +118,7 @@
 	
 	.cascader-wrapper {
 		position: relative;
+		display: inline-block;
 		.popover {
 			position: absolute;
 			transform: translateY(4px);
