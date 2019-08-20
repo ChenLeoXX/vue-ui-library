@@ -2,14 +2,19 @@
 	<div class="cascader-item" v-if="items && items.length >0">
 		<div class="left" :style="{'height':height}">
 			<div class="label" v-for="(item,index) in items" :key="index" @click.stop="onSelect(item)"
-			     :class="{'option-selected': selected[level] && selected[level].name === item.name}"
-			>
+			     :class="{'option-selected': selected[level] && selected[level].name === item.name}">
 				{{item.name}}
-				<v-icon icon-name="right" color="gray" v-if="rightArrowVisible(item)"></v-icon>
+				<template v-if="item.name === loadItem.name">
+					<v-icon icon-name="loading" color="gray" class="spin-icon"></v-icon>
+				</template>
+				<template v-else>
+					<v-icon icon-name="right" class="arrow-icon" color="gray" v-if="rightArrowVisible(item)"></v-icon>
+				</template>
 			</div>
 		</div>
 		<div class="right" v-if="rightItems">
 			<cascader-item :items="rightItems.children" :level="level+1" :selected="selected"
+			               :load-item="loadItem"
 			               @update:selected="onUpdate" :load-data="loadData"
 			></cascader-item>
 		</div>
@@ -41,6 +46,11 @@
             },
             loadData: {
                 type: Function
+            },
+            //正在加载的所选对象
+            loadItem: {
+                type: Object,
+                default: () => ({}),
             }
         },
         data() {
@@ -103,8 +113,8 @@
 			background: white;
 			.label {
 				user-select: none;
-				min-width: 110px;
-				padding: 5px 24px 5px 12px;
+				min-width: 100px;
+				padding: .5em 1em;
 				display: flex;
 				align-items: center;
 				position: relative;
@@ -117,12 +127,14 @@
 					background: $hover-lightblue;
 				}
 				
-				.icon-wrapper {
-					position: absolute;
-					right: 12px;
-					width: 0.8em;
-					height: 0.8em;
-					line-height: 0.8em;
+				.arrow-icon {
+					transform: scale(0.8);
+					margin-left: auto;
+				}
+				
+				.spin-icon {
+					margin-left: auto;
+					animation: spin .8s infinite linear;
 				}
 			}
 		}

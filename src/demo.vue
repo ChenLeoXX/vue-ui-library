@@ -4,15 +4,20 @@
 		            :load-data="loadData"
 		>
 		</v-cascader>
+		<div>
+			<v-button :is-loading="true" type="primary">按钮</v-button>
+		</div>
 	</div>
 </template>
 <script>
     import db from './db'
     import cascader from './cascader'
+    import vButton from './button'
     export default {
         name: 'demo',
         components: {
             'v-cascader': cascader,
+            vButton
         },
         data() {
             return {

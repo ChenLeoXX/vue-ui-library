@@ -46,17 +46,7 @@
     }
 </script>
 <style lang="scss" scoped>
-	$button-height: 32px;
-	$font-size: 14px;
-	$button-color: #fff;
-	$border-radius: 4px;
-	$primary: #2d8cf0;
-	$warn: #ff9900;
-	$error: #ed4014;
-	$success: #19be6b;
-	$text-color: #515a6e;
-	$circle-height: 32px;
-	$circle-width: 32px;
+	@import "var";
 	.v-icon {
 		width: 1em;
 		height: 1em;
@@ -64,20 +54,9 @@
 		fill: currentColor;
 		overflow: hidden;
 	}
-
 	.loading {
-		animation: loading 0.8s linear infinite;
+		animation: spin 0.8s linear infinite;
 	}
-
-	@keyframes loading {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg)
-		}
-	}
-
 	.v-button {
 		display: inline-flex;
 		align-items: center;

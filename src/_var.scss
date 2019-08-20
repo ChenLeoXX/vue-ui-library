@@ -19,6 +19,14 @@ $success: #19be6b;
 $text-color: #515a6e;
 $tip-font-size: 12px;
 $warn: #ff9900;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg)
+  }
+}
 .clearfix::after {
   content: '';
   display: block;

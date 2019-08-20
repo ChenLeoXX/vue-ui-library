@@ -8,7 +8,7 @@
 		<div class="popover" v-if="visible">
 			<!--递归组件-->
 			<cascader-item
-							:items="source" @update:selected="onUpdate"
+							:items="source" @update:selected="onUpdate" :load-item="loadItem"
 							:height="height" :selected="selected" :load-data="loadData"
 			></cascader-item>
 		</div>
@@ -38,7 +38,7 @@
             },
             loadData: {
                 type: Function
-            }
+            },
         },
         components: {
             cascaderItem,
@@ -46,7 +46,8 @@
         },
         data() {
             return {
-                visible: false
+                visible: false,
+                loadItem: {},
             }
         },
         methods: {
@@ -98,9 +99,14 @@
                     let copyArr = JSON.parse(JSON.stringify(this.source))
                     let target = complexFind(copyArr, lastUpdate.id)
                     target.children = child
+                    //加载完毕
+                    this.loadItem = {}
                     this.$emit('update:source', copyArr)
                 }
-                this.loadData && this.loadData(lastUpdate, toUpdateSrc)
+                if (this.loadData && !lastUpdate.isLeaf) {
+                    this.loadData && this.loadData(lastUpdate, toUpdateSrc)
+                    this.loadItem = lastUpdate
+                }
             },
         },
         computed: {
