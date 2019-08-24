@@ -52,7 +52,7 @@ new Vue({
     }
   },
     create() {
-        // this.test()
+        // this.tests()
     },
   methods: {
       test(pos) {

@@ -127,6 +127,7 @@
 		display: inline-block;
 		.popover {
 			position: absolute;
+			z-index: 1;
 			transform: translateY(4px);
 			box-shadow: $box-shadow;
 		}

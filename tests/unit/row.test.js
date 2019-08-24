@@ -1,7 +1,7 @@
 const expect = chai.expect;
-import Vue from 'vue'
-import Col from '../src/v-col'
-import Row from '../src/v-row'
+import Vue from 'vue/types'
+import Col from '../../src/v-col'
+import Row from '../../src/v-row'
 
 describe('Row', function () {
     it('存在', function () {

@@ -1,6 +1,6 @@
 const expect = chai.expect;
-import Vue from 'vue'
-import Toast from '../src/toast'
+import Vue from 'vue/types'
+import Toast from '../../src/toast'
 
 Vue.config.productionTip = false
 Vue.config.devtools = false
@@ -48,10 +48,10 @@ describe('toast', () => {
                     enableHtml: true
                 }
             })
-            toast.$slots.default = ['<p id="test">哈哈哈</p>'];
+            toast.$slots.default = ['<p id="tests">哈哈哈</p>'];
             toast.$mount()
             //可作为选择器则是html
-            expect(toast.$el.querySelector('#test')).to.exist
+            expect(toast.$el.querySelector('#tests')).to.exist
         })
         it('接受showPosition', () => {
             let Constructor = Vue.extend(Toast)

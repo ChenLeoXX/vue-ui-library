@@ -1,6 +1,6 @@
 const expect = chai.expect;
-import Vue from 'vue'
-import Col from '../src/v-col'
+import Vue from 'vue/types'
+import Col from '../../src/v-col'
 
 describe('Col', function () {
     it('存在', function () {
