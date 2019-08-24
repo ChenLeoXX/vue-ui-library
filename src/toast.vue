@@ -56,7 +56,9 @@
                 // mounted 之后下次队列更新
                 this.$nextTick(() => {
                     let btn = document.querySelector('.close')
-                    btn.style.height = this.$refs.line.style.height = this.$refs.ct.getBoundingClientRect().height + 'px'
+                    if (btn.style && this.$refs.line.style) {
+                        btn.style.height = this.$refs.line.style.height = this.$refs.ct.getBoundingClientRect().height + 'px'
+                    }
                 })
             },
             excuteClose() {
