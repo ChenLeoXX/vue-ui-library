@@ -107,6 +107,7 @@
                     this.loadData && this.loadData(lastUpdate, toUpdateSrc)
                     this.loadItem = lastUpdate
                 }
+                if (lastUpdate.isLeaf) this.close()
             },
         },
         computed: {
