@@ -8,14 +8,20 @@
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
 		<slide :selected.sync="choose" :auto-play="true">
-			<slide-item name="1" @on-item-click="slideClick">
-				<div class="box">1</div>
+			<slide-item name="A" @on-item-click="slideClick">
+				<div class="box">
+					1
+				</div>
 			</slide-item>
-			<slide-item name="2">
-				<div class="box">2</div>
+			<slide-item name="B" @on-item-click="slideClick">
+				<div class="box">
+					2
+				</div>
 			</slide-item>
-			<slide-item name="3">
-				<div class="box">3</div>
+			<slide-item name="C" @on-item-click="slideClick">
+				<div class="box">
+					3
+				</div>
 			</slide-item>
 		</slide>
 	</div>
@@ -39,7 +45,7 @@
                 db: db,
                 selected: [],
                 source: [],
-                choose: '3'
+                choose: 'A'
             }
         },
         methods: {
@@ -99,9 +105,8 @@
 	}
 	
 	.box {
-		width: 300px;
+		width: 100%;
 		height: 200px;
 		background: gray;
-		border: 1px solid red;
 	}
 </style>

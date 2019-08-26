@@ -1,6 +1,6 @@
 <template>
 	<transition name="slide">
-		<div class="v-slide-item" v-if="visible" @click="onClick">
+		<div class="v-slide-item" v-if="visible" @click="onClick" :class="{reverse}">
 			<slot></slot>
 		</div>
 	</transition>
@@ -12,11 +12,11 @@
         data() {
             return {
                 selected: null,
+                reverse: false
             }
         },
         methods: {
             onClick() {
-                console.log(111)
                 this.$emit('on-item-click', this.name)
             }
         },
@@ -40,17 +40,26 @@
 	}
 	
 	.slide-enter {
-		transform: translateX(100%);
+		transform: translate3d(100%, 0, 0);
 	}
 	
 	.slide-leave-to {
-		transform: translateX(-100%);
+		transform: translate3d(-100%, 0, 0);
 	}
 	
+	.slide-enter.reverse {
+		transform: translate3d(-100%, 0, 0);
+	}
+	
+	.slide-leave-to.reverse {
+		transform: translate3d(100%, 0, 0);
+	}
 	.slide-leave-active {
 		position: absolute;
 		top: 0;
 		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 	
 	.slide-enter-active, .slide-leave-active {

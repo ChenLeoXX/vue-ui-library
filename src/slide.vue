@@ -3,6 +3,11 @@
 		<div class="v-slide-window">
 			<div class="v-slide-inner">
 				<slot></slot>
+				<div class="dots">
+					<span class="dot" v-for="n in childLength" :key="n" @click="dotClick(n-1)">
+						{{n}}
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -12,7 +17,19 @@
     export default {
         name: "slide",
         data() {
-            return {}
+            return {
+                lastIndex: null,
+                childLength: null,
+            }
+        },
+        computed: {
+            curInx() {
+                let inx = this.names.indexOf(this.selected)
+                return inx === -1 ? 0 : inx
+            },
+            names() {
+                return this.$children.map(item => item.name)
+            },
         },
         props: {
             selected: {
@@ -29,6 +46,7 @@
         },
         mounted() {
             this.updateChild()
+            this.childLength = this.$children.length
             if (this.autoPlay) {
                 this.enableAutoPlay()
             }
@@ -38,20 +56,18 @@
         },
         methods: {
             enableAutoPlay() {
-                let names = this.getNames()
-                let inx = names.indexOf(this.getDefaultSelect())
                 const run = () => {
-                    if (inx > names.length - 1) inx = 0
-                    setTimeout(() => {
-                        inx++
-                        this.$emit('update:selected', names[inx])
-                        run()
-                    }, this.autoPlayDelay)
+                    let newInx = this.curInx + 1
+                    if (newInx === this.names.length) newInx = 0
+                    this.dotClick(newInx)
+                    setTimeout(run, this.autoPlayDelay)
                 }
-                run()
+                setTimeout(run, this.autoPlayDelay)
             },
-            getNames() {
-                return this.$children.map(item => item.name)
+            dotClick(inx) {
+                this.lastIndex = this.curInx
+                let names = this.names
+                this.$emit('update:selected', names[inx])
             },
             getDefaultSelect() {
                 let firstChild = this.$children[0]
@@ -60,7 +76,12 @@
             updateChild() {
                 let selected = this.getDefaultSelect()
                 this.$children.forEach(item => {
-                    item.selected = selected
+                    let reverse = this.curInx < this.lastIndex;
+                    if (this.lastIndex === this.names.length) reverse = false
+                    item.reverse = reverse
+                    this.$nextTick(() => {
+                        item.selected = selected
+                    })
                 })
             },
         }
@@ -69,15 +90,19 @@
 
 <style lang="scss" scoped>
 	.v-slide {
-		border: 1px solid red;
-		display: inline-block;
-		
+		/*display: inline-block;*/
 		&-window {
 			overflow: hidden;
 		}
 		
 		&-inner {
 			position: relative;
+			
+			.dots {
+				.dot {
+					background: blue;
+				}
+			}
 		}
 	}
 </style>
