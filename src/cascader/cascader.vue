@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import clickOutside from './click-outside'
-    import vInput from './v-input'
+    import clickOutside from '../click-outside'
+    import vInput from '../basic/v-input'
     import cascaderItem from './cascader-item'
     export default {
         name: "cascader",
@@ -121,7 +121,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "var";
+	@import "../../style/var";
 	
 	.cascader-wrapper {
 		position: relative;

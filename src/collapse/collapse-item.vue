@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import vIcon from './v-icon'
+    import vIcon from '../basic/v-icon'
 
     export default {
         name: "collapse-item",

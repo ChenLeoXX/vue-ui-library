@@ -46,7 +46,7 @@
     }
 </script>
 <style lang="scss" scoped>
-	@import "var";
+	@import "../../style/var";
 	.v-icon {
 		width: 1em;
 		height: 1em;

@@ -2,7 +2,7 @@ import chai, {expect} from 'chai'
 import {mount} from "@vue/test-utils";
 import sinon from 'sinon'
 import sinochai from 'sinon-chai'
-import Toast from '@/toast'
+import Toast from '@/toast/toast'
 
 chai.use(sinochai)
 

@@ -163,7 +163,7 @@
 		font-size: 14px;
 		min-height: 40px;
 		background: rgba(0, 0, 0, 0.74);
-		box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.50);
+		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.50);
 		.content {
 			padding: 0.5em;
 			max-width: 260px;

@@ -18,6 +18,7 @@
 </template>
 
 <script>
+    import vIcon from '../basic/v-icon'
     export default {
         name: "slide",
         data() {
@@ -58,6 +59,9 @@
                 default: 3000
             },
         },
+        components: {
+            vIcon
+        },
         mounted() {
             this.updateChild()
             this.childLength = this.$children.filter(item => {
@@ -81,18 +85,21 @@
                 let {clientX: x2, clientY: y2} = changeTouch
                 let deltaX = Math.abs(x2 - x1)
                 let deltaY = Math.abs(y2 - y1)
-                if (deltaY > deltaX) return null
+                //最小滑动距离 20
+                if (deltaY > deltaX || deltaX < 20) return null
                 if (x2 - x1 > 0) {
-                    console.log('向右')
+                    // '向右'
                     this.dotClick(this.curInx - 1)
                 } else {
                     this.dotClick(this.curInx + 1)
-                    console.log('向左')
+                    // '向左'
                 }
-                // this.enableAutoPlay()
+                if (this.autoPlay) {
+                    this.enableAutoPlay()
+                }
             },
             onTouchmove() {
-                console.log('移动');
+                // console.log('移动');
             },
             enableAutoPlay() {
                 if (this.timerId) return
@@ -124,11 +131,12 @@
             },
             updateChild() {
                 let selected = this.getDefaultSelect()
+                let len = this.names.length - 1
                 this.$children.forEach(item => {
                     let reverse = this.curInx < this.lastIndex;
-                    if (this.timerId) {
-                        if (this.lastIndex === this.names.length - 1 && this.curInx === 0) reverse = false
-                    }
+                    //无缝轮播
+                    if (this.lastIndex === len && this.curInx === 0) reverse = false
+                    if (this.curInx === len && this.lastIndex === 0) reverse = true
                     item.reverse = reverse
                     this.$nextTick(() => {
                         item.selected = selected

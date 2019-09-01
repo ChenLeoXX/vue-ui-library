@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Toast from './toast.vue'
 
 let curInstance

@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-  import '../static/svg'
+    import '../../static/svg'
   export default {
     props: {
       iconName: {

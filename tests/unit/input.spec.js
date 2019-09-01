@@ -2,7 +2,7 @@ import chai, {expect} from 'chai'
 import {mount} from "@vue/test-utils";
 import sinon from 'sinon'
 import sinochai from 'sinon-chai'
-import Input from '@/v-input'
+import Input from '@/basic/v-input'
 
 chai.use(sinochai)
 describe('Input',function(){

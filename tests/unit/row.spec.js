@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {mount} from "@vue/test-utils";
-import Col from '@/v-col'
-import Row from '@/v-row'
+import Col from '@/layouts/v-col'
+import Row from '@/layouts/v-row'
 
 describe('Row', function () {
     it('存在', function () {

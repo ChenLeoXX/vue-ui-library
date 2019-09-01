@@ -1,12 +1,14 @@
 <template>
   <div class="wrapper">
-    <input
-            @change="$emit('change',$event.target.value,$event)"
-            @blur="$emit('blur',$event.target.value,$event)"
-            @focus="$emit('focus',$event.target.value,$event)"
-            @input="$emit('input',$event.target.value,$event)"
-            :disabled="disabled" :value="value" :readonly="readonly"
-            :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
+    <label>
+      <input
+              @change="$emit('change',$event.target.value,$event)"
+              @blur="$emit('blur',$event.target.value,$event)"
+              @focus="$emit('focus',$event.target.value,$event)"
+              @input="$emit('input',$event.target.value,$event)"
+              :disabled="disabled" :value="value" :readonly="readonly"
+              :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
+    </label>
     <template v-if="error">
         <v-icon  icon-name="error" fill="#f77f61"></v-icon>
       <span class="msg">{{error}}</span>
@@ -50,7 +52,7 @@
   }
 </script>
 <style lang="scss" scoped>
-	@import "var";
+  @import "../../style/var";
 .wrapper {
   display: inline-flex;
   vertical-align: top;

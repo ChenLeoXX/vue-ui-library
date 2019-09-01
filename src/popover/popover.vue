@@ -53,7 +53,7 @@
             }
         },
         //手动添加的监听器需要手动清除
-        destroyed() {
+        beforeDestroy() {
             if (this.trigger === 'click') {
                 this.$refs.popover.removeEventListener('click', this.onTrigger)
             } else if (this.trigger === 'hover') {

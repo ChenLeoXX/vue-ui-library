@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import icon from './v-icon'
+    import icon from '../basic/v-icon'
 
     export default {
         name: "cascader-item",
@@ -95,7 +95,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "var";
+	@import "../../style/var";
 	
 	.cascader-item {
 		display: flex;

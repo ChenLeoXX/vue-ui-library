@@ -27,11 +27,11 @@
 	</div>
 </template>
 <script>
-    import db from './db'
-    import cascader from './cascader'
-    import vButton from './button'
-    import slideItem from './slide-item'
-    import slide from './slide'
+    import db from '../tests/fixture/db'
+    import cascader from './cascader/cascader'
+    import vButton from './basic/button'
+    import slideItem from './slide/slide-item'
+    import slide from './slide/slide'
     export default {
         name: 'demo',
         components: {
@@ -94,7 +94,7 @@
     }
 </script>
 <style lang="scss">
-	@import "var";
+	@import "../style/var";
 	*, *::before, *::after {
 		box-sizing: border-box;
 	}

@@ -18,7 +18,7 @@
         methods: {
             onClick(e) {
                 let slideItem = this.$refs.slideItem
-                if (slideItem.contains(e.target)) {
+                if (slideItem && slideItem.contains(e.target)) {
                     this.$emit('on-item-click', this.name)
                 }
             }
