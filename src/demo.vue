@@ -10,17 +10,17 @@
 		<slide :selected.sync="choose" :auto-play="true">
 			<slide-item name="A" @on-item-click="slideClick">
 				<div class="box">
-					1
+					<h1>1</h1>
 				</div>
 			</slide-item>
 			<slide-item name="B" @on-item-click="slideClick">
 				<div class="box">
-					2
+					<h1>2</h1>
 				</div>
 			</slide-item>
 			<slide-item name="C" @on-item-click="slideClick">
 				<div class="box">
-					3
+					<h1>3</h1>
 				</div>
 			</slide-item>
 		</slide>
@@ -93,7 +93,8 @@
         }
     }
 </script>
-<style>
+<style lang="scss">
+	@import "var";
 	*, *::before, *::after {
 		box-sizing: border-box;
 	}
@@ -101,12 +102,16 @@
 	body {
 		margin: 0;
 		font-size: 14px;
-		padding: 150px;
+		padding: 50px;
 	}
 	
 	.box {
+		background: $dark-blue;
 		width: 100%;
 		height: 200px;
-		background: gray;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
 	}
 </style>

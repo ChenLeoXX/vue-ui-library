@@ -1,10 +1,14 @@
 <template>
-	<div class="v-slide">
+	<div class="v-slide" @mouseenter="pause" @mouseleave="enableAutoPlay"
+	     @touchstart="onTouchstart"
+	     @touchend="onTouchend"
+	     @touchmove="onTouchmove"
+	>
 		<div class="v-slide-window">
 			<div class="v-slide-inner">
 				<slot></slot>
-				<div class="dots">
-					<span class="dot" v-for="n in childLength" :key="n" @click="dotClick(n-1)">
+				<div class="dots" v-if="showDots">
+					<span class="dot" :class="{'active':curInx === n-1}" v-for="n in childLength" :key="n" @click="dotClick(n-1)">
 						{{n}}
 					</span>
 				</div>
@@ -20,6 +24,8 @@
             return {
                 lastIndex: null,
                 childLength: null,
+                timerId: '',
+                touchObj: null,
             }
         },
         computed: {
@@ -28,10 +34,18 @@
                 return inx === -1 ? 0 : inx
             },
             names() {
-                return this.$children.map(item => item.name)
+                return this.$children.map(item => {
+                    if (item.$options.name === 'slide-item') {
+                        return item.name
+                    }
+                })
             },
         },
         props: {
+            showDots: {
+                type: Boolean,
+                default: true
+            },
             selected: {
                 type: String
             },
@@ -46,7 +60,9 @@
         },
         mounted() {
             this.updateChild()
-            this.childLength = this.$children.length
+            this.childLength = this.$children.filter(item => {
+                return item.$options.name === 'slide-item'
+            }).length
             if (this.autoPlay) {
                 this.enableAutoPlay()
             }
@@ -55,16 +71,49 @@
             this.updateChild()
         },
         methods: {
+            onTouchstart(e) {
+                this.touchObj = e.touches[0]
+                this.pause()
+            },
+            onTouchend(e) {
+                let changeTouch = e.changedTouches[0]
+                let {clientX: x1, clientY: y1} = this.touchObj
+                let {clientX: x2, clientY: y2} = changeTouch
+                let deltaX = Math.abs(x2 - x1)
+                let deltaY = Math.abs(y2 - y1)
+                if (deltaY > deltaX) return null
+                if (x2 - x1 > 0) {
+                    console.log('向右')
+                    this.dotClick(this.curInx - 1)
+                } else {
+                    this.dotClick(this.curInx + 1)
+                    console.log('向左')
+                }
+                // this.enableAutoPlay()
+            },
+            onTouchmove() {
+                console.log('移动');
+            },
             enableAutoPlay() {
+                if (this.timerId) return
                 const run = () => {
                     let newInx = this.curInx + 1
-                    if (newInx === this.names.length) newInx = 0
                     this.dotClick(newInx)
-                    setTimeout(run, this.autoPlayDelay)
+                    this.timerId = setTimeout(run, this.autoPlayDelay)
                 }
-                setTimeout(run, this.autoPlayDelay)
+                this.timerId = setTimeout(run, this.autoPlayDelay)
+            },
+            pause() {
+                window.clearTimeout(this.timerId)
+                this.timerId = ''
             },
             dotClick(inx) {
+                let len = this.names.length - 1
+                if (inx < 0) {
+                    inx = inx = len
+                } else if (inx > len) {
+                    inx = 0
+                }
                 this.lastIndex = this.curInx
                 let names = this.names
                 this.$emit('update:selected', names[inx])
@@ -77,7 +126,9 @@
                 let selected = this.getDefaultSelect()
                 this.$children.forEach(item => {
                     let reverse = this.curInx < this.lastIndex;
-                    if (this.lastIndex === this.names.length) reverse = false
+                    if (this.timerId) {
+                        if (this.lastIndex === this.names.length - 1 && this.curInx === 0) reverse = false
+                    }
                     item.reverse = reverse
                     this.$nextTick(() => {
                         item.selected = selected
@@ -90,7 +141,8 @@
 
 <style lang="scss" scoped>
 	.v-slide {
-		/*display: inline-block;*/
+		box-sizing: border-box;
+		position: relative;
 		&-window {
 			overflow: hidden;
 		}
@@ -99,8 +151,35 @@
 			position: relative;
 			
 			.dots {
+				position: absolute;
+				bottom: 10px;
+				left: 50%;
+				transform: translateX(-50%);
 				.dot {
-					background: blue;
+					display: inline-block;
+					margin: 0 4px;
+					width: 16px;
+					height: 3px;
+					padding: 0;
+					color: transparent;
+					font-size: 0;
+					background: #fff;
+					border: 0;
+					border-radius: 1px;
+					outline: none;
+					cursor: pointer;
+					opacity: .3;
+					transition: all .5s;
+					
+					&:hover {
+						opacity: .75;
+					}
+					
+					&.active {
+						width: 24px;
+						background: #fff;
+						opacity: 1;
+					}
 				}
 			}
 		}

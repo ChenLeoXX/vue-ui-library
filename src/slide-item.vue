@@ -1,6 +1,6 @@
 <template>
 	<transition name="slide">
-		<div class="v-slide-item" v-if="visible" @click="onClick" :class="{reverse}">
+		<div class="v-slide-item" v-if="visible" @click="onClick" :class="{reverse}" ref="slideItem">
 			<slot></slot>
 		</div>
 	</transition>
@@ -16,8 +16,11 @@
             }
         },
         methods: {
-            onClick() {
-                this.$emit('on-item-click', this.name)
+            onClick(e) {
+                let slideItem = this.$refs.slideItem
+                if (slideItem.contains(e.target)) {
+                    this.$emit('on-item-click', this.name)
+                }
             }
         },
         props: {
