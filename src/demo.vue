@@ -7,23 +7,39 @@
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
-		<slide :selected.sync="choose" :auto-play="true">
-			<slide-item name="A" @on-item-click="slideClick">
-				<div class="box">
-					<h1>1</h1>
-				</div>
-			</slide-item>
-			<slide-item name="B" @on-item-click="slideClick">
-				<div class="box">
-					<h1>2</h1>
-				</div>
-			</slide-item>
-			<slide-item name="C" @on-item-click="slideClick">
-				<div class="box">
-					<h1>3</h1>
-				</div>
-			</slide-item>
-		</slide>
+		<!--		<slide :selected.sync="choose" :auto-play="true">-->
+		<!--			<slide-item name="A" @on-item-click="slideClick">-->
+		<!--				<div class="box">-->
+		<!--					<h1>1</h1>-->
+		<!--				</div>-->
+		<!--			</slide-item>-->
+		<!--			<slide-item name="B" @on-item-click="slideClick">-->
+		<!--				<div class="box">-->
+		<!--					<h1>2</h1>-->
+		<!--				</div>-->
+		<!--			</slide-item>-->
+		<!--			<slide-item name="C" @on-item-click="slideClick">-->
+		<!--				<div class="box">-->
+		<!--					<h1>3</h1>-->
+		<!--				</div>-->
+		<!--			</slide-item>-->
+		<!--		</slide>-->
+		<v-menu active="home">
+			<menu-item name="home">首页</menu-item>
+			<menu-item name="team">团队</menu-item>
+			<menu-item name="about">关于</menu-item>
+			<sub-menu name="products">
+				<template slot="title">产品</template>
+				<menu-item name="software">软件</menu-item>
+				<menu-item name="hardware">硬件</menu-item>
+				<sub-menu name="service">
+					<template slot="title">服务</template>
+					<menu-item name="maintain">维修</menu-item>
+					<menu-item name="delivery">送货</menu-item>
+				</sub-menu>
+			</sub-menu>
+		</v-menu>
+		<p>铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨</p>
 	</div>
 </template>
 <script>
@@ -32,9 +48,15 @@
     import vButton from './basic/button'
     import slideItem from './slide/slide-item'
     import slide from './slide/slide'
+    import vMenu from './menu/menu'
+    import menuItem from './menu/menu-item'
+    import subMenu from './menu/sub-menu'
     export default {
         name: 'demo',
         components: {
+            vMenu,
+            menuItem,
+            subMenu,
             'v-cascader': cascader,
             vButton,
             slide,
