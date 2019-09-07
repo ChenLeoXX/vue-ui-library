@@ -1,5 +1,5 @@
 <template>
-	<div class="menu-item" :class="{active}">
+	<div class="menu-item" :class="{active}" @click="onItemClick">
 		<slot></slot>
 	</div>
 </template>
@@ -18,8 +18,20 @@
                 active: false
             }
         },
+        computed: {
+            selected() {
+                return this.menu.namePath.indexOf(this.name) >= 0
+            }
+        },
         created() {
             this.menu.add(this)
+        },
+        methods: {
+            onItemClick() {
+                this.menu.namePath = []
+                this.$parent.updatePath && this.$parent.updatePath()
+                this.$emit('add:item', this.name)
+            }
         },
         inject: ['menu']
     }

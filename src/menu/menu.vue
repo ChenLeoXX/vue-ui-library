@@ -10,9 +10,14 @@
         data() {
             return {
                 childItem: [],
+                namePath: [],
             }
         },
-        created() {
+        mounted() {
+            this.selectDefault()
+            this.listenChild()
+        },
+        updated() {
             this.selectDefault()
         },
         methods: {
@@ -20,11 +25,24 @@
                 this.childItem.push(vm)
             },
             selectDefault() {
-                if (this.active) {
+                if (this.active.length > 0) {
                     this.childItem.forEach(vm => {
-                        vm.active = vm.name === this.active
+                        vm.active = this.active.indexOf(vm.name) >= 0
                     })
                 }
+            },
+            listenChild() {
+                this.childItem.forEach(vm => {
+                    vm.$on('add:item', (name) => {
+                        if (this.multiple) {
+                            let copy = JSON.parse(JSON.stringify(this.active))
+                            copy.push(name)
+                            this.$emit('update:active', copy)
+                        } else {
+                            this.$emit('update:active', [name])
+                        }
+                    })
+                })
             },
         },
         provide() {
@@ -34,7 +52,17 @@
         },
         props: {
             active: {
-                type: String
+                type: Array,
+                validator(value) {
+                    return value.every(item => {
+                        return typeof item === 'string'
+                    })
+                },
+                default: () => ([])
+            },
+            multiple: {
+                type: Boolean,
+                default: false,
             }
         }
     }

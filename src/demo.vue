@@ -24,7 +24,7 @@
 		<!--				</div>-->
 		<!--			</slide-item>-->
 		<!--		</slide>-->
-		<v-menu active="home">
+		<v-menu :active.sync="active">
 			<menu-item name="home">首页</menu-item>
 			<menu-item name="team">团队</menu-item>
 			<menu-item name="about">关于</menu-item>
@@ -67,7 +67,8 @@
                 db: db,
                 selected: [],
                 source: [],
-                choose: 'A'
+                choose: 'A',
+                active: ['home'],
             }
         },
         methods: {
