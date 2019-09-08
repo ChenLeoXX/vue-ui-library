@@ -1,9 +1,9 @@
 <template>
 	<div class="demo">
-		<!--		<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
-		<!--		            :load-data="loadData"-->
-		<!--		>-->
-		<!--		</v-cascader>-->
+		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
+		<!--				            :load-data="loadData"-->
+		<!--				>-->
+		<!--				</v-cascader>-->
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
@@ -24,9 +24,28 @@
 		<!--				</div>-->
 		<!--			</slide-item>-->
 		<!--		</slide>-->
-		<v-menu :active.sync="active">
+		<!--		<v-menu :active.sync="active">-->
+		<!--			<menu-item name="home">首页</menu-item>-->
+		<!--			<menu-item name="team">团队</menu-item>-->
+		<!--			<menu-item name="about">关于</menu-item>-->
+		<!--			<sub-menu name="products">-->
+		<!--				<template slot="title">产品</template>-->
+		<!--				<menu-item name="software">软件</menu-item>-->
+		<!--				<menu-item name="hardware">硬件</menu-item>-->
+		<!--				<sub-menu name="service">-->
+		<!--					<template slot="title">服务</template>-->
+		<!--					<menu-item name="maintain">维修</menu-item>-->
+		<!--					<menu-item name="delivery">送货</menu-item>-->
+		<!--				</sub-menu>-->
+		<!--			</sub-menu>-->
+		<!--		</v-menu>-->
+		<v-menu :active.sync="active" vertical @on-item-click="x">
 			<menu-item name="home">首页</menu-item>
-			<menu-item name="team">团队</menu-item>
+			<sub-menu name="team">
+				<template slot="title">团队</template>
+				<menu-item name="evan">尤雨溪</menu-item>
+				<menu-item name="jack">jack</menu-item>
+			</sub-menu>
 			<menu-item name="about">关于</menu-item>
 			<sub-menu name="products">
 				<template slot="title">产品</template>
@@ -39,7 +58,6 @@
 				</sub-menu>
 			</sub-menu>
 		</v-menu>
-		<p>铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨铁憨憨</p>
 	</div>
 </template>
 <script>
@@ -68,10 +86,13 @@
                 selected: [],
                 source: [],
                 choose: 'A',
-                active: ['home'],
+                active: 'home',
             }
         },
         methods: {
+            x(name) {
+                console.log(name)
+            },
             /**
              * 模拟后台动态返回节点
              * @param id 回调返回的p_id
@@ -128,6 +149,9 @@
 		padding: 50px;
 	}
 	
+	.demo {
+		width: 300px;
+	}
 	.box {
 		background: $dark-blue;
 		width: 100%;

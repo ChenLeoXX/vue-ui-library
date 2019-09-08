@@ -1,5 +1,5 @@
 <template>
-	<div class="menu-wrapper">
+	<div class="menu-wrapper" :class="{vertical}" ref="menuWrapper">
 		<slot></slot>
 	</div>
 </template>
@@ -16,34 +16,40 @@
         mounted() {
             this.selectDefault()
             this.listenChild()
+            this.calcPadding()
         },
         updated() {
             this.selectDefault()
         },
         methods: {
+            calcPadding() {
+                let elList = this.$refs.menuWrapper.querySelectorAll('.popover-wrapper')
+                elList.forEach((el, index) => {
+                    el.querySelectorAll('.vertical-item').forEach(child => {
+                        let ind = index + 2
+                        child.style.paddingLeft = `${24 * ind}px`
+                    })
+                })
+            },
             add(vm) {
                 this.childItem.push(vm)
             },
             selectDefault() {
-                if (this.active.length > 0) {
+                if (this.active) {
                     this.childItem.forEach(vm => {
-                        vm.active = this.active.indexOf(vm.name) >= 0
+                        vm.active = this.active === vm.name
                     })
                 }
             },
             listenChild() {
-                this.childItem.forEach(vm => {
-                    vm.$on('add:item', (name) => {
-                        if (this.multiple) {
-                            let copy = JSON.parse(JSON.stringify(this.active))
-                            copy.push(name)
-                            this.$emit('update:active', copy)
-                        } else {
-                            this.$emit('update:active', [name])
-                        }
+                setTimeout(() => {
+                    this.childItem.forEach(vm => {
+                        vm.$on('add:item', (name) => {
+                            this.$emit('update:active', name)
+                        })
                     })
                 })
-            },
+            }
         },
         provide() {
             return {
@@ -52,30 +58,41 @@
         },
         props: {
             active: {
-                type: Array,
-                validator(value) {
-                    return value.every(item => {
-                        return typeof item === 'string'
-                    })
-                },
-                default: () => ([])
+                type: String,
             },
-            multiple: {
+            vertical: {
                 type: Boolean,
-                default: false,
+                default: false
             }
         }
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import "../../style/var";
 	
 	.menu-wrapper {
 		user-select: none;
 		line-height: 46px;
 		display: flex;
+		font-size: 16px;
 		color: $base-font-color;
 		border-bottom: 1px solid $gray-border;
+		
+		&.vertical {
+			display: block !important;
+			border: none;
+			border-right: 1px solid $gray-border;
+			
+			.menu-item.active::before, & .menu-item:hover::before {
+				display: none;
+			}
+			
+			.sub-menu-wrapper {
+				.title:hover::before, .title.active::before {
+					display: none !important;
+				}
+			}
+		}
 	}
 </style>

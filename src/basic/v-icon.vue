@@ -1,13 +1,9 @@
 ™
 <template>
-  <div class="icon-wrapper">
     <svg class="v-icon" :fill="color">
 	    <use :xlink:href="icon">
-	
 	    </use>
     </svg>
-    <slot></slot>
-  </div>
 </template>
 <script>
     import '../../static/svg'
@@ -30,12 +26,9 @@
   }
 </script>
 <style lang="scss" scoped>
-  .icon-wrapper {
-	  width: 1em;
-	  height: 1em;
-	  .v-icon {
-		  width: 100%;
-		  height: 100%;
-    }
-  }
+	.v-icon {
+		width: 1em;
+		height: 1em;
+		fill: inherit;
+	}
 </style>

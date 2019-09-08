@@ -1,15 +1,31 @@
 <template>
 	<div class="sub-menu-wrapper" v-click-outside="close">
-		<span class="title" :class="{'active':selected || active}" @click="showPop">
+		<span class="title" :class="{'active':selected || active,'vertical-item':menu.vertical}" @click.stop="showPop">
 			<slot name="title"></slot>
+			<span class="icon" :class="{'active':visible}" v-if="!menu.vertical">
+				<v-icon icon-name="left"></v-icon>
+			</span>
+			<span class="icon" :class="{'vertical-active':visible}" v-if="menu.vertical">
+				<v-icon icon-name="left"></v-icon>
+			</span>
 		</span>
-		<div class="popover-wrapper" v-show="visible">
-			<slot></slot>
-		</div>
+		<template v-if="!menu.vertical">
+			<div class="popover-wrapper" v-show="visible">
+				<slot></slot>
+			</div>
+		</template>
+		<template v-else>
+			<transition name="fade" @entern="enter" @after-enter="afterEnter" @leave="leave" @afterLeave="afterLeave">
+				<div class="popover-wrapper" :class="{'vertical':menu.vertical}" v-show="visible" @click.stop>
+					<slot></slot>
+				</div>
+			</transition>
+		</template>
 	</div>
 </template>
 <script>
     import clickOutside from '../click-outside'
+    import vIcon from '../basic/v-icon'
     export default {
         name: "sub-menu",
         inject: ['menu'],
@@ -21,6 +37,9 @@
                 visible: false,
                 active: false
             }
+        },
+        components: {
+            vIcon
         },
         props: {
             name: {
@@ -34,15 +53,44 @@
             }
         },
         methods: {
+            //利用getBoundingClientRect调用触发动画
+            enter(el, done) {
+                let {height} = el.getBoundingClientRect()
+                el.style.height = 0
+                el.getBoundingClientRect()
+                el.style.height = `${height}px`
+                setTimeout(() => {
+                    done()
+                }, 400)
+            },
+            afterEnter(el) {
+                el.style.height = 'auto'
+            },
+            leave(el, done) {
+                let {height} = el.getBoundingClientRect()
+                el.style.height = `${height}px`
+                el.getBoundingClientRect()
+                el.style.height = 0
+                setTimeout(() => {
+                    done()
+                }, 400)
+            },
+            afterLeave(el) {
+                el.style.height = 'auto'
+            },
             close() {
                 this.visible = false
             },
             showPop() {
                 this.visible = !this.visible
+
             },
             updatePath() {
                 this.menu.namePath.unshift(this.name)
                 this.$parent.updatePath && this.$parent.updatePath()
+                if (!this.menu.vertical) {
+                    this.close()
+                }
             },
         }
     }
@@ -51,6 +99,14 @@
 <style lang="scss" scoped>
 	@import "../../style/var";
 	
+	.fade-enter-active, .fade-leave-active {
+		transition: all .3s;
+		opacity: 1;
+	}
+	
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
 	.sub-menu-wrapper {
 		position: relative;
 
@@ -61,7 +117,13 @@
 			border-radius: $border-radius;
 			position: absolute;
 			margin-top: 6px;
-			
+			/*垂直popover*/
+			&.vertical {
+				box-shadow: none;
+				position: static;
+				margin: 0;
+				overflow: hidden;
+			}
 			.menu-item {
 				&.active {
 					background: $menu-selected-bg;
@@ -73,11 +135,40 @@
 		}
 		
 		.title {
-			padding: 0 2em;
+			padding: 0 24px;
 			cursor: default;
 			position: relative;
 			display: block;
 			
+			.icon {
+				display: none;
+			}
+			
+			&.vertical-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				
+				&:hover {
+					svg {
+						fill: $active-primary;
+					}
+				}
+				
+				&::before {
+					display: none;
+				}
+				
+				.icon {
+					display: inline-flex;
+					transition: transform .3s;
+					transform: rotate(180deg);
+					
+					&.vertical-active {
+						transform: rotate(270deg);
+					}
+				}
+			}
 			&.active {
 				color: $active-primary;
 			}
@@ -114,15 +205,59 @@
 			}
 		}
 	}
-	
 	.sub-menu-wrapper {
 		.popover-wrapper {
 			.sub-menu-wrapper {
+				.title {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					padding: 0 24px 0 24px;
+					
+					.icon {
+						display: inline-flex;
+						transition: transform .3s;
+						
+						&.active {
+							transform: rotate(180deg);
+						}
+						
+						svg {
+							fill: $light-gray-color;
+						}
+					}
+					
+					&.active {
+						color: $active-primary;
+					}
+					
+					&:hover {
+						svg {
+							fill: $active-primary;
+						}
+					}
+					
+					&.vertical-item {
+						.icon {
+							transition: transform .3s;
+							transform: rotate(180deg);
+							
+							&.vertical-active {
+								transform: rotate(270deg);
+							}
+						}
+					}
+				}
+			}
 				.title.active {
 					color: inherit;
 					
-					&::before, &:hover::before {
+					&::before {
 						display: none;
+					}
+					
+					&:hover {
+						color: $active-primary;
 					}
 				}
 				
@@ -131,20 +266,12 @@
 						display: none;
 					}
 				}
-				
 				.popover-wrapper {
 					left: 100%;
 					top: 0;
 					margin-left: 4px;
 					margin-top: 0;
-					
-					.title {
-						&:hover::before {
-							display: none;
-						}
-					}
 				}
 			}
 		}
-	}
 </style>
