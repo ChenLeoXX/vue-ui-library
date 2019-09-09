@@ -1,6 +1,6 @@
 <template>
 	<div class="sub-menu-wrapper" v-click-outside="close">
-		<span class="title" :class="{'active':selected || active,'vertical-item':menu.vertical}" @click.stop="showPop">
+		<span class="title" :class="{'active':selected || active,'vertical-item':menu.vertical}" @click="showPop">
 			<slot name="title"></slot>
 			<span class="icon" :class="{'active':visible}" v-if="!menu.vertical">
 				<v-icon icon-name="left"></v-icon>
@@ -15,7 +15,7 @@
 			</div>
 		</template>
 		<template v-else>
-			<transition name="fade" @entern="enter" @after-enter="afterEnter" @leave="leave" @afterLeave="afterLeave">
+			<transition name="fade" @enter="enter" @after-enter="afterEnter" @leave="leave" @afterLeave="afterLeave">
 				<div class="popover-wrapper" :class="{'vertical':menu.vertical}" v-show="visible" @click.stop>
 					<slot></slot>
 				</div>
@@ -26,6 +26,7 @@
 <script>
     import clickOutside from '../click-outside'
     import vIcon from '../basic/v-icon'
+
     export default {
         name: "sub-menu",
         inject: ['menu'],
@@ -79,9 +80,11 @@
                 el.style.height = 'auto'
             },
             close() {
+                if (this.menu.vertical) return
                 this.visible = false
             },
-            showPop() {
+            showPop(e) {
+                if (this.menu.vertical) e.stopPropagation()
                 this.visible = !this.visible
 
             },
@@ -107,9 +110,10 @@
 	.fade-enter, .fade-leave-to {
 		opacity: 0;
 	}
+	
 	.sub-menu-wrapper {
 		position: relative;
-
+		
 		.popover-wrapper {
 			min-width: 8em;
 			background: #fff;
@@ -121,13 +125,16 @@
 			&.vertical {
 				box-shadow: none;
 				position: static;
+				border-radius: 0;
 				margin: 0;
 				overflow: hidden;
 			}
+			
 			.menu-item {
 				&.active {
 					background: $menu-selected-bg;
 				}
+				
 				&::before {
 					display: none;
 				}
@@ -139,6 +146,11 @@
 			cursor: default;
 			position: relative;
 			display: block;
+			
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
 			
 			.icon {
 				display: none;
@@ -169,6 +181,7 @@
 					}
 				}
 			}
+			
 			&.active {
 				color: $active-primary;
 			}
@@ -205,6 +218,7 @@
 			}
 		}
 	}
+	
 	.sub-menu-wrapper {
 		.popover-wrapper {
 			.sub-menu-wrapper {
@@ -249,29 +263,31 @@
 					}
 				}
 			}
-				.title.active {
-					color: inherit;
-					
-					&::before {
-						display: none;
-					}
-					
-					&:hover {
-						color: $active-primary;
-					}
+			
+			.title.active {
+				color: inherit;
+				
+				&::before {
+					display: none;
 				}
 				
-				.title {
-					&::before {
-						display: none;
-					}
-				}
-				.popover-wrapper {
-					left: 100%;
-					top: 0;
-					margin-left: 4px;
-					margin-top: 0;
+				&:hover {
+					color: $active-primary;
 				}
 			}
+			
+			.title {
+				&::before {
+					display: none;
+				}
+			}
+			
+			.popover-wrapper {
+				left: 100%;
+				top: 0;
+				margin-left: 4px;
+				margin-top: 0;
+			}
 		}
+	}
 </style>

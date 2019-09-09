@@ -46,6 +46,12 @@
 		padding: 0 24px;
 		cursor: default;
 		position: relative;
+		
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+		
 		&.active {
 			color: $active-primary;
 		}

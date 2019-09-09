@@ -16,7 +16,7 @@
       color:{
         type:String,
           default: '#fff'
-      }
+      },
     },
       computed: {
           icon() {
@@ -29,6 +29,7 @@
 	.v-icon {
 		width: 1em;
 		height: 1em;
+		margin: 0 10px;
 		fill: inherit;
 	}
 </style>

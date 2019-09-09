@@ -24,25 +24,29 @@
 		<!--				</div>-->
 		<!--			</slide-item>-->
 		<!--		</slide>-->
-		<!--		<v-menu :active.sync="active">-->
-		<!--			<menu-item name="home">首页</menu-item>-->
-		<!--			<menu-item name="team">团队</menu-item>-->
-		<!--			<menu-item name="about">关于</menu-item>-->
-		<!--			<sub-menu name="products">-->
-		<!--				<template slot="title">产品</template>-->
-		<!--				<menu-item name="software">软件</menu-item>-->
-		<!--				<menu-item name="hardware">硬件</menu-item>-->
-		<!--				<sub-menu name="service">-->
-		<!--					<template slot="title">服务</template>-->
-		<!--					<menu-item name="maintain">维修</menu-item>-->
-		<!--					<menu-item name="delivery">送货</menu-item>-->
-		<!--				</sub-menu>-->
-		<!--			</sub-menu>-->
-		<!--		</v-menu>-->
+		<!--				<v-menu :active.sync="active">-->
+		<!--					<menu-item name="home">首页</menu-item>-->
+		<!--					<menu-item name="team">团队</menu-item>-->
+		<!--					<menu-item name="about">关于</menu-item>-->
+		<!--					<sub-menu name="products">-->
+		<!--						<template slot="title">产品</template>-->
+		<!--						<menu-item name="software">软件</menu-item>-->
+		<!--						<menu-item name="hardware">硬件</menu-item>-->
+		<!--						<sub-menu name="service">-->
+		<!--							<template slot="title">服务</template>-->
+		<!--							<menu-item name="maintain">维修</menu-item>-->
+		<!--							<menu-item name="delivery">送货</menu-item>-->
+		<!--						</sub-menu>-->
+		<!--					</sub-menu>-->
+		<!--				</v-menu>-->
 		<v-menu :active.sync="active" vertical @on-item-click="x">
-			<menu-item name="home">首页</menu-item>
+			<menu-item name="home">
+				<a href="http://google.com" target="_blank">谷歌</a>
+			</menu-item>
 			<sub-menu name="team">
-				<template slot="title">团队</template>
+				<template slot="title">
+					<a href="http://baidu.com" target="_blank">百度</a>
+				</template>
 				<menu-item name="evan">尤雨溪</menu-item>
 				<menu-item name="jack">jack</menu-item>
 			</sub-menu>
@@ -55,6 +59,10 @@
 					<template slot="title">服务</template>
 					<menu-item name="maintain">维修</menu-item>
 					<menu-item name="delivery">送货</menu-item>
+					<sub-menu name="大区">
+						<template slot="title">大区</template>
+						<menu-item name="祖安">祖安</menu-item>
+					</sub-menu>
 				</sub-menu>
 			</sub-menu>
 		</v-menu>
@@ -69,6 +77,7 @@
     import vMenu from './menu/menu'
     import menuItem from './menu/menu-item'
     import subMenu from './menu/sub-menu'
+    import vIcon from './basic/v-icon'
     export default {
         name: 'demo',
         components: {
@@ -78,7 +87,8 @@
             'v-cascader': cascader,
             vButton,
             slide,
-            slideItem
+            slideItem,
+            vIcon
         },
         data() {
             return {
@@ -150,7 +160,7 @@
 	}
 	
 	.demo {
-		width: 300px;
+		max-width: 700px;
 	}
 	.box {
 		background: $dark-blue;
