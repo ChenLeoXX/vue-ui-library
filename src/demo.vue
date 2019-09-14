@@ -1,6 +1,6 @@
 <template>
 	<div class="demo">
-		<v-page :total="20" :current.sync="currentPage">
+		<v-page :total="10" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">
 		
 		</v-page>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
