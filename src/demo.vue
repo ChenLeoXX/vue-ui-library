@@ -1,5 +1,8 @@
 <template>
 	<div class="demo">
+		<v-page :total="20" :current.sync="currentPage">
+		
+		</v-page>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
 		<!--				>-->
@@ -39,36 +42,37 @@
 		<!--						</sub-menu>-->
 		<!--					</sub-menu>-->
 		<!--				</v-menu>-->
-		<v-menu :active.sync="active" vertical @on-item-click="x">
-			<menu-item name="home">
-				<a href="http://google.com" target="_blank">谷歌</a>
-			</menu-item>
-			<sub-menu name="team">
-				<template slot="title">
-					<a href="http://baidu.com" target="_blank">百度</a>
-				</template>
-				<menu-item name="evan">尤雨溪</menu-item>
-				<menu-item name="jack">jack</menu-item>
-			</sub-menu>
-			<menu-item name="about">关于</menu-item>
-			<sub-menu name="products">
-				<template slot="title">产品</template>
-				<menu-item name="software">软件</menu-item>
-				<menu-item name="hardware">硬件</menu-item>
-				<sub-menu name="service">
-					<template slot="title">服务</template>
-					<menu-item name="maintain">维修</menu-item>
-					<menu-item name="delivery">送货</menu-item>
-					<sub-menu name="大区">
-						<template slot="title">大区</template>
-						<menu-item name="祖安">祖安</menu-item>
-					</sub-menu>
-				</sub-menu>
-			</sub-menu>
-		</v-menu>
+		<!--		<v-menu :active.sync="active" vertical @on-item-click="x">-->
+		<!--			<menu-item name="home">-->
+		<!--				<a href="http://google.com" target="_blank">谷歌</a>-->
+		<!--			</menu-item>-->
+		<!--			<sub-menu name="team">-->
+		<!--				<template slot="title">-->
+		<!--					<a href="http://baidu.com" target="_blank">百度</a>-->
+		<!--				</template>-->
+		<!--				<menu-item name="evan">尤雨溪</menu-item>-->
+		<!--				<menu-item name="jack">jack</menu-item>-->
+		<!--			</sub-menu>-->
+		<!--			<menu-item name="about">关于</menu-item>-->
+		<!--			<sub-menu name="products">-->
+		<!--				<template slot="title">产品</template>-->
+		<!--				<menu-item name="software">软件</menu-item>-->
+		<!--				<menu-item name="hardware">硬件</menu-item>-->
+		<!--				<sub-menu name="service">-->
+		<!--					<template slot="title">服务</template>-->
+		<!--					<menu-item name="maintain">维修</menu-item>-->
+		<!--					<menu-item name="delivery">送货</menu-item>-->
+		<!--					<sub-menu name="大区">-->
+		<!--						<template slot="title">大区</template>-->
+		<!--						<menu-item name="祖安">祖安</menu-item>-->
+		<!--					</sub-menu>-->
+		<!--				</sub-menu>-->
+		<!--			</sub-menu>-->
+		<!--		</v-menu>-->
 	</div>
 </template>
 <script>
+    import vPage from './pagenation/pagenation'
     import db from '../tests/fixture/db'
     import cascader from './cascader/cascader'
     import vButton from './basic/button'
@@ -88,6 +92,7 @@
             vButton,
             slide,
             slideItem,
+            vPage,
             vIcon
         },
         data() {
@@ -97,9 +102,13 @@
                 source: [],
                 choose: 'A',
                 active: 'home',
+                currentPage: 10
             }
         },
         methods: {
+            changePage() {
+                console.log(123);
+            },
             x(name) {
                 console.log(name)
             },
