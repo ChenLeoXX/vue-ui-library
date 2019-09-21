@@ -1,24 +1,32 @@
 <template>
 	<div class="v-table-wrapper">
 		<table class="v-table">
-			<thead>
+			<thead :class="{sample}">
 			<tr>
 				<th v-if="showNum">
 					<span>No</span>
 				</th>
 				<th class="selection" v-if="needSelection">
 					<label @click="checkAll">
-						<input type="checkbox" ref="allCheck" :checked="isAllCheck">
+						<span class="check-box">
+							<input type="checkbox" ref="allCheck" :checked="isAllCheck">
+						</span>
 					</label>
 				</th>
 				<th v-for="item in columns" :key="item.field">
-					<span class="th-content">
+					<div class="v-table-th-inner">
+						<span class="th-content">
 						{{item.name}}
-					</span>
+						</span>
+						<div class="v-table-order" v-if="orderBy[item.field]" @click="changeOrder(item.field)">
+							<v-icon icon-name="triangle-up" :class="{'active': orderBy[item.field] === 'ascend'}"/>
+							<v-icon icon-name="triangle-down" :class="{'active': orderBy[item.field] === 'decline'}"/>
+						</div>
+					</div>
 				</th>
 			</tr>
 			</thead>
-			<tbody :class="{stripe}">
+			<tbody :class="{stripe,sample}">
 			<tr v-for="(item,index) in dataSource" :key="item.key">
 				<td v-if="showNum">
 					<span class="td-content">
@@ -27,7 +35,9 @@
 				</td>
 				<td class="selection" v-if="needSelection">
 					<label @click="onChecked(item,$event)">
-						<input type="checkbox" :checked="isChecked(item)">
+						<span class="check-box">
+							<input type="checkbox" :checked="isChecked(item)">
+						</span>
 					</label>
 				</td>
 				<template>
@@ -44,6 +54,7 @@
 </template>
 
 <script>
+    import vIcon from '../basic/v-icon'
     export default {
         name: "v-table",
         data() {
@@ -68,9 +79,16 @@
             },
         },
         props: {
+            orderBy: {
+                type: Object
+            },
             needSelection: {
                 type: Boolean,
                 default: true
+            },
+            sample: {
+                type: Boolean,
+                default: false
             },
             stripe: {
                 type: Boolean,
@@ -98,6 +116,22 @@
             }
         },
         methods: {
+            changeOrder(key) {
+                let copy = JSON.parse(JSON.stringify(this.orderBy))
+                let val = copy[key]
+                switch (val) {
+                    case 'ascend':
+                        copy[key] = 'decline'
+                        break;
+                    case 'decline':
+                        copy[key] = true
+                        break
+                    case true:
+                        copy[key] = 'ascend'
+                        break
+                }
+                this.$emit('update:orderBy', copy)
+            },
             checkAll(e) {
                 let isCheck = e.target.checked
                 if (isCheck) {
@@ -128,8 +162,8 @@
                 this.$emit('update:selectedItems', duplicate)
             },
         },
-        mounted() {
-
+        components: {
+            vIcon
         }
     }
 </script>
@@ -143,7 +177,20 @@
 			border-collapse: separate;
 			border-spacing: 0;
 			color: $base-font-color;
+			
+			thead {
+				&.sample {
+					th {
+						padding: 6px
+					}
+				}
+			}
 			tbody {
+				&.sample {
+					td {
+						padding: 6px;
+					}
+				}
 				&.stripe {
 					tr:nth-child(even) {
 						td {
@@ -188,6 +235,29 @@
 						&:hover {
 							border: 1px solid $active-primary;
 						}
+					}
+				}
+			}
+			
+			&-th-inner {
+				display: flex;
+				align-items: center;
+			}
+			
+			&-order {
+				display: inline-flex;
+				flex-direction: column;
+				margin-left: 5px;
+				
+				svg {
+					margin: 0;
+					cursor: pointer;
+					fill: rgb(191, 191, 191);
+					width: 12px;
+					height: 12px;
+					
+					&.active {
+						fill: $active-primary;
 					}
 				}
 			}

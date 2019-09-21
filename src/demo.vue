@@ -3,9 +3,9 @@
 		<!--		<v-page :total="20" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">-->
 		<!--		-->
 		<!--		</v-page>-->
-		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead" stripe="">
-		
-		</v-table>
+		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"
+		         :order-by.sync="orderBy"
+		/>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
 		<!--				>-->
@@ -88,6 +88,11 @@
     import vTable from './table/table'
     export default {
         name: 'demo',
+        watch: {
+            orderBy(newVal, oldVal) {
+                console.log(newVal, oldVal)
+            }
+        },
         components: {
             vMenu,
             menuItem,
@@ -108,6 +113,10 @@
                 choose: 'A',
                 active: 'home',
                 currentPage: 10,
+                orderBy: {
+                    heroName: true,
+                    superAbility: true
+                },
                 tableSelected: [{heroName: '蜘蛛侠', superAbility: '蜘蛛感应', key: 2},
                     {heroName: '雷神', superAbility: '风暴战斧', key: 3},
                     {heroName: '绿巨人', superAbility: '超恢复', key: 4},
@@ -126,11 +135,9 @@
             }
         },
         methods: {
-            changePage() {
-                console.log(123);
-            },
-            x(name) {
-                console.log(name)
+            x() {
+                console.log(this.orderBy)
+                console.log(123)
             },
             /**
              * 模拟后台动态返回节点
