@@ -3,7 +3,7 @@
 		<!--		<v-page :total="20" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">-->
 		<!--		-->
 		<!--		</v-page>-->
-		<v-table :data-source="tableData" :columns="tableHead">
+		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead" stripe="">
 		
 		</v-table>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
@@ -108,6 +108,10 @@
                 choose: 'A',
                 active: 'home',
                 currentPage: 10,
+                tableSelected: [{heroName: '蜘蛛侠', superAbility: '蜘蛛感应', key: 2},
+                    {heroName: '雷神', superAbility: '风暴战斧', key: 3},
+                    {heroName: '绿巨人', superAbility: '超恢复', key: 4},
+                    {heroName: '奇异博士', superAbility: '空间传送', key: 5},],
                 tableData: [
                     {heroName: '钢铁侠', superAbility: '钞能力', key: 1},
                     {heroName: '蜘蛛侠', superAbility: '蜘蛛感应', key: 2},
@@ -116,7 +120,7 @@
                     {heroName: '奇异博士', superAbility: '空间传送', key: 5},
                     {heroName: '黑寡妇', superAbility: '枪械', key: 6},
                     {heroName: '鹰眼', superAbility: '弓箭', key: 7},
-                    {heroName: '美国队长', superAbility: '氪金盾', key: 8},
+                    {heroName: '美国队长', superAbility: '振金盾', key: 8},
                 ],
                 tableHead: [{name: '英雄名', field: 'heroName'}, {name: '超能力', field: 'superAbility'}]
             }
