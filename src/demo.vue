@@ -4,8 +4,14 @@
 		<!--		-->
 		<!--		</v-page>-->
 		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"
-		         :order-by.sync="orderBy" ref="table" :height="400"
-		/>
+		         :order-by.sync="orderBy" ref="table" bordered :height="400" show-num="true" :stripe="true"
+		>
+			<template v-slot="{item}">
+				<button @click="look(item)">查看</button>
+				<button>编辑</button>
+				<button>删除</button>
+			</template>
+		</v-table>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
 		<!--				>-->
@@ -138,6 +144,9 @@
             }
         },
         methods: {
+            look(item) {
+                console.log(item)
+            },
             x() {
                 console.log(this.orderBy)
                 console.log(123)

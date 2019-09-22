@@ -1,6 +1,6 @@
 ™
 <template>
-    <svg class="v-icon" :fill="color">
+	<svg class="v-icon" :fill="color" @click="$emit('click')">
 	    <use :xlink:href="icon">
 	    </use>
     </svg>

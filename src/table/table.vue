@@ -1,7 +1,7 @@
 <template>
 	<div class="v-table-wrapper" ref="wrapper">
 		<div class="fixed-wrapper" :style="{'overflow':'auto','height':height+'px'}">
-			<table class="v-table" ref="tableInstant">
+			<table class="v-table" ref="tableInstant" :class="{bordered}">
 				<thead :class="{sample}">
 				<tr>
 					<th v-if="showNum" class="number-index">
@@ -27,9 +27,12 @@
 							</div>
 						</div>
 					</th>
+					<th v-if="$scopedSlots.default && $scopedSlots.default().length > 0" class="actions" ref="actionsHeader">
+						操作
+					</th>
 				</tr>
 				</thead>
-				<tbody :class="{stripe,sample}">
+				<tbody :class="{stripe,sample}" ref="tBody">
 				<tr v-for="(item,index) in dataSource" :key="item.key">
 					<td v-if="showNum" class="number-index">
 					<span class="td-content">
@@ -48,6 +51,13 @@
 						<span class="td-content">
 							{{item[column.field]}}
 						</span>
+						</td>
+					</template>
+					<template v-if="$scopedSlots.default && $scopedSlots.default().length > 0">
+						<td class="actions">
+							<div class="operate-wrapper" ref="actions">
+								<slot :item="item"></slot>
+							</div>
 						</td>
 					</template>
 				</tr>
@@ -71,17 +81,10 @@
             }
         },
         mounted() {
-            const wrapper = this.$refs.wrapper
-            const real = this.$refs.tableInstant
-            const fake = real.cloneNode(false)
-            const tHead = real.children[0]
-            this.table2 = fake
-            fake.classList.add('copy-table')
-            fake.appendChild(tHead)
-            //先放进也没后才可获取到高度
-            wrapper.appendChild(fake)
-            let {height} = tHead.getBoundingClientRect()
-            wrapper.style.paddingTop = height + 'px'
+            this.fixedHeader()
+            if (this.$scopedSlots.default && this.$scopedSlots.default().length > 0) {
+                this.calcActions()
+            }
         },
         watch: {
             'selectedItems': {
@@ -100,6 +103,10 @@
             },
         },
         props: {
+            bordered: {
+                type: Boolean,
+                default: false
+            },
             height: {
                 type: Number
             },
@@ -141,6 +148,38 @@
             }
         },
         methods: {
+            calcActions() {
+                const action = this.$refs.actions[0]
+                const {width} = action.getBoundingClientRect()
+                //32 为左右padding 2为border
+                action.parentNode.style.width = width + 32 + 2 + 'px'
+                if (this.height) {
+                    if (this.$refs.tBody.getBoundingClientRect().height > this.height && this.bordered) {
+                        this.$refs.actionsHeader.style.width = width + 32 + 2 + 15 + 'px'
+                    } else if (this.bordered) {
+                        this.$refs.actionsHeader.style.width = width + 32 + 2 + 'px'
+                    } else {
+                        this.$refs.actionsHeader.style.width = width + 32 + 'px'
+                    }
+                } else if (this.bordered) {
+                    this.$refs.actionsHeader.style.width = width + 32 + 2 + 'px'
+                } else {
+                    this.$refs.actionsHeader.style.width = width + 32 + 'px'
+                }
+            },
+            fixedHeader() {
+                const wrapper = this.$refs.wrapper
+                const real = this.$refs.tableInstant
+                const fake = real.cloneNode(false)
+                const tHead = real.children[0]
+                this.table2 = fake
+                fake.classList.add('copy-table')
+                fake.appendChild(tHead)
+                //先放进也没后才可获取到高度
+                wrapper.appendChild(fake)
+                let {height} = tHead.getBoundingClientRect()
+                wrapper.style.paddingTop = height + 'px'
+            },
             changeOrder(key) {
                 let copy = JSON.parse(JSON.stringify(this.orderBy))
                 let val = copy[key]
@@ -197,7 +236,6 @@
 	@import "../../style/var";
 	.v-table-wrapper {
 		position: relative;
-		
 		.copy-table {
 			position: absolute;
 			top: 0;
@@ -210,9 +248,25 @@
 			border-spacing: 0;
 			color: $base-font-color;
 			
+			&.bordered {
+				border-top: 1px solid $gray-border;
+				border-right: 1px solid $gray-border;
+				
+				th, td {
+					border-left: 1px solid $gray-border;
+				}
+			}
 			thead, tbody {
+				.actions {
+					text-align: center;
+					
+					.operate-wrapper {
+						display: inline-block;
+					}
+				}
 				.number-index {
 					width: 60px;
+					text-align: center;
 				}
 			}
 			thead {
@@ -261,14 +315,12 @@
 			.selection {
 				width: 60px;
 				text-align: center;
-				
 				label {
 					input[type="checkbox"] {
-						cursor: pointer;
+						cursor: pointer;;
 						width: 16px;
 						height: 16px;
 						margin: 0;
-						
 						&:hover {
 							border: 1px solid $active-primary;
 						}
@@ -290,8 +342,8 @@
 					margin: 0;
 					cursor: pointer;
 					fill: rgb(191, 191, 191);
-					width: 12px;
-					height: 12px;
+					width: 10px;
+					height: 10px;
 					&.active {
 						fill: $active-primary;
 					}
