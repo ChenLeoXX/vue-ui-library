@@ -13,7 +13,7 @@
 						</span>
 					</label>
 				</th>
-				<th v-for="item in columns" :key="item.field">
+				<th v-for="item in columns" :key="item.field" :class="{'v-table-sorter':orderBy[item.field]}">
 					<div class="v-table-th-inner">
 						<span class="th-content">
 						{{item.name}}
@@ -50,6 +50,9 @@
 			</tr>
 			</tbody>
 		</table>
+		<div class="table-loading-wrapper" :class="{'loadings': isLoading}" v-if="isLoading">
+			<v-icon icon-name="table-loading" :class="{'spin-animation':isLoading}"/>
+		</div>
 	</div>
 </template>
 
@@ -59,7 +62,8 @@
         name: "v-table",
         data() {
             return {
-                isAllCheck: false
+                isAllCheck: false,
+                isLoading: false
             }
         },
         watch: {
@@ -80,7 +84,8 @@
         },
         props: {
             orderBy: {
-                type: Object
+                type: Object,
+                default: () => ({})
             },
             needSelection: {
                 type: Boolean,
@@ -171,6 +176,7 @@
 <style lang="scss" scoped>
 	@import "../../style/var";
 	.v-table-wrapper {
+		position: relative;
 		.v-table {
 			width: 100%;
 			text-align: left;
@@ -215,7 +221,7 @@
 				color: rgba(0, 0, 0, .85);
 				background: #fafafa;
 				font-weight: 500;
-				
+				transition: background .3s ease;
 				&:first-child, &:last-child {
 					border-top-left-radius: $border-radius;
 				}
@@ -255,11 +261,46 @@
 					fill: rgb(191, 191, 191);
 					width: 12px;
 					height: 12px;
-					
 					&.active {
 						fill: $active-primary;
 					}
 				}
+			}
+			
+			&-sorter {
+				user-select: none;
+				
+				&:hover {
+					background: rgb(235, 235, 235);
+				}
+			}
+		}
+		
+		.table-loading-wrapper {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			z-index: 2;
+			
+			&.loadings {
+				background: rgba(255, 255, 255, .4);
+			}
+			
+			.spin-animation {
+				animation: spin infinite linear .8s;
+			}
+			
+			svg {
+				position: absolute;
+				width: 2.5em;
+				height: 2.5em;
+				top: 50%;
+				left: 50%;
+				margin-left: -1.5em;
+				margin-top: -1.5em;
 			}
 		}
 	}

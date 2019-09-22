@@ -4,7 +4,7 @@
 		<!--		-->
 		<!--		</v-page>-->
 		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"
-		         :order-by.sync="orderBy"
+		         :order-by.sync="orderBy" ref="table"
 		/>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
@@ -90,7 +90,10 @@
         name: 'demo',
         watch: {
             orderBy(newVal, oldVal) {
-                console.log(newVal, oldVal)
+                this.$refs.table.isLoading = true
+                setTimeout(() => {
+                    this.$refs.table.isLoading = false
+                }, 3000)
             }
         },
         components: {
