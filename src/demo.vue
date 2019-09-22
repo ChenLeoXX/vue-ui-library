@@ -4,7 +4,7 @@
 		<!--		-->
 		<!--		</v-page>-->
 		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"
-		         :order-by.sync="orderBy" ref="table"
+		         :order-by.sync="orderBy" ref="table" :height="400"
 		/>
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
@@ -89,7 +89,7 @@
     export default {
         name: 'demo',
         watch: {
-            orderBy(newVal, oldVal) {
+            orderBy() {
                 this.$refs.table.isLoading = true
                 setTimeout(() => {
                     this.$refs.table.isLoading = false
@@ -134,7 +134,7 @@
                     {heroName: '鹰眼', superAbility: '弓箭', key: 7},
                     {heroName: '美国队长', superAbility: '振金盾', key: 8},
                 ],
-                tableHead: [{name: '英雄名', field: 'heroName'}, {name: '超能力', field: 'superAbility'}]
+                tableHead: [{name: '英雄名', field: 'heroName', width: 150}, {name: '超能力', field: 'superAbility'}]
             }
         },
         methods: {

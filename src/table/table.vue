@@ -1,55 +1,59 @@
 <template>
-	<div class="v-table-wrapper">
-		<table class="v-table">
-			<thead :class="{sample}">
-			<tr>
-				<th v-if="showNum">
-					<span>No</span>
-				</th>
-				<th class="selection" v-if="needSelection">
-					<label @click="checkAll">
+	<div class="v-table-wrapper" ref="wrapper">
+		<div class="fixed-wrapper" :style="{'overflow':'auto','height':height+'px'}">
+			<table class="v-table" ref="tableInstant">
+				<thead :class="{sample}">
+				<tr>
+					<th v-if="showNum" class="number-index">
+						<span>No</span>
+					</th>
+					<th class="selection" v-if="needSelection">
+						<label @click="checkAll">
 						<span class="check-box">
 							<input type="checkbox" ref="allCheck" :checked="isAllCheck">
 						</span>
-					</label>
-				</th>
-				<th v-for="item in columns" :key="item.field" :class="{'v-table-sorter':orderBy[item.field]}">
-					<div class="v-table-th-inner">
+						</label>
+					</th>
+					<th v-for="column in columns" :key="column.field"
+					    :style="{'width':column.width+'px'}"
+					    :class="{'v-table-sorter':orderBy[column.field]}">
+						<div class="v-table-th-inner">
 						<span class="th-content">
-						{{item.name}}
+						{{column.name}}
 						</span>
-						<div class="v-table-order" v-if="orderBy[item.field]" @click="changeOrder(item.field)">
-							<v-icon icon-name="triangle-up" :class="{'active': orderBy[item.field] === 'ascend'}"/>
-							<v-icon icon-name="triangle-down" :class="{'active': orderBy[item.field] === 'decline'}"/>
+							<div class="v-table-order" v-if="orderBy[column.field]" @click="changeOrder(column.field)">
+								<v-icon icon-name="triangle-up" :class="{'active': orderBy[column.field] === 'ascend'}"/>
+								<v-icon icon-name="triangle-down" :class="{'active': orderBy[column.field] === 'decline'}"/>
+							</div>
 						</div>
-					</div>
-				</th>
-			</tr>
-			</thead>
-			<tbody :class="{stripe,sample}">
-			<tr v-for="(item,index) in dataSource" :key="item.key">
-				<td v-if="showNum">
+					</th>
+				</tr>
+				</thead>
+				<tbody :class="{stripe,sample}">
+				<tr v-for="(item,index) in dataSource" :key="item.key">
+					<td v-if="showNum" class="number-index">
 					<span class="td-content">
 						{{index+1}}
 					</span>
-				</td>
-				<td class="selection" v-if="needSelection">
-					<label @click="onChecked(item,$event)">
+					</td>
+					<td class="selection" v-if="needSelection">
+						<label @click="onChecked(item,$event)">
 						<span class="check-box">
 							<input type="checkbox" :checked="isChecked(item)">
 						</span>
-					</label>
-				</td>
-				<template>
-					<td v-for="head in columns" :key="head.field">
-						<span class="td-content">
-							{{item[head.field]}}
-						</span>
+						</label>
 					</td>
-				</template>
-			</tr>
-			</tbody>
-		</table>
+					<template>
+						<td v-for="column in columns" :key="column.field" :style="{'width':column.width+'px'}">
+						<span class="td-content">
+							{{item[column.field]}}
+						</span>
+						</td>
+					</template>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="table-loading-wrapper" :class="{'loadings': isLoading}" v-if="isLoading">
 			<v-icon icon-name="table-loading" :class="{'spin-animation':isLoading}"/>
 		</div>
@@ -65,6 +69,19 @@
                 isAllCheck: false,
                 isLoading: false
             }
+        },
+        mounted() {
+            const wrapper = this.$refs.wrapper
+            const real = this.$refs.tableInstant
+            const fake = real.cloneNode(false)
+            const tHead = real.children[0]
+            this.table2 = fake
+            fake.classList.add('copy-table')
+            fake.appendChild(tHead)
+            //先放进也没后才可获取到高度
+            wrapper.appendChild(fake)
+            let {height} = tHead.getBoundingClientRect()
+            wrapper.style.paddingTop = height + 'px'
         },
         watch: {
             'selectedItems': {
@@ -83,6 +100,9 @@
             },
         },
         props: {
+            height: {
+                type: Number
+            },
             orderBy: {
                 type: Object,
                 default: () => ({})
@@ -177,6 +197,12 @@
 	@import "../../style/var";
 	.v-table-wrapper {
 		position: relative;
+		
+		.copy-table {
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
 		.v-table {
 			width: 100%;
 			text-align: left;
@@ -184,6 +210,11 @@
 			border-spacing: 0;
 			color: $base-font-color;
 			
+			thead, tbody {
+				.number-index {
+					width: 60px;
+				}
+			}
 			thead {
 				&.sample {
 					th {
@@ -275,7 +306,6 @@
 				}
 			}
 		}
-		
 		.table-loading-wrapper {
 			position: absolute;
 			width: 100%;
