@@ -1,17 +1,62 @@
 <template>
-	<div class="demo">
+	<div class="demo" style="height:500px;">
+		<div>
+			<p>段落1</p>
+			<p>段落2</p>
+			<p>段落3</p>
+			<p>段落4</p>
+			<p>段落5</p>
+			<p>段落6</p>
+			<v-sticky>
+				<h1> 我是 Sticky</h1>
+			</v-sticky>
+			<p>段落7</p>
+			<p>段落8</p>
+			<p>段落9</p>
+			<p>段落10</p>
+			<p>段落11</p>
+			<p>段落12</p>
+			<p>段落13</p>
+			<p>段落14</p>
+			<p>段落15</p>
+			<p>段落16</p>
+			<p>段落17</p>
+			<p>段落18</p>
+			<p>段落19</p>
+			<p>段落20</p>
+			<p>段落301</p>
+			<p>段落302</p>
+			<p>段落303</p>
+			<p>段落304</p>
+			<p>段落305</p>
+			<p>段落306</p>
+			<p>段落307</p>
+			<p>段落308</p>
+			<p>段落309</p>
+			<p>段落3010</p>
+			<p>段落3011</p>
+			<p>段落3012</p>
+			<p>段落3013</p>
+			<p>段落3014</p>
+			<p>段落3015</p>
+			<p>段落3016</p>
+			<p>段落3017</p>
+			<p>段落3018</p>
+			<p>段落3019</p>
+			<p>段落3020</p>
+		</div>
 		<!--		<v-page :total="20" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">-->
 		<!--		-->
 		<!--		</v-page>-->
-		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"
-		         :order-by.sync="orderBy" ref="table" bordered :height="400" show-num="true" :stripe="true"
-		>
-			<template v-slot="{item}">
-				<button @click="look(item)">查看</button>
-				<button>编辑</button>
-				<button>删除</button>
-			</template>
-		</v-table>
+		<!--		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"-->
+		<!--		         :order-by.sync="orderBy" ref="table" bordered :height="400" show-num="true" :stripe="true"-->
+		<!--		>-->
+		<!--			<template v-slot="{item}">-->
+		<!--				<button @click="look(item)">查看</button>-->
+		<!--				<button>编辑</button>-->
+		<!--				<button>删除</button>-->
+		<!--			</template>-->
+		<!--		</v-table>-->
 		<!--				<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--				            :load-data="loadData"-->
 		<!--				>-->
@@ -92,6 +137,7 @@
     import subMenu from './menu/sub-menu'
     import vIcon from './basic/v-icon'
     import vTable from './table/table'
+    import vSticky from './sticky/sticky'
     export default {
         name: 'demo',
         watch: {
@@ -103,6 +149,7 @@
             }
         },
         components: {
+            vSticky,
             vMenu,
             menuItem,
             subMenu,
