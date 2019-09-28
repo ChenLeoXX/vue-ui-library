@@ -1,12 +1,12 @@
 {
   "name": "vue-ease-ui",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.2",
+  "main": "src/index.js",
   "scripts": {
     "test:unit": "karma start",
     "test": "vue-cli-service test:unit",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build --target lib --name easyui ./src/index.js"
   },
   "dependencies": {
     "core-js": "^2.6.5",

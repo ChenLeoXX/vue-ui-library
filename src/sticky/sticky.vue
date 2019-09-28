@@ -39,14 +39,12 @@
                 let top = this.calcTop()
                 if (top < window.scrollY) {
                     let {height, width, left} = this.$refs.wrapper.getBoundingClientRect()
-                    console.log('超过了');
                     this.height = height + 'px'
                     this.width = width + 'px'
                     this.left = left + 'px'
                     this.top = this.distance + 'px'
                     this.sticky = true
                 } else {
-                    console.log('没超过了');
                     this.height = ''
                     this.width = ''
                     this.top = ''

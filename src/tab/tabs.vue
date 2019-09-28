@@ -4,7 +4,7 @@
 	</div>
 </template>
 <script>
-    import Vue from "vue/types";
+    import Vue from "vue";
     export default {
         name: "tabs",
         props: {

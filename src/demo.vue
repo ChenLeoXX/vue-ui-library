@@ -1,50 +1,5 @@
 <template>
-	<div class="demo" style="height:500px;">
-		<div>
-			<p>段落1</p>
-			<p>段落2</p>
-			<p>段落3</p>
-			<p>段落4</p>
-			<p>段落5</p>
-			<p>段落6</p>
-			<v-sticky>
-				<h1> 我是 Sticky</h1>
-			</v-sticky>
-			<p>段落7</p>
-			<p>段落8</p>
-			<p>段落9</p>
-			<p>段落10</p>
-			<p>段落11</p>
-			<p>段落12</p>
-			<p>段落13</p>
-			<p>段落14</p>
-			<p>段落15</p>
-			<p>段落16</p>
-			<p>段落17</p>
-			<p>段落18</p>
-			<p>段落19</p>
-			<p>段落20</p>
-			<p>段落301</p>
-			<p>段落302</p>
-			<p>段落303</p>
-			<p>段落304</p>
-			<p>段落305</p>
-			<p>段落306</p>
-			<p>段落307</p>
-			<p>段落308</p>
-			<p>段落309</p>
-			<p>段落3010</p>
-			<p>段落3011</p>
-			<p>段落3012</p>
-			<p>段落3013</p>
-			<p>段落3014</p>
-			<p>段落3015</p>
-			<p>段落3016</p>
-			<p>段落3017</p>
-			<p>段落3018</p>
-			<p>段落3019</p>
-			<p>段落3020</p>
-		</div>
+	<div class="demo">
 		<!--		<v-page :total="20" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">-->
 		<!--		-->
 		<!--		</v-page>-->
@@ -64,23 +19,17 @@
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
-		<!--		<slide :selected.sync="choose" :auto-play="true">-->
-		<!--			<slide-item name="A" @on-item-click="slideClick">-->
-		<!--				<div class="box">-->
-		<!--					<h1>1</h1>-->
-		<!--				</div>-->
-		<!--			</slide-item>-->
-		<!--			<slide-item name="B" @on-item-click="slideClick">-->
-		<!--				<div class="box">-->
-		<!--					<h1>2</h1>-->
-		<!--				</div>-->
-		<!--			</slide-item>-->
-		<!--			<slide-item name="C" @on-item-click="slideClick">-->
-		<!--				<div class="box">-->
-		<!--					<h1>3</h1>-->
-		<!--				</div>-->
-		<!--			</slide-item>-->
-		<!--		</slide>-->
+		<slide :selected.sync="choose" :auto-play="true">
+			<slide-item name="A" @on-item-click="slideClick">
+				<h1>1</h1>
+			</slide-item>
+			<slide-item name="B" @on-item-click="slideClick">
+				<h1>2</h1>
+			</slide-item>
+			<slide-item name="C" @on-item-click="slideClick">
+				<h1>3</h1>
+			</slide-item>
+		</slide>
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->

@@ -48,7 +48,8 @@
                 default: true
             },
             selected: {
-                type: String
+                type: String,
+                required: true
             },
             autoPlay: {
                 type: Boolean,
