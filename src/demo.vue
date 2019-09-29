@@ -19,17 +19,7 @@
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
-		<slide :selected.sync="choose" :auto-play="true">
-			<slide-item name="A" @on-item-click="slideClick">
-				<h1>1</h1>
-			</slide-item>
-			<slide-item name="B" @on-item-click="slideClick">
-				<h1>2</h1>
-			</slide-item>
-			<slide-item name="C" @on-item-click="slideClick">
-				<h1>3</h1>
-			</slide-item>
-		</slide>
+		<v-date-picker></v-date-picker>
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->
@@ -75,6 +65,7 @@
 	</div>
 </template>
 <script>
+    import vDatePicker from './datepicker/datepicker'
     import vPage from './pagenation/pagenation'
     import db from '../tests/fixture/db'
     import cascader from './cascader/cascader'
@@ -98,6 +89,7 @@
             }
         },
         components: {
+            vDatePicker,
             vSticky,
             vMenu,
             menuItem,
