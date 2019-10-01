@@ -19,7 +19,9 @@
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
-		<v-date-picker></v-date-picker>
+		<v-date-picker :value.sync="selectDate">
+		
+		</v-date-picker>
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->
@@ -104,6 +106,7 @@
         },
         data() {
             return {
+                selectDate: new Date(),
                 db: db,
                 selected: [],
                 source: [],

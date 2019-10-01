@@ -1,25 +1,33 @@
 <template>
 	<div :class="className('wrapper')">
 		<v-popover position="bottom" :content-styles="{padding:'0px'}">
-			<v-input readonly></v-input>
+			<v-input readonly :value="formatDate"></v-input>
 			<template slot="content">
 				<div :class="className('pop')">
 					<div :class="className('nav')">
 						<div :class="className('prev')">
-							<v-icon icon-name="lefttwo"></v-icon>
-							<v-icon icon-name="left"></v-icon>
+							<span @click="onPrevYear">
+								<v-icon icon-name="lefttwo"></v-icon>
+							</span>
+							<span @click="onPrevMonth">
+								<v-icon icon-name="left"></v-icon>
+							</span>
 						</div>
 						<div class="date-value">
 							<span class="year">
-								2019年
+								{{displayDate.year}}年
 							</span>
 							<span class="month">
-								9月
+								{{displayDate.month+1}}月
 							</span>
 						</div>
 						<div :class="className('next')">
-							<v-icon icon-name="right"></v-icon>
-							<v-icon icon-name="righttwo"></v-icon>
+							<span @click="onNextMonth">
+								<v-icon icon-name="right"></v-icon>
+							</span>
+							<span @click="onNextYear">
+								<v-icon icon-name="righttwo"></v-icon>
+							</span>
 						</div>
 					</div>
 					<div :class="className('panels')">
@@ -30,8 +38,10 @@
 						</div>
 						<div class="dates">
 							<div class="date-row" v-for=" i in 6">
-								<span class="date-cell" v-for="j in 7">
-									{{getAllDays[`${7*i-7+j - 1}`].getDate()}}
+								<span class="date-cell" v-for="j in 7" :class="{'current-day':isCurrentMonth(i,j)}"
+								      @click="onCellSelect(i,j)"
+								>
+									{{calcVisibleDate(i,j).getDate()}}
 								</span>
 							</div>
 						</div>
@@ -53,8 +63,10 @@
     export default {
         name: "datepicker",
         data() {
+            let {year, month, date} = this.getYearMonthDay(this.value)
             return {
-                value: new Date(),
+                //    区分展示和选中
+                displayDate: {year, month, date},
                 weekDict: {
                     1: '一',
                     2: '二',
@@ -69,6 +81,42 @@
             }
         },
         methods: {
+            addMonth(n) {
+                const {year, month, date} = this.displayDate
+                const newDate = new Date(year, month, date)
+                this.displayDate = this.getYearMonthDay(new Date(newDate.setMonth(month + n)))
+            },
+            addYear(n) {
+                const {year, month, date} = this.displayDate
+                const newDate = new Date(year, month, date)
+                this.displayDate = this.getYearMonthDay(new Date(newDate.setFullYear(year + n)))
+            },
+            onPrevYear() {
+                this.addYear(-1)
+            },
+            onNextYear() {
+                this.addYear(1)
+            },
+            onPrevMonth() {
+                this.addMonth(-1)
+            },
+            onNextMonth() {
+                this.addMonth(1)
+            },
+            onCellSelect(row, col) {
+                const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
+                console.log(date)
+                this.$emit('update:value', new Date(date))
+            },
+            isCurrentMonth(row, col) {
+                const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
+                const {year, month} = this.getYearMonthDay(date)
+                return this.displayDate.year === year && this.displayDate.month === month
+
+            },
+            calcVisibleDate(row, col) {
+                return this.getAllDays[`${(row - 1) * 7 + col - 1}`]
+            },
             className(name) {
                 return `v-date-picker-${name}`
             },
@@ -92,11 +140,16 @@
             }
         },
         mounted() {
-            console.log(window.a = this.getAllDays)
+
         },
         computed: {
+            formatDate() {
+                const {year, month, date} = this.getYearMonthDay(this.value)
+                return `${year}-${month + 1}-${date}`
+            },
             getAllDays() {
-                let firstDay = this.getFirstDay(this.value)
+                const initDate = new Date(this.displayDate.year, this.displayDate.month, 1)
+                let firstDay = this.getFirstDay(initDate)
                 let dayOfMonth = []
                 let prevDate = firstDay.getDay() ? firstDay.getDay() - 1 : 6
                 const DAY_MS = 86400 * 1000
@@ -107,7 +160,12 @@
                 return dayOfMonth
             }
         },
-        props: {},
+        props: {
+            value: {
+                type: Date,
+                default: () => new Date()
+            }
+        },
         components: {
             vPopover,
             vIcon,
@@ -155,9 +213,8 @@
 			}
 			
 			.dates {
-				color: $base-font-color;
-				
 				.date-cell {
+					cursor: pointer;
 					display: inline-flex;
 					align-items: center;
 					justify-content: center;
@@ -165,6 +222,11 @@
 					width: 24px;
 					height: 24px;
 					margin: 0 auto;
+					color: $base-disabled-gray;
+					
+					&.current-day {
+						color: $base-font-color;
+					}
 				}
 			}
 		}
