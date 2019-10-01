@@ -1,14 +1,43 @@
 <template>
 	<div :class="className('wrapper')">
-		<v-popover>
+		<v-popover position="bottom" :content-styles="{padding:'0px'}">
 			<v-input readonly></v-input>
 			<template slot="content">
 				<div :class="className('pop')">
 					<div :class="className('nav')">
+						<div :class="className('prev')">
+							<v-icon icon-name="lefttwo"></v-icon>
+							<v-icon icon-name="left"></v-icon>
+						</div>
+						<div class="date-value">
+							<span class="year">
+								2019年
+							</span>
+							<span class="month">
+								9月
+							</span>
+						</div>
+						<div :class="className('next')">
+							<v-icon icon-name="right"></v-icon>
+							<v-icon icon-name="righttwo"></v-icon>
+						</div>
 					</div>
 					<div :class="className('panels')">
+						<div class="weeks">
+							<span v-for="i in 7" class="weekday">
+								{{weekDict[i]}}
+							</span>
+						</div>
+						<div class="dates">
+							<div class="date-row" v-for=" i in 6">
+								<span class="date-cell" v-for="j in 7">
+									{{getAllDays[`${7*i-7+j - 1}`].getDate()}}
+								</span>
+							</div>
+						</div>
 					</div>
 					<div :class="className('actions')">
+						今天
 					</div>
 				</div>
 			</template>
@@ -34,7 +63,9 @@
                     5: '五',
                     6: '六',
                     7: '日'
-                }
+                },
+                pickerColRange: [1, 2, 3, 4, 5, 6, 7],
+                pickerRowRange: [1, 2, 3, 4, 5, 6]
             }
         },
         methods: {
@@ -61,34 +92,19 @@
             }
         },
         mounted() {
-            console.log(this.getAllDays)
+            console.log(window.a = this.getAllDays)
         },
         computed: {
             getAllDays() {
                 let firstDay = this.getFirstDay(this.value)
-                let lastDay = this.getLastDay(this.value)
-                let {year, month} = this.getYearMonthDay(this.value)
                 let dayOfMonth = []
-                //遍历获取当前月的所有日期
-                for (let i = firstDay.getDate(); i <= lastDay.getDate(); i++) {
-                    dayOfMonth.push(new Date(year, month, i))
+                let prevDate = firstDay.getDay() ? firstDay.getDay() - 1 : 6
+                const DAY_MS = 86400 * 1000
+                let firstDayOfShow = new Date(firstDay.getTime() - prevDate * DAY_MS)
+                for (let i = 0; i < 42; i++) {
+                    dayOfMonth.push(new Date(firstDayOfShow.getTime() + i * DAY_MS))
                 }
-                //根据星期 填充前一月日期,一页显示 42天,保证页面高度,
-                let prevArr = []
-                //星期从  一 到日顺序所以 正常日期减2, 0的话为5 setDate(0)算最后一天
-                let prevDate = firstDay.getDay() ? firstDay.getDay() - 2 : 5
-                for (let i = prevDate; i >= 0; i--) {
-                    prevArr.push(new Date(year, month, -i))
-                }
-                //同上
-                let nextArr = []
-                let nextDate = 42 - (dayOfMonth.length + prevArr.length)
-                //从1开始不包括最后一天 0
-                for (let i = 1; i <= nextDate; i++) {
-                    //  下一个月的日期
-                    nextArr.push(new Date(year, month + 1, i))
-                }
-                return [...prevArr, ...dayOfMonth, ...nextArr]
+                return dayOfMonth
             }
         },
         props: {},
@@ -101,5 +117,93 @@
 </script>
 
 <style lang="scss" scoped>
-
+	@import "../../style/var";
+	
+	.v-date-picker-pop {
+		box-sizing: border-box;
+		min-width: 278px;
+		
+		.v-date-picker-actions {
+			padding: 0 12px;
+			line-height: 38px;
+			text-align: center;
+		}
+		
+		.v-date-picker-panels {
+			padding: 8px 12px;
+			user-select: none;
+			border-bottom: 1px solid $gray-border;
+			
+			.date-row {
+				display: flex;
+			}
+			
+			.weeks {
+				color: $base-font-color;
+				display: flex;
+				
+				.weekday {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 2px;
+					width: 33px;
+					height: auto;
+					padding: 6px 0;
+					margin: 0 auto;
+				}
+			}
+			
+			.dates {
+				color: $base-font-color;
+				
+				.date-cell {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 2px;
+					width: 24px;
+					height: 24px;
+					margin: 0 auto;
+				}
+			}
+		}
+		
+		.v-date-picker-nav {
+			display: flex;
+			padding: 10px 5px;
+			justify-content: space-between;
+			border-bottom: 1px solid $gray-border;
+			
+			.v-date-picker-prev, .v-date-picker-next {
+				display: inline-flex;
+				align-items: center;
+			}
+			
+			svg {
+				cursor: pointer;
+				margin: 0 5px;
+				min-width: 0.8em;
+				min-height: 0.8em;
+				fill: $light-gray-color;
+				transition: .2s linear;
+				
+				&:hover {
+					fill: $base-font-color2;
+				}
+			}
+			
+			.date-value {
+				font-weight: 500;
+				cursor: pointer;
+				color: $base-font-color2;
+				transition: .2s linear;
+				margin: auto;
+				
+				.year:hover, .month:hover {
+					color: $active-primary;
+				}
+			}
+		}
+	}
 </style>

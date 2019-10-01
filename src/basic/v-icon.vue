@@ -30,6 +30,6 @@
 		width: 1em;
 		height: 1em;
 		margin: 0 10px;
-		fill: inherit;
+		fill: currentColor;
 	}
 </style>

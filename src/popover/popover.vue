@@ -4,7 +4,7 @@
 			<div class="title" v-if="needTitle">
 				<slot name="title"></slot>
 			</div>
-			<div class="content">
+			<div class="content" :style="contentStyles">
 				<slot name="content">
 				</slot>
 			</div>
@@ -25,6 +25,9 @@
             }
         },
         props: {
+            contentStyles: {
+                type: Object
+            },
             trigger: {
                 type: String,
                 default: 'click',
