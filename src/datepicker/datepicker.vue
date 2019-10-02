@@ -1,7 +1,7 @@
 <template>
 	<div :class="className('wrapper')">
-		<v-popover position="bottom" :content-styles="{padding:'0px'}">
-			<v-input readonly :value="formatDate"></v-input>
+		<v-popover position="bottom" :content-styles="{padding:'0px'}" ref="pop">
+			<v-input readonly :value="formatDate" icon-name="calendar"></v-input>
 			<template slot="content">
 				<div :class="className('pop')">
 					<div :class="className('nav')">
@@ -38,7 +38,8 @@
 						</div>
 						<div class="dates">
 							<div class="date-row" v-for=" i in 6">
-								<span class="date-cell" v-for="j in 7" :class="{'current-day':isCurrentMonth(i,j)}"
+								<span class="date-cell" v-for="j in 7"
+								      :class="{'current-day':isCurrentMonth(i,j),'today':isToday(i,j),'selectDay':isSelected(i,j)}"
 								      @click="onCellSelect(i,j)"
 								>
 									{{calcVisibleDate(i,j).getDate()}}
@@ -47,7 +48,8 @@
 						</div>
 					</div>
 					<div :class="className('actions')">
-						今天
+						<span @click="clearDate">清除</span>
+						<span @click="goToday">今天</span>
 					</div>
 				</div>
 			</template>
@@ -63,7 +65,8 @@
     export default {
         name: "datepicker",
         data() {
-            let {year, month, date} = this.getYearMonthDay(this.value)
+            let defaultDate = new Date()
+            let {year, month, date} = this.value ? this.getYearMonthDay(this.value) : this.getYearMonthDay(defaultDate)
             return {
                 //    区分展示和选中
                 displayDate: {year, month, date},
@@ -76,11 +79,32 @@
                     6: '六',
                     7: '日'
                 },
+                defaultDate,
                 pickerColRange: [1, 2, 3, 4, 5, 6, 7],
                 pickerRowRange: [1, 2, 3, 4, 5, 6]
             }
         },
         methods: {
+            clearDate() {
+                this.$emit('update:value', '')
+            },
+            goToday() {
+                this.$emit('update:value', new Date())
+                this.displayDate = this.getYearMonthDay(new Date())
+            },
+            isSelected(row, col) {
+                const itemDate = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
+                return this.compareTime(itemDate, this.value)
+            },
+            isToday(row, col) {
+                const itemDate = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
+                return this.compareTime(itemDate, new Date())
+            },
+            compareTime(date1, date2) {
+                const {year, month, date} = this.getYearMonthDay(date1)
+                const {year: _year, month: _month, date: _date} = this.getYearMonthDay(date2)
+                return _year === year && _month === month && date === _date
+            },
             addMonth(n) {
                 const {year, month, date} = this.displayDate
                 const newDate = new Date(year, month, date)
@@ -105,8 +129,8 @@
             },
             onCellSelect(row, col) {
                 const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
-                console.log(date)
                 this.$emit('update:value', new Date(date))
+                this.$refs.pop.close()
             },
             isCurrentMonth(row, col) {
                 const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
@@ -130,7 +154,8 @@
                 return new Date(year, month + 1, 0)
             },
             getYearMonthDay(date) {
-                if (!date instanceof Date) throw TypeError('date must be date instance')
+                if (!(date instanceof Date) && typeof date !== 'string') throw TypeError('date must be date instance')
+                date = new Date(date)
                 return {
                     year: date.getFullYear(),
                     month: date.getMonth(),
@@ -144,8 +169,10 @@
         },
         computed: {
             formatDate() {
-                const {year, month, date} = this.getYearMonthDay(this.value)
-                return `${year}-${month + 1}-${date}`
+                if (this.value) {
+                    const {year, month, date} = this.getYearMonthDay(this.value)
+                    return `${year}-${month + 1}-${date}`
+                }
             },
             getAllDays() {
                 const initDate = new Date(this.displayDate.year, this.displayDate.month, 1)
@@ -162,9 +189,19 @@
         },
         props: {
             value: {
-                type: Date,
-                default: () => new Date()
-            }
+                type: Date | String,
+                validator(val) {
+                    let regx = /^\d{4}-\d{2}-\d{2}$/g
+                    if (typeof val === 'string' && val !== '') {
+                        return !!val.match(regx)
+                    } else if (typeof val === 'object') {
+                        return val instanceof Date
+                    } else {
+                        return true
+                    }
+                },
+                required: true,
+            },
         },
         components: {
             vPopover,
@@ -180,11 +217,16 @@
 	.v-date-picker-pop {
 		box-sizing: border-box;
 		min-width: 278px;
-		
 		.v-date-picker-actions {
 			padding: 0 12px;
 			line-height: 38px;
-			text-align: center;
+			text-align: right;
+			user-select: none;
+			
+			span {
+				cursor: pointer;
+				margin-right: .5em;
+			}
 		}
 		
 		.v-date-picker-panels {
@@ -226,6 +268,20 @@
 					
 					&.current-day {
 						color: $base-font-color;
+						
+						&.selectDay {
+							background: $hover-lightblue;
+						}
+						
+						&.today {
+							color: $active-primary;
+							border: 1px solid $active-primary;
+							font-weight: bold;
+						}
+						
+						&:hover {
+							background: $hover-lightblue;
+						}
 					}
 				}
 			}
@@ -261,7 +317,7 @@
 				color: $base-font-color2;
 				transition: .2s linear;
 				margin: auto;
-				
+				user-select: none;
 				.year:hover, .month:hover {
 					color: $active-primary;
 				}

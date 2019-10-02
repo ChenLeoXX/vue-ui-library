@@ -15,7 +15,7 @@
       },
       color:{
         type:String,
-          default: '#fff'
+          default: '#000'
       },
     },
       computed: {
@@ -30,6 +30,5 @@
 		width: 1em;
 		height: 1em;
 		margin: 0 10px;
-		fill: currentColor;
 	}
 </style>

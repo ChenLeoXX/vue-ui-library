@@ -8,9 +8,12 @@
               @input="$emit('input',$event.target.value,$event)"
               :disabled="disabled" :value="value" :readonly="readonly"
               :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
+      <span v-if="iconName" class="input-icon">
+        <v-icon :icon-name="iconName"></v-icon>
+      </span>
     </label>
     <template v-if="error">
-        <v-icon  icon-name="error" fill="#f77f61"></v-icon>
+      <v-icon icon-name="error" color="#f77f61"></v-icon>
       <span class="msg">{{error}}</span>
     </template>
   </div>
@@ -19,6 +22,9 @@
   import vIcon from './v-icon'
   export default  {
     props:{
+      iconName: {
+        type: String
+      },
       value:{
         default:''
       },
@@ -54,12 +60,25 @@
 <style lang="scss" scoped>
   @import "../../style/var";
 .wrapper {
+  position: relative;
   display: inline-flex;
   vertical-align: top;
   align-items: center;
   font-size: var(--font-size);
   & > :not(:last-child) {
     margin-right: 0.3em;
+  }
+  
+  .input-icon {
+    position: absolute;
+    right: -4px;
+    top: 4px;
+    
+    svg {
+      width: 2em;
+      height: 1.8em;
+      fill: gray;
+    }
   }
   input {
     outline: none;

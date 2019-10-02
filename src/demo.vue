@@ -106,7 +106,7 @@
         },
         data() {
             return {
-                selectDate: new Date(),
+                selectDate: '',
                 db: db,
                 selected: [],
                 source: [],
