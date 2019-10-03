@@ -3,6 +3,8 @@
   "version": "0.0.2",
   "main": "src/index.js",
   "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "test:unit": "karma start",
     "test": "vue-cli-service test:unit",
     "serve": "vue-cli-service serve",
@@ -28,7 +30,8 @@
     "karma-webpack": "3.0.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vuepress": "^1.1.0"
   },
   "postcss": {
     "plugins": {

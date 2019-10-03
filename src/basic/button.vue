@@ -1,7 +1,7 @@
 <template>
 	<button class="v-button"
-	        :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape,'only-icon':!$slots.default}"
-	        @click="$emit('click')"
+	        :class="{[type]:true,[`icon-position-${iconPosition}`]:iconPosition,[shape]:shape,'only-icon':!$slots.default,wave}"
+	        @click="onClick"
 	>
 		<v-icon :icon-name="icon" v-if="icon && !isLoading"></v-icon>
 		<v-icon :class="{'loading':isLoading}" icon-name="loading" v-if="isLoading"></v-icon>
@@ -36,9 +36,26 @@
                 }
             },
         },
-        methods:{
-            testJump(){
+        data() {
+            return {
+                wave: false
             }
+        },
+        methods:{
+            onClick() {
+                this.$emit('click')
+                this.wave = true
+            },
+            listenAnimation() {
+                console.log(123)
+                this.wave = false
+            },
+        },
+        mounted() {
+            this.$el.addEventListener('animationend', this.listenAnimation)
+        },
+        beforeDestroy() {
+            this.$el.removeEventListener('animationend', this.listenAnimation)
         },
         components:{
             vIcon,
@@ -67,7 +84,27 @@
 		border-radius: $border-radius;
 		padding: 0 1em;
 		transition: all .2s ease-in;
-
+		position: relative;
+		
+		&.wave {
+			&::after {
+				content: '';
+				display: block;
+				background: #f0fffe;
+				pointer-events: none;
+				position: absolute;
+				z-index: 1;
+				top: -1px;
+				left: -1px;
+				bottom: -1px;
+				right: -1px;
+				border-radius: inherit;
+				border: 0 solid $active-primary;
+				opacity: 0.4;
+				animation: after-scale 0.3s linear forwards;
+				flex-shrink: 0;
+			}
+		}
 		&.icon-position-left {
 			.icon-wrapper {
 				color: $button-color;
@@ -156,6 +193,17 @@
 				width: 2.5em;
 			}
 
+		}
+	}
+	
+	@keyframes after-scale {
+		to {
+			top: -6px;
+			left: -6px;
+			bottom: -6px;
+			right: -6px;
+			border-width: 6px;
+			opacity: 0;
 		}
 	}
 </style>

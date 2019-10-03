@@ -1,69 +1,74 @@
 <template>
-	<div :class="className('wrapper')">
-		<v-popover position="bottom" :content-styles="{padding:'0px'}" ref="pop">
-			<v-input readonly :value="formatDate" icon-name="calendar"></v-input>
-			<template slot="content">
-				<div :class="className('pop')">
-					<div :class="className('nav')">
-						<div :class="className('prev')">
+	<div :class="className('wrapper')" v-out-click="closePanel">
+		<v-input readonly :value="formatDate" icon-name="calendar" placeholder="请选择日期" @click="visible = true"></v-input>
+		<v-expand :visible="visible" class="expand">
+			<div :class="className('pop')">
+				<label>
+					<input type="text" :value="formatDate" placeholder="请选择日期" @change="matchInput">
+				</label>
+				<div :class="className('nav')">
+					<div :class="className('prev')">
 							<span @click="onPrevYear">
 								<v-icon icon-name="lefttwo"></v-icon>
 							</span>
-							<span @click="onPrevMonth">
+						<span @click="onPrevMonth">
 								<v-icon icon-name="left"></v-icon>
 							</span>
-						</div>
-						<div class="date-value">
-							<span class="year">
+					</div>
+					<div class="date-value">
+							<span class="year" @click="selectYear">
 								{{displayDate.year}}年
 							</span>
-							<span class="month">
+						<span class="month" @click="selectMonth">
 								{{displayDate.month+1}}月
 							</span>
-						</div>
-						<div :class="className('next')">
+					</div>
+					<div :class="className('next')">
 							<span @click="onNextMonth">
 								<v-icon icon-name="right"></v-icon>
 							</span>
-							<span @click="onNextYear">
+						<span @click="onNextYear">
 								<v-icon icon-name="righttwo"></v-icon>
 							</span>
-						</div>
 					</div>
-					<div :class="className('panels')">
-						<div class="weeks">
+				</div>
+				<div :class="className('panels')">
+					<div class="weeks">
 							<span v-for="i in 7" class="weekday">
 								{{weekDict[i]}}
 							</span>
-						</div>
-						<div class="dates">
-							<div class="date-row" v-for=" i in 6">
+					</div>
+					<div class="dates">
+						<div class="date-row" v-for=" i in 6">
 								<span class="date-cell" v-for="j in 7"
 								      :class="{'current-day':isCurrentMonth(i,j),'today':isToday(i,j),'selectDay':isSelected(i,j)}"
 								      @click="onCellSelect(i,j)"
 								>
 									{{calcVisibleDate(i,j).getDate()}}
 								</span>
-							</div>
 						</div>
 					</div>
-					<div :class="className('actions')">
-						<span @click="clearDate">清除</span>
-						<span @click="goToday">今天</span>
-					</div>
 				</div>
-			</template>
-		</v-popover>
+				<div :class="className('actions')">
+					<span @click="clearDate">清除</span>
+					<span @click="goToday">今天</span>
+				</div>
+			</div>
+		</v-expand>
 	</div>
 </template>
 
 <script>
-    import vPopover from '../popover/popover'
     import vIcon from '../basic/v-icon'
     import vInput from '../basic/v-input'
+    import vExpand from '../animations/expand'
+    import outClick from '../click-outside'
 
     export default {
         name: "datepicker",
+        directives: {
+            outClick
+        },
         data() {
             let defaultDate = new Date()
             let {year, month, date} = this.value ? this.getYearMonthDay(this.value) : this.getYearMonthDay(defaultDate)
@@ -80,17 +85,45 @@
                     7: '日'
                 },
                 defaultDate,
+                visible: false,
                 pickerColRange: [1, 2, 3, 4, 5, 6, 7],
-                pickerRowRange: [1, 2, 3, 4, 5, 6]
+                pickerRowRange: [1, 2, 3, 4, 5, 6],
+                yearBase: 0,
+                monthBase: 0
+            }
+        },
+        watch: {
+            yearBase(val) {
+                console.log(val)
             }
         },
         methods: {
+            matchInput(e) {
+                let regx = /^\d{4}-\d{2}-\d{2}$/g
+                let res = e.target.value.match(regx)
+                if (res) {
+                    this.$emit('update:value', new Date(res[0]))
+                } else {
+                    this.$emit('update:value', this.value)
+                }
+                this.visible = false
+            },
+            closePanel() {
+                this.visible = false
+            },
+            selectYear() {
+                this.yearBase = this.displayDate.year
+            },
+            selectMonth() {
+
+            },
             clearDate() {
                 this.$emit('update:value', '')
             },
             goToday() {
                 this.$emit('update:value', new Date())
                 this.displayDate = this.getYearMonthDay(new Date())
+                this.visible = false
             },
             isSelected(row, col) {
                 const itemDate = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
@@ -130,7 +163,8 @@
             onCellSelect(row, col) {
                 const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
                 this.$emit('update:value', new Date(date))
-                this.$refs.pop.close()
+                // this.$refs.pop.close
+                this.visible = false
             },
             isCurrentMonth(row, col) {
                 const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
@@ -171,7 +205,7 @@
             formatDate() {
                 if (this.value) {
                     const {year, month, date} = this.getYearMonthDay(this.value)
-                    return `${year}-${month + 1}-${date}`
+                    return `${year}-${month < 9 ? '0' + (month + 1) : month + 1}-${date < 10 ? '0' + date : date}`
                 }
             },
             getAllDays() {
@@ -204,9 +238,9 @@
             },
         },
         components: {
-            vPopover,
             vIcon,
-            vInput
+            vInput,
+            vExpand
         }
     }
 </script>
@@ -214,9 +248,46 @@
 <style lang="scss" scoped>
 	@import "../../style/var";
 	
+	.v-date-picker-wrapper {
+		width: 280px;
+		position: relative;
+		
+		.expand {
+			position: absolute;
+			top: -2px;
+			left: -2px;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	
 	.v-date-picker-pop {
+		filter: drop-shadow(0 1px 5px rgba(0, 0, 0, 0.15));
 		box-sizing: border-box;
-		min-width: 278px;
+		width: 278px;
+		position: absolute;
+		z-index: 20;
+		top: 0;
+		background: #ffffff;
+		
+		input {
+			outline: none;
+			width: 100%;
+			height: 35px;
+			font-size: $font-size;
+			display: block;
+			border: none;
+			border-bottom: 1px solid $gray-border;
+			-webkit-box-shadow: none;
+			box-shadow: none;
+			padding: 5px 10px;
+			color: $base-font-color;
+			
+			&::placeholder {
+				color: #ddd;
+			}
+		}
+		
 		.v-date-picker-actions {
 			padding: 0 12px;
 			line-height: 38px;
@@ -318,6 +389,7 @@
 				transition: .2s linear;
 				margin: auto;
 				user-select: none;
+				
 				.year:hover, .month:hover {
 					color: $active-primary;
 				}

@@ -25,10 +25,13 @@
       }
   }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 	.v-icon {
 		width: 1em;
 		height: 1em;
-		margin: 0 10px;
+		
+		& + * {
+			margin-left: 0.5em;
+		}
 	}
 </style>

@@ -2,14 +2,15 @@
   <div class="wrapper">
     <label>
       <input
+              @click="$emit('click',$event.target.value,$event)"
               @change="$emit('change',$event.target.value,$event)"
               @blur="$emit('blur',$event.target.value,$event)"
               @focus="$emit('focus',$event.target.value,$event)"
               @input="$emit('input',$event.target.value,$event)"
               :disabled="disabled" :value="value" :readonly="readonly"
-              :class="{[`${size}`]:true,error:error}" :type="textType" :placeholder="placeholder">
-      <span v-if="iconName" class="input-icon">
-        <v-icon :icon-name="iconName"></v-icon>
+              :class="{[`${size}`]:true,error:error,'icon':iconName}" :type="textType" :placeholder="placeholder">
+      <span v-if="iconName" class="input-icon" :class="{[`${size}`]:true}">
+        <v-icon :icon-name="iconName" :class="{[`${size}`]:true}"></v-icon>
       </span>
     </label>
     <template v-if="error">
@@ -71,13 +72,31 @@
   
   .input-icon {
     position: absolute;
-    right: -4px;
+    right: 4px;
     top: 4px;
-    
+  
+    &.s {
+      top: 0;
+    }
+  
+    &.l {
+      top: 9px;
+    }
     svg {
       width: 2em;
       height: 1.8em;
       fill: gray;
+      margin: 0;
+  
+      &.s {
+        width: 1.8em;
+        height: 1.5em;
+      }
+  
+      &.l {
+        width: 2.2em;
+        height: 2em;
+      }
     }
   }
   input {
@@ -88,6 +107,10 @@
     border:1px solid #ddd;
     transition:all 0.2s linear;
     color:rgba(0,0,0,.65);
+  
+    &.icon {
+      padding-right: 2em !important;
+    }
     &::placeholder {
       color:#ddd;
     }

@@ -22,6 +22,7 @@
 		<v-date-picker :value.sync="selectDate">
 		
 		</v-date-picker>
+		<p>我我我我我</p>
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->
@@ -67,7 +68,9 @@
 	</div>
 </template>
 <script>
+    import vExpand from './animations/expand'
     import vDatePicker from './datepicker/datepicker'
+    import vInput from './basic/v-input'
     import vPage from './pagenation/pagenation'
     import db from '../tests/fixture/db'
     import cascader from './cascader/cascader'
@@ -100,12 +103,15 @@
             vButton,
             slide,
             slideItem,
+            vInput,
             vPage,
             vIcon,
-            vTable
+            vTable,
+            vExpand
         },
         data() {
             return {
+                a: false,
                 selectDate: '',
                 db: db,
                 selected: [],
@@ -135,8 +141,8 @@
             }
         },
         methods: {
-            look(item) {
-                console.log(item)
+            ctrl() {
+                this.a = !this.a
             },
             x() {
                 console.log(this.orderBy)
@@ -203,7 +209,7 @@
 	}
 	.box {
 		background: $dark-blue;
-		width: 100%;
+		width: 200px;
 		height: 200px;
 		display: flex;
 		justify-content: center;
