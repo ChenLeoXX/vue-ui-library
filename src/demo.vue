@@ -19,10 +19,27 @@
 		<!--		<div>-->
 		<!--			<v-button :is-loading="true" type="primary">按钮</v-button>-->
 		<!--		</div>-->
-		<v-date-picker :value.sync="selectDate">
-		
-		</v-date-picker>
-		<p>我我我我我</p>
+		<!--		<v-date-picker :value.sync="selectDate">-->
+		<!--		-->
+		<!--		</v-date-picker>-->
+		<v-layout>
+			<v-header>
+				<div style="height: 100px">Head</div>
+			</v-header>
+			<v-layout>
+				<v-sider can-close>Sider</v-sider>
+				<v-content>
+					<div style="height: 300px;">
+						Content
+					</div>
+				</v-content>
+			</v-layout>
+			<v-footer>
+				<div style="height: 100px;">
+					Foot
+				</div>
+			</v-footer>
+		</v-layout>
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->
@@ -68,6 +85,11 @@
 	</div>
 </template>
 <script>
+    import vLayout from './layouts/layout'
+    import vSider from './layouts/sider'
+    import vHeader from './layouts/header'
+    import vFooter from './layouts/footer'
+    import vContent from './layouts/content'
     import vExpand from './animations/expand'
     import vDatePicker from './datepicker/datepicker'
     import vInput from './basic/v-input'
@@ -94,6 +116,11 @@
             }
         },
         components: {
+            vLayout,
+            vHeader,
+            vFooter,
+            vContent,
+            vSider,
             vDatePicker,
             vSticky,
             vMenu,
