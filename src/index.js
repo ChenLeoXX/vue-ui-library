@@ -12,7 +12,7 @@ export {default as Header} from './layouts/header';
 export {default as Sider} from './layouts/sider';
 export {default as Col} from './layouts/v-col';
 export {default as Row} from './layouts/v-row';
-export {default as Lay} from './layouts/v-lay';
+export {default as Layout} from './layouts/layout';
 export {default as Menu} from './menu/menu';
 export {default as MenuItem} from './menu/menu-item';
 export {default as SubMenu} from './menu/sub-menu';
