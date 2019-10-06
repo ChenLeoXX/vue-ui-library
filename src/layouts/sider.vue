@@ -40,7 +40,6 @@
 <style lang="scss" scoped>
 	.sider {
 		min-width: 200px;
-		border: 1px solid aqua;
 		position: relative;
 		
 		.v-icon {

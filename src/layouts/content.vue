@@ -6,7 +6,6 @@
 <script></script>
 <style lang="scss" scoped>
 	.content {
-		border: 1px solid navy;
 		flex: auto;
 	}
 </style>
