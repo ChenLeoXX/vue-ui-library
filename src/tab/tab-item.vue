@@ -45,7 +45,7 @@
                 if (this.eventHub) {
                     this.eventHub.$emit('update:selectName', this.name, this.$el)
                 }
-                this.$emit('click')
+                this.$emit('on-tab-click')
             }
         }
     }
@@ -65,10 +65,18 @@
 		}
 		&.active {
 			color: $blue-text;
+			
+			.v-icon {
+				fill: $blue-text !important;
+			}
 		}
 		
 		&:not(.disable):hover {
 			color: $blue-text;
+			
+			.v-icon {
+				fill: $blue-text !important;
+			}
 		}
 		> .actions-wrapper {
 			margin-left: auto;

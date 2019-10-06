@@ -13,6 +13,7 @@
 <script>
     import vIcon from './v-icon';
     export default {
+        name: 'v-button',
         props:{
             isLoading:{
                 type:Boolean,
@@ -47,7 +48,6 @@
                 this.wave = true
             },
             listenAnimation() {
-                console.log(123)
                 this.wave = false
             },
         },
@@ -113,6 +113,7 @@
 			}
 
 			.content {
+				margin: 0 auto;
 				order: 2;
 			}
 		}
@@ -125,6 +126,7 @@
 			}
 
 			.content {
+				margin: 0 auto;
 				order: 1;
 			}
 		}

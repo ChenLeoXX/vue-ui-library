@@ -1,5 +1,5 @@
 export {default as Vbutton} from './basic/button';
-export {default as Vbuttongroup} from './basic/buttton-group';
+export {default as Vbuttongroup} from './basic/button-group';
 export {default as Vicon} from './basic/v-icon';
 export {default as Vinput} from './basic/v-input';
 export {default as Vcascader} from './cascader/cascader';
@@ -30,3 +30,5 @@ export {default as Table} from './table/table';
 export {default as Toast} from './toast/toast';
 export {default as Validate} from './validate';
 export {default as clickOutside} from './click-outside';
+export {default as Vdatepicker} from './datepicker/datepicker'
+export {default as Vexpand} from './animations/expand'

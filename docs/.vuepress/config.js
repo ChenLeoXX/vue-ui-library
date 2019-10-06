@@ -3,8 +3,8 @@ module.exports = {
     description: '一个易用的UI组件库',
     themeConfig: {
         nav: [
-            {text: 'Home', link: '/'},
-            {text: 'Guide', link: '/guide/'},
+            {text: 'Github', link: 'https://github.com/ChenLeoXX/vue-ui-library'},
+            {text: 'Guide', link: '/get-start/'},
         ],
         sidebar: [
             {
@@ -19,11 +19,57 @@ module.exports = {
                 title: '组件',
                 collapsable: true,
                 children: [
-                    '/components/button',
-                    '/components/tabs',
-                    '/components/popover'
+                    {
+                        title: '基础',
+                        children: [
+                            '/components/button',
+                            '/components/buttongroup'
+                        ]
+                    },
+                    {
+                        title: '表单',
+                        children: [],
+                    },
+                    {
+                        title: '布局',
+                        children: [
+                            '/components/layout'
+                        ]
+                    },
+                    {
+                        title: '视图',
+                        children: [
+                            '/components/popover'
+                        ]
+                    },
+                    {
+                        title: '导航',
+                        children: [
+                            '/components/tabs',
+                            '/components/pagenation',
+                        ]
+                    },
+                    {
+                        title: '其他',
+                        children: []
+                    }
                 ]
             }
         ]
-    }
+    },
+    plugins: [
+        ['demo-code', {
+            onlineBtns: {
+                codepen: false,
+                jsfiddle: false,
+                codesandbox: false,
+            },
+            showText: 'code',
+            hideText: 'hide',
+            styleStr: 'text-decoration: underline;',
+            minHeight: 250,
+            demoCodeMark: 'demo',
+        }
+        ]
+    ],
 }

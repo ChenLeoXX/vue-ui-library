@@ -49,14 +49,14 @@
                 type: Number,
                 required: true,
                 validator(value) {
-                    return value > 0
+                    return typeof value === 'number' && value > 0
                 }
             },
             current: {
                 type: Number,
                 required: true,
                 validator(value) {
-                    return value > 0
+                    return typeof value === 'number' && value > 0
                 }
             },
             hideWhenOne: {
@@ -75,6 +75,7 @@
             go(p) {
                 if (p >= 1 && p <= this.total) {
                     this.$emit('update:current', p)
+                    this.$emit('on-page-change')
                 }
             },
         },

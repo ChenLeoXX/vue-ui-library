@@ -8,6 +8,7 @@
 <script>
     import '../../static/svg'
   export default {
+      name: 'v-icon',
     props: {
       iconName: {
         type: String,

@@ -165,7 +165,7 @@
 		word-break: break-word;
 		display: inline-block;
 		position: absolute;
-		
+		z-index: 10;
 		.title, .content {
 			padding: 0.5em 1em;
 		}
