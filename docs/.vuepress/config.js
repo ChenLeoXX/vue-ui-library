@@ -34,7 +34,8 @@ module.exports = {
                     {
                         title: '布局',
                         children: [
-                            '/components/layout'
+                            '/components/layout',
+                            '/components/grid'
                         ]
                     },
                     {

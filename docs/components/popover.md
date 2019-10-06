@@ -1,7 +1,7 @@
 ---
-title: popover
+title: Popover 气泡卡片
 ---
-# Popover 弹出框
+# Popover 气泡卡片
 ### 基本用法
 用于展示元素信息
 ::: demo

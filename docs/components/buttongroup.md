@@ -1,8 +1,8 @@
 ---
-title: ButtonGroup  
+title: ButtonGroup  组合按钮
 ---
 
-## ButtonGroup  组合按钮
+### ButtonGroup  组合按钮
 ### 基本用法
 横向排列的按钮组合
 ::: demo

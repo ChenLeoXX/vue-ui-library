@@ -1,10 +1,9 @@
 ---
-title: Button
+title: Button 按钮
 ---
 
-# 基础
-## Button 按钮
-### 类型按钮
+# Button 按钮
+### 基本用法
 基础按钮,点击触发事件
 ::: demo
 

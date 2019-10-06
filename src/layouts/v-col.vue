@@ -68,7 +68,7 @@
 <style lang="scss" scoped>
 	.col {
 		min-height: 50px;
-
+		flex: auto;
 		&:nth-child(odd) > div {
 			background: #00A0E9;
 		}

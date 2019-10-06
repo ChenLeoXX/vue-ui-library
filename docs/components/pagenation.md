@@ -1,7 +1,7 @@
 ---
-title: pagenation
+title: Pagenation 分页
 ---
-# pager 分页器
+# Pagenation 分页
 数据较多时,展示不同分页内容.
 ### 说明
 > @update:prop ="expr"的写法 可以换为.sync修饰符 
