@@ -12,7 +12,6 @@
 </script>
 <style lang="scss" scoped>
 	.header {
-		padding: 0 50px;
 		flex: 0 0 auto;
 	}
 </style>

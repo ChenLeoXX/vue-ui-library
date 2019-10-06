@@ -1,5 +1,6 @@
 module.exports = {
     title: 'Easy-UI',
+    base: '/easy-ui/',
     description: '一个易用的UI组件库',
     themeConfig: {
         nav: [

@@ -4,7 +4,9 @@
 			<v-expand horizontal :visible="visible">
 				<div class="sider">
 					<slot></slot>
-					<v-icon icon-name="left" @click="visible = !visible"></v-icon>
+					<div class="sider-action">
+						<v-icon icon-name="left" @click="visible = !visible"></v-icon>
+					</div>
 				</div>
 			</v-expand>
 		</template>
@@ -42,11 +44,15 @@
 		min-width: 200px;
 		position: relative;
 		
-		.v-icon {
+		.sider-action {
 			position: absolute;
 			top: 5px;
 			right: 5px;
 			cursor: pointer;
+			
+			.v-icon {
+				fill: currentColor;
+			}
 		}
 	}
 </style>

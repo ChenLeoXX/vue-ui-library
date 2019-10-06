@@ -22,24 +22,24 @@
 		<!--		<v-date-picker :value.sync="selectDate">-->
 		<!--		-->
 		<!--		</v-date-picker>-->
-		<v-layout>
-			<v-header>
-				<div style="height: 100px">Head</div>
-			</v-header>
-			<v-layout>
-				<v-sider can-close>Sider</v-sider>
-				<v-content>
-					<div style="height: 300px;">
-						Content
-					</div>
-				</v-content>
-			</v-layout>
-			<v-footer>
-				<div style="height: 100px;">
-					Foot
-				</div>
-			</v-footer>
-		</v-layout>
+		<!--		<v-layout>-->
+		<!--			<v-header>-->
+		<!--				<div style="height: 100px">Head</div>-->
+		<!--			</v-header>-->
+		<!--			<v-layout>-->
+		<!--				<v-sider can-close>Sider</v-sider>-->
+		<!--				<v-content>-->
+		<!--					<div style="height: 300px;">-->
+		<!--						Content-->
+		<!--					</div>-->
+		<!--				</v-content>-->
+		<!--			</v-layout>-->
+		<!--			<v-footer>-->
+		<!--				<div style="height: 100px;">-->
+		<!--					Foot-->
+		<!--				</div>-->
+		<!--			</v-footer>-->
+		<!--		</v-layout>-->
 		<!--				<v-menu :active.sync="active">-->
 		<!--					<menu-item name="home">首页</menu-item>-->
 		<!--					<menu-item name="team">团队</menu-item>-->
