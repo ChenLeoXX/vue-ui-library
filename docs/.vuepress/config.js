@@ -29,7 +29,11 @@ module.exports = {
                     },
                     {
                         title: '表单',
-                        children: [],
+                        children: [
+                            '/components/input',
+                            '/components/datepicker',
+                            '/components/cascader'
+                        ],
                     },
                     {
                         title: '布局',
@@ -41,7 +45,8 @@ module.exports = {
                     {
                         title: '视图',
                         children: [
-                            '/components/popover'
+                            '/components/popover',
+                            '/components/collapse'
                         ]
                     },
                     {

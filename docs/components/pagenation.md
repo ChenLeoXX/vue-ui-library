@@ -4,7 +4,7 @@ title: Pagenation 分页
 # Pagenation 分页
 数据较多时,展示不同分页内容.
 ### 说明
-> @update:prop ="expr"的写法 可以换为.sync修饰符 
+> @update:prop ="expr"的写法 使用时换为.sync修饰符 
 ### 基本用法
 超出时显示省略,否则全部展示.
 ::: demo
