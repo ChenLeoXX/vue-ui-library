@@ -122,6 +122,7 @@
             },
             goToday() {
                 this.$emit('update:value', new Date())
+                this.$emit('on-change')
                 this.displayDate = this.getYearMonthDay(new Date())
                 this.visible = false
             },
@@ -163,6 +164,7 @@
             onCellSelect(row, col) {
                 const date = this.getAllDays[`${(row - 1) * 7 + col - 1}`]
                 this.$emit('update:value', new Date(date))
+                this.$emit('on-change')
                 // this.$refs.pop.close
                 this.visible = false
             },
