@@ -2,15 +2,16 @@
   <div class="wrapper">
     <label>
       <input
-              @click="$emit('click',$event.target.value,$event)"
-              @change="$emit('change',$event.target.value,$event)"
-              @blur="$emit('blur',$event.target.value,$event)"
-              @focus="$emit('focus',$event.target.value,$event)"
-              @input="$emit('input',$event.target.value,$event)"
-              :disabled="disabled" :value="value" :readonly="readonly"
-              :class="{[`${size}`]:true,error:error,'icon':iconName}" :type="textType" :placeholder="placeholder">
-      <span v-if="iconName" class="input-icon" :class="{[`${size}`]:true}">
-        <v-icon :icon-name="iconName" :class="{[`${size}`]:true}"></v-icon>
+				      @click="$emit('click',$event.target.value,$event)"
+				      @change="$emit('change',$event.target.value,$event)"
+				      @blur="$emit('blur',$event.target.value,$event)"
+				      @focus="$emit('focus',$event.target.value,$event)"
+				      @input="$emit('input',$event.target.value,$event)"
+				      :disabled="disabled" :value="value" :readonly="readonly"
+				      :class="{[`${size}`]:true,error:error,'left-icon':!!leftIcon,'right-icon':!!rightIcon}" :type="textType"
+				      :placeholder="placeholder">
+	    <span v-if="rightIcon||leftIcon" class="input-icon" :class="{[`${size}`]:true,'left-icon':!!leftIcon}">
+        <v-icon :icon-name="rightIcon||leftIcon" :class="{[`${size}`]:true}"></v-icon>
       </span>
     </label>
     <template v-if="error">
@@ -23,8 +24,11 @@
   import vIcon from './v-icon'
   export default  {
     props:{
-      iconName: {
-        type: String
+        rightIcon: {
+            type: String,
+        },
+        leftIcon: {
+            type: String,
       },
       value:{
         default:''
@@ -69,33 +73,33 @@
   & > :not(:last-child) {
     margin-right: 0.3em;
   }
-  
   .input-icon {
     position: absolute;
+	  display: inline-flex;
     right: 4px;
-    top: 4px;
-  
-    &.s {
-      top: 0;
-    }
-  
-    &.l {
-      top: 9px;
+	  top: 50%;
+	  transform: translateY(-50%);
+	
+	  &.left-icon {
+		  left: 4px !important;
+		  right: 0;
     }
     svg {
-      width: 2em;
-      height: 1.8em;
       fill: gray;
       margin: 0;
   
       &.s {
-        width: 1.8em;
-        height: 1.5em;
+	      width: 1em;
+	      height: 1em;
       }
-  
+	
+	    &.m {
+		    width: 1.2em;
+		    height: 1.2em;
+	    }
       &.l {
-        width: 2.2em;
-        height: 2em;
+	      width: 1.5em;
+	      height: 1.5em;
       }
     }
   }
@@ -107,10 +111,22 @@
     border:1px solid #ddd;
     transition:all 0.2s linear;
     color:rgba(0,0,0,.65);
-  
-    &.icon {
+	
+	  &.right-icon.m {
       padding-right: 2em !important;
     }
+	
+	  &.left-icon.m {
+		  padding-left: 2em !important;
+	  }
+	
+	  &.right-icon.s, &.right-icon.l {
+		  padding-right: 1.8em !important;
+	  }
+	
+	  &.left-icon.s, &.left-icon.l {
+		  padding-left: 1.8em !important;
+	  }
     &::placeholder {
       color:#ddd;
     }
@@ -134,7 +150,11 @@
     }
     &.error {
       border:1px solid #ff606f;
-      box-shadow:0 0 0 2px rgba(255,0,0,0.2)
+	    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+	
+	    &:hover {
+		    border: 1px solid #ff606f;
+	    }
     }
     &.m {
       padding: 8px;
