@@ -94,7 +94,11 @@
         },
         watch: {
             value(val) {
-                this.displayDate = this.getYearMonthDay(val)
+                if (val === '') {
+                    this.displayDate = this.getYearMonthDay(new Date())
+                } else {
+                    this.displayDate = this.getYearMonthDay(val)
+                }
             }
         },
         methods: {
