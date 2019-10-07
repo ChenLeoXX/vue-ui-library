@@ -93,15 +93,35 @@
             }
         },
         watch: {
-            yearBase(val) {
-                console.log(val)
+            value(val) {
+                this.displayDate = this.getYearMonthDay(val)
             }
         },
         methods: {
             matchInput(e) {
                 let regx = /^\d{4}-\d{2}-\d{2}$/g
                 let res = e.target.value.match(regx)
-                if (res) {
+                let isValid = true
+                if (res === null) {
+                    return this.$emit('update:value', this.value)
+                }
+                res[0].split('-').forEach((item, ind) => {
+                    let val = parseInt(item)
+                    if (ind === 0) {
+                        if (val < 1900 || val > 2200) {
+                            isValid = false
+                        }
+                    } else if (ind === 1) {
+                        if (val > 12) {
+                            isValid = false
+                        }
+                    } else {
+                        if (val > 31) {
+                            isValid = false
+                        }
+                    }
+                })
+                if (res && isValid) {
                     this.$emit('update:value', new Date(res[0]))
                 } else {
                     this.$emit('update:value', this.value)
