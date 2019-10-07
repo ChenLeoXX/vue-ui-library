@@ -58,12 +58,12 @@
         //手动添加的监听器需要手动清除
         beforeDestroy() {
             if (this.trigger === 'click') {
-                this.$refs.popover.removeEventListener('click', this.onTrigger)
+                this.$refs.popover && this.$refs.popover.removeEventListener('click', this.onTrigger)
             } else if (this.trigger === 'hover') {
-                this.$refs.popover.removeEventListener('mouseenter', this.show)
-                this.$refs.popover.removeEventListener('mouseleave', this.close)
-                this.$refs.contentWrapper.removeEventListener('mouseenter', this.clearTimer)
-                this.$refs.contentWrapper.removeEventListener('mouseleave', this.hoverClose)
+                this.$refs.popover && this.$refs.popover.removeEventListener('mouseenter', this.show)
+                this.$refs.popover && this.$refs.popover.removeEventListener('mouseleave', this.close)
+                this.$refs.contentWrapper && this.$refs.contentWrapper.removeEventListener('mouseenter', this.clearTimer)
+                this.$refs.contentWrapper && this.$refs.contentWrapper.removeEventListener('mouseleave', this.hoverClose)
             }
         },
         methods: {

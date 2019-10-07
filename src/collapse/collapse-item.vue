@@ -1,29 +1,34 @@
 <template>
 	<div class="collapse-item" @click.stop="toggle">
-		<div class="title" ref="title">
-			<v-icon icon-name="right"></v-icon>
+		<div class="title" ref="title" v-show="title">
+			<div class="icon-wrapper">
+				<v-icon icon-name="right"></v-icon>
+			</div>
 			{{this.title}}
 		</div>
-		<div class="content" v-if="visible" @click.stop>
-			<slot></slot>
-		</div>
+		<v-expand :visible="visible">
+			<div class="content" @click.stop>
+				<slot></slot>
+			</div>
+		</v-expand>
 	</div>
 </template>
 
 <script>
     import vIcon from '../basic/v-icon'
-
+    import vExpand from '../animations/expand'
     export default {
         name: "collapse-item",
         inject: ['eventHub'],
         data() {
             return {
-                visible: true
+                visible: true,
             }
         },
         props: {
             title: {
-                type: String
+                type: String,
+                required: true
             },
             name: {
                 type: String | Number,
@@ -54,8 +59,9 @@
                 }
             },
         },
-        comments: {
-            vIcon
+        components: {
+            vIcon,
+            vExpand
         }
     }
 </script>
@@ -70,10 +76,10 @@
 			border-top-right-radius: $item-radius;
 		}
 		
-		&:last-child > .title:last-child {
-			border-bottom: none;
-			/*<!--border-bottom-left-radius: $item-radius;-->*/
-			/*<!--border-bottom-right-radius: $item-radius;-->*/
+		&:last-child > .title {
+			/*border-bottom: none;*/
+			border-bottom-left-radius: $item-radius;
+			border-bottom-right-radius: $item-radius;
 		}
 		
 		.title {
@@ -86,7 +92,6 @@
 			margin-top: -1px;
 			margin-left: -1px;
 			margin-right: -1px;
-			
 			.icon-wrapper {
 				position: absolute;
 				left: 14px;
