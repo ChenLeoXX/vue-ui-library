@@ -2,7 +2,7 @@
 	<div class="cascader-wrapper" v-click-outside="close" @click="toggle">
 		<div class="trigger">
 			<slot>
-				<v-input :value="result" readonly></v-input>
+				<v-input :value="result" readonly :right-icon="icon" @on-click="clear" :placeholder="placeholder"></v-input>
 			</slot>
 		</div>
 		<div class="popover" v-if="visible">
@@ -39,10 +39,23 @@
             loadData: {
                 type: Function
             },
+            placeholder: {
+                type: String,
+                default: '请选择'
+            }
         },
         components: {
             cascaderItem,
             vInput
+        },
+        watch: {
+            result(val) {
+                if (val !== '') {
+                    this.icon = 'clear'
+                } else {
+                    this.icon = ''
+                }
+            }
         },
         data() {
             return {
@@ -56,6 +69,9 @@
             },
             close() {
                 this.visible = false
+            },
+            clear() {
+                this.$emit('update:selected', [])
             },
             /**
              *
@@ -128,7 +144,7 @@
 		display: inline-block;
 		.popover {
 			position: absolute;
-			z-index: 1;
+			z-index: 10;
 			transform: translateY(4px);
 			box-shadow: $box-shadow;
 		}

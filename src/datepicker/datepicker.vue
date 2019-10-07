@@ -1,6 +1,6 @@
 <template>
 	<div :class="className('wrapper')" v-out-click="closePanel">
-		<v-input readonly :value="formatDate" icon-name="calendar" placeholder="请选择日期" @click="visible = true"></v-input>
+		<v-input readonly :value="formatDate" right-icon="calendar" placeholder="请选择日期" @click="visible = true"></v-input>
 		<v-expand :visible="visible" class="expand">
 			<div :class="className('pop')">
 				<label>
@@ -274,6 +274,16 @@
 		width: 280px;
 		position: relative;
 		
+		.outer-input {
+			position: relative;
+			
+			.v-icon {
+				position: absolute;
+				right: 5px;
+				top: 8px;
+				fill: gray;
+			}
+		}
 		.expand {
 			position: absolute;
 			top: -2px;

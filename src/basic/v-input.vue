@@ -11,7 +11,7 @@
 				      :class="{[`${size}`]:true,error:error,'left-icon':!!leftIcon,'right-icon':!!rightIcon}" :type="textType"
 				      :placeholder="placeholder">
 	    <span v-if="rightIcon||leftIcon" class="input-icon" :class="{[`${size}`]:true,'left-icon':!!leftIcon}">
-        <v-icon :icon-name="rightIcon||leftIcon" :class="{[`${size}`]:true}"></v-icon>
+        <v-icon :icon-name="rightIcon||leftIcon" :class="{[`${size}`]:true}" @click="$emit('on-click')"></v-icon>
       </span>
     </label>
     <template v-if="error">
