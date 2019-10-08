@@ -58,6 +58,9 @@ export default {
 </style>
 :::
 ### 属性
+> slide-item 需要name作为唯一标示 
+
+#### slide-item
 | 参数 | 说明 | 类型 | 可选值 | 默认值 |
 | :---: | :----: | :----: | :----: | :----: |
 | selected | 默认展示的轮播 | String | - | - |
