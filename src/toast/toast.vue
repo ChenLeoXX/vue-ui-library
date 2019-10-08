@@ -23,7 +23,9 @@
                 default: () => {
                     return {
                         text: '关闭',
-                        callback: undefined
+                        callback(vm) {
+                            vm.close()
+                        },
                     }
                 }
             },
@@ -38,6 +40,9 @@
                 type: [Boolean, Number],
                 default: 3,
                 validator(val) {
+                    if (val === true) {
+                        val = 5
+                    }
                     return val === false || (typeof val === 'number' && val > 0)
                 },
             }
@@ -122,7 +127,7 @@
 	.wrapper {
 		position: fixed;
 		left: 50%;
-		
+		z-index: 100;
 		&.position-top {
 			top: 0;
 			transform: translateX(-50%);

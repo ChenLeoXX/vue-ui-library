@@ -49,11 +49,11 @@
             },
             selected: {
                 type: String,
-                required: true
+                required: true,
             },
             autoPlay: {
                 type: Boolean,
-                default: false,
+                default: true,
             },
             autoPlayDelay: {
                 type: Number,

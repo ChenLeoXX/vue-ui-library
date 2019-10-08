@@ -46,7 +46,7 @@
 		padding: 0 24px;
 		cursor: default;
 		position: relative;
-		
+		border-radius: $border-radius;
 		a {
 			color: inherit;
 			text-decoration: none;

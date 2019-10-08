@@ -120,6 +120,7 @@
 			box-shadow: 0 0 3px rgba(0, 0, 0, .2);
 			border-radius: $border-radius;
 			position: absolute;
+			z-index: 10;
 			margin-top: 6px;
 			/*垂直popover*/
 			&.vertical {

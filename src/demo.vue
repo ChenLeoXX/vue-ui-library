@@ -3,15 +3,15 @@
 		<!--		<v-page :total="20" :current.sync="currentPage" hide-when-one prev-text="上一页" next-text="下一页">-->
 		<!--		-->
 		<!--		</v-page>-->
-		<!--		<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"-->
-		<!--		         :order-by.sync="orderBy" ref="table" bordered :height="400" show-num="true" :stripe="true"-->
-		<!--		>-->
-		<!--			<template v-slot="{item}">-->
-		<!--				<button @click="look(item)">查看</button>-->
-		<!--				<button>编辑</button>-->
-		<!--				<button>删除</button>-->
-		<!--			</template>-->
-		<!--		</v-table>-->
+		<!--				<v-table :selected-items.sync="tableSelected" :data-source="tableData" :columns="tableHead"-->
+		<!--				         :order-by.sync="orderBy" ref="table" bordered :height="400" show-num="true" :stripe="true"-->
+		<!--				>-->
+		<!--					<template v-slot="{item}">-->
+		<!--						<button @click="look(item)">查看</button>-->
+		<!--						<button>编辑</button>-->
+		<!--						<button>删除</button>-->
+		<!--					</template>-->
+		<!--				</v-table>-->
 		<!--						<v-cascader :source.sync="source" :selected.sync="selected" v-slot="{result}"-->
 		<!--						            :load-data="loadData"-->
 		<!--						>-->
@@ -40,21 +40,21 @@
 		<!--				</div>-->
 		<!--			</v-footer>-->
 		<!--		</v-layout>-->
-		<!--				<v-menu :active.sync="active">-->
-		<!--					<menu-item name="home">首页</menu-item>-->
-		<!--					<menu-item name="team">团队</menu-item>-->
-		<!--					<menu-item name="about">关于</menu-item>-->
-		<!--					<sub-menu name="products">-->
-		<!--						<template slot="title">产品</template>-->
-		<!--						<menu-item name="software">软件</menu-item>-->
-		<!--						<menu-item name="hardware">硬件</menu-item>-->
-		<!--						<sub-menu name="service">-->
-		<!--							<template slot="title">服务</template>-->
-		<!--							<menu-item name="maintain">维修</menu-item>-->
-		<!--							<menu-item name="delivery">送货</menu-item>-->
-		<!--						</sub-menu>-->
-		<!--					</sub-menu>-->
-		<!--				</v-menu>-->
+		<v-menu :active.sync="active">
+			<menu-item name="home">首页</menu-item>
+			<menu-item name="team">团队</menu-item>
+			<menu-item name="about">关于</menu-item>
+			<sub-menu name="products">
+				<template slot="title">产品</template>
+				<menu-item name="software">软件</menu-item>
+				<menu-item name="hardware">硬件</menu-item>
+				<sub-menu name="service">
+					<template slot="title">服务</template>
+					<menu-item name="maintain">维修</menu-item>
+					<menu-item name="delivery">送货</menu-item>
+				</sub-menu>
+			</sub-menu>
+		</v-menu>
 		<!--		<v-menu :active.sync="active" vertical @on-item-click="x">-->
 		<!--			<menu-item name="home">-->
 		<!--				<a href="http://google.com" target="_blank">谷歌</a>-->
