@@ -46,7 +46,10 @@ module.exports = {
                         title: '视图',
                         children: [
                             '/components/popover',
-                            '/components/collapse'
+                            '/components/collapse',
+                            '/components/table',
+                            '/components/toast',
+                            '/components/slide'
                         ]
                     },
                     {
@@ -54,6 +57,8 @@ module.exports = {
                         children: [
                             '/components/tabs',
                             '/components/pagenation',
+                            '/components/sticky',
+                            '/components/menu',
                         ]
                     },
                     {
