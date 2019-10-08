@@ -114,6 +114,7 @@
 			.label {
 				user-select: none;
 				min-width: 100px;
+				white-space: nowrap;
 				padding: .5em 1em;
 				display: flex;
 				align-items: center;

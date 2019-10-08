@@ -108,7 +108,7 @@
                 default: false
             },
             height: {
-                type: Number
+                type: Number,
             },
             orderBy: {
                 type: Object,
@@ -235,6 +235,14 @@
 <style lang="scss" scoped>
 	@import "../../style/var";
 	.v-table-wrapper {
+		table {
+			display: table;
+			margin: auto;
+			
+			td, th {
+				border: none;
+			}
+		}
 		position: relative;
 		.copy-table {
 			position: absolute;
@@ -251,7 +259,8 @@
 			&.bordered {
 				border-top: 1px solid $gray-border;
 				border-right: 1px solid $gray-border;
-				
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
 				th, td {
 					border-left: 1px solid $gray-border;
 				}

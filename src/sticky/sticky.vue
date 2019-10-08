@@ -60,6 +60,7 @@
 		.v-sticky-placeholder {
 			&.sticky {
 				position: fixed;
+				z-index: 10;
 			}
 		}
 	}
