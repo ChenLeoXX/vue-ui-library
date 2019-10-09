@@ -33,6 +33,7 @@
             beforeEnter(el) {
                 if (this.horizontal) {
                     el.style.transition = this.horizontalTransition
+                    console.log(this.horizontalTransition)
                     this.elData.paddingLeft = el.style.paddingLeft;
                     this.elData.paddingRight = el.style.paddingRight;
                     el.style.width = 0;
@@ -50,8 +51,11 @@
             enter(el) {
                 this.elData.overflow = el.style.overflow;
                 if (this.horizontal) {
+                    console.log(el.scrollWidth)
                     if (el.scrollWidth !== 0) {
                         el.style.width = el.scrollWidth + 'px'
+                    } else {
+                        el.style.width = ''
                     }
                     el.style.paddingLeft = this.elData.paddingLeft;
                     el.style.paddingRight = this.elData.paddingRight;
