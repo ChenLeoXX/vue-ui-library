@@ -1,6 +1,6 @@
 module.exports = {
-    title: 'Easy-UI',
-    base: '/easy-ui/',
+    title: 'Ease-UI',
+    base: '/ease-ui/',
     description: '一个易用的UI组件库',
     themeConfig: {
         nav: [
@@ -9,12 +9,16 @@ module.exports = {
         ],
         sidebar: [
             {
-                title: '入门',   // 必要的
-                collapsable: true, // 可选的, 默认值是 true,
-                children: [
-                    '/install/',
-                    '/get-start/',
-                ]
+                title: '介绍',   // 必要的
+                path: '/introduction/'
+            },
+            {
+                title: '安装',   // 必要的
+                path: '/install/'
+            },
+            {
+                title: '快速上手',   // 必要的
+                path: '/get-start/'
             },
             {
                 title: '组件',
