@@ -63,7 +63,10 @@ module.exports = {
                     },
                     {
                         title: '其他',
-                        children: []
+                        children: [
+                            '/components/expand',
+                            '/components/loading',
+                        ]
                     }
                 ]
             }
